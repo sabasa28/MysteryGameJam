@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
+  m_Name: TestDoc 2
+  m_EditorClassIdentifier: 
+  fullText: Do not tell anyone this, but apparently the surface team that recently
+    went to investigate the supposed meteor has made an incredible discovery. The
+    commander(?) has already approved a second expedition to bring down whatever
+    they found. There is a lot of secrecy around it, but I will share more with you
+    as soon as I know more. - Prremp
+  currentText: Do not **** ****** ****, *** ********** the surface team that ********
+    went ** *********** the ******** ****** has made ** ********** discovery. The
+    ***********) has ******* ******** * second ********** ** bring **** whatever
+    **** found. There ** * *** of ******* ****** **, *** * will ***** **** **** you
+    ** **** ** * **** ****. * Prremp

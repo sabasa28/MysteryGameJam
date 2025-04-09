@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//ended up using it not only for movement
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float speed;
@@ -23,6 +24,19 @@ public class PlayerMovement : MonoBehaviour
     RaycastHit interactHit;
     [SerializeField] float maxInteractDistance;
     bool inputEnabled = true;
+    [SerializeField] float sonarTimer;
+    [SerializeField] float sonarAlignTime;
+    bool isSonarActive = false;
+    [SerializeField] SpriteRenderer sonarSprite;
+    [SerializeField] Transform sonarPivotY;
+    [SerializeField] Transform sonarPivotX;
+    [SerializeField] GameObject sonar;
+    [SerializeField] Color closeColor;
+    [SerializeField] Color mediumColor;
+    [SerializeField] Color farColor;
+    [SerializeField] float distanceForFarColor;
+    [SerializeField] float distanceForMediumColor;
+    IInteractable interactable;
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -47,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             mouseY = Input.GetAxis("Mouse Y");
             mouseX = Input.GetAxis("Mouse X");
             horizontalValue = Input.GetAxis("Horizontal");
-            verticalValue   = Input.GetAxis("Vertical");
+            verticalValue = Input.GetAxis("Vertical");
             if (Input.GetButtonDown("Jump") && grounded && verticalForce < 0.0f)
             {
                 verticalForce += jumpForce;
@@ -55,6 +69,14 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 SetFlashlightState(!isFlashlightEnabled);
+            }
+            if (Input.GetKeyDown(KeyCode.G) && !isSonarActive)
+            {
+                ActivateSonar();
+            }
+            if (Input.GetKeyDown(KeyCode.E) && interactable != null)
+            {
+                interactable.AttemptInteract();
             }
         }
 
@@ -100,10 +122,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out interactHit, maxInteractDistance))
         {
-            Interactable interactable = interactHit.collider.GetComponent<Interactable>();
+            interactable = interactHit.collider.GetComponent<IInteractable>();
             if (interactable == null)
             {
-                interactable = interactHit.collider.GetComponentInParent<Interactable>();
+                interactable = interactHit.collider.GetComponentInParent<IInteractable>();
             }
             if (interactable != null)
             {
@@ -148,5 +170,39 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(coyoteTime);
         grounded = characterController.isGrounded;
+    }
+
+    void ActivateSonar()
+    {
+        Vector3 closestInteractable;
+        GameplayController.Get().GetCurrentZone().GetClosestInteractable(transform.position, out closestInteractable);
+        StartCoroutine(DisplaySonarArrow(closestInteractable));
+    }
+
+    IEnumerator DisplaySonarArrow(Vector3 closestInteractablePos)
+    {
+        sonar.SetActive(true);
+        isSonarActive = true;
+        float timer = 0.0f;
+        while (timer < sonarTimer)
+        {
+            Vector3 slerpedVector = Vector3.Slerp(transform.forward, closestInteractablePos - transform.position, timer / sonarAlignTime);
+            Quaternion rotation = Quaternion.LookRotation(slerpedVector, Vector3.up);
+            float distToInteractable = Vector3.Distance(transform.position, closestInteractablePos);
+            if (distToInteractable > distanceForMediumColor)
+            {
+                sonarSprite.color = Color.Lerp(mediumColor, farColor, (distToInteractable-distanceForMediumColor) / (distanceForFarColor - distanceForMediumColor));
+            }
+            else
+            { 
+                sonarSprite.color = Color.Lerp(closeColor, mediumColor, distToInteractable / distanceForMediumColor);
+            }
+            sonarPivotY.eulerAngles = new Vector3(sonarPivotY.eulerAngles.x, rotation.eulerAngles.y, sonarPivotY.eulerAngles.z);
+            sonarPivotX.eulerAngles = new Vector3(rotation.eulerAngles.x, sonarPivotX.eulerAngles.y, sonarPivotX.eulerAngles.z);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        isSonarActive = false;
+        sonar.SetActive(false);
     }
 }

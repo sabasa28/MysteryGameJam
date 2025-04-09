@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestInteractableCube : MonoBehaviour, Interactable
+public class TestInteractableCube : MonoBehaviour, IInteractable
 {
     [SerializeField] bool isInteractable;
     public void Interact()
     {
+        RemoveFromNecessaryInteractables();
         Debug.Log("Interacted with " + gameObject.name);
     }
 
@@ -15,15 +16,8 @@ public class TestInteractableCube : MonoBehaviour, Interactable
         return true;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void RemoveFromNecessaryInteractables()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GameplayController.Get().GetCurrentZone().RemoveFromNecessaryInteractions(gameObject);
     }
 }

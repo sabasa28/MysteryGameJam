@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Interactable
+public interface IInteractable
 {
     bool AttemptInteract()
     {
@@ -15,4 +16,6 @@ public interface Interactable
     }
     void Interact();
     bool IsInteractable();
+    void RemoveFromNecessaryInteractables();
+
 }

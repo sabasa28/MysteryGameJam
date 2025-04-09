@@ -38,6 +38,8 @@ public class GameplayController : MonoBehaviour
     InputState inputState;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] ChatManager chatManager;
+    [SerializeField] ZoneData currentZone;
+    [SerializeField] ZoneData[] zones;
     public void ChangeInputState(InputState newState)
     {
         inputState = newState;
@@ -58,5 +60,10 @@ public class GameplayController : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public ZoneData GetCurrentZone()
+    {
+        return currentZone;
     }
 }
