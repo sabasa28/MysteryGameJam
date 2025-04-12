@@ -28,7 +28,7 @@ public class ChatManager : MonoBehaviour
 
     private void Start()
     {
-        StartDisplayingTextEntry(testText);
+        //StartDisplayingTextEntry(testText);
     }
 
     public void StartDisplayingTextEntry(TextEntry textEntry)

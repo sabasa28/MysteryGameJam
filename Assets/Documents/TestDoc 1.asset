@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: TestDoc 1
   m_EditorClassIdentifier: 
-  fullText: A meteorite has been sighted landing near Pruobo mountain. A surface
+  fullText: "A meteorite has been sighted landing near Pruobo mountain. \nA surface
     team is being dispatched soon to investigate. If you are available, we would
-    love you to join us in this expedition. - Priimam
+    love you to join us in this expedition. - Priimam"
+  currentText: "A meteorite has been sighted landing near Pruobo mountain. \n A surface
+    team is being dispatched soon to investigate. If you are available, we would
+    love you to join us in this expedition. - Priimam"

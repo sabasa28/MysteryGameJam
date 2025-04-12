@@ -4,19 +4,52 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using TMPro;
 
 public class DocumentManager : MonoBehaviour
 {
-    
+    #region singletonStuff
+    static DocumentManager instance;
+    public static DocumentManager Get()
+    {
+        return instance;
+    }
+
+    private void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
+    }
+    #endregion
+
     [SerializeField] List<string> learnableWords = new();
     [SerializeField] List<string> wordsLearned = new();
+    [SerializeField] List<string> redList = new();
+    [SerializeField] List<string> greenListNAMES = new();
+    bool namesLearned = false;
+    [SerializeField] List<string> greenListSECRETS = new();
+    bool secretsLearned = false;
     [SerializeField] string censoredText;
     string uncensoredText;
     int knowledgeLevel = 0;
-    int testDocsIndex = 0;
     [SerializeField] Document[] testDocs;
     [SerializeField] List<Document> documentsRead = new();
     string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n" };
+    [SerializeField] TextMeshProUGUI testText;
 
     [Serializable]
     struct WordsReplacement : IComparable<WordsReplacement>
@@ -53,10 +86,29 @@ public class DocumentManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            if (testDocsIndex < testDocs.Length)
+            if (knowledgeLevel<100)
             {
-                AddDocumentWordsToLearnable(testDocs[testDocsIndex]);
-                testDocsIndex++;
+                SetKnowledgeLevel(knowledgeLevel + 10);
+                if (documentsRead.Count > 0)
+                {
+                    testText.SetText(documentsRead[0].currentText);
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            LearnNames();
+            if (documentsRead.Count > 0)
+            {
+                testText.SetText(documentsRead[0].currentText);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            LearnSecrets();
+            if (documentsRead.Count > 0)
+            {
+                testText.SetText(documentsRead[0].currentText);
             }
         }
     }
@@ -64,11 +116,29 @@ public class DocumentManager : MonoBehaviour
     void SetKnowledgeLevel(int knowledge)
     {
         knowledgeLevel = knowledge;
-        int totalWords = learnableWords.Count + wordsLearned.Count;
-        int wordsPercentage = (totalWords * knowledgeLevel / 100) - wordsLearned.Count;
+
+        List<string> actualLernableWords = new();
+        actualLernableWords.AddRange(learnableWords);
+        List<string> actualWordsLearned = new();
+        actualWordsLearned.AddRange(wordsLearned);
+
+        List<string> forbidenWords = new();
+        forbidenWords.AddRange(redList);
+        forbidenWords.AddRange(greenListNAMES);
+        forbidenWords.AddRange(greenListSECRETS);
+
+        foreach (string word in forbidenWords)
+        {
+            actualLernableWords.Remove(word.ToLower());
+            actualWordsLearned.Remove(word.ToLower());
+        }
+
+        int totalWords = actualLernableWords.Count + actualWordsLearned.Count;
+        int wordsPercentage = (totalWords * knowledgeLevel / 100) - actualWordsLearned.Count;
         List<int> randoms = new();
         List<int> posibleRandoms = new();
-        for (int i = 0; i < learnableWords.Count; i++)
+
+        for (int i = 0; i < actualLernableWords.Count; i++)
         {
             posibleRandoms.Add(i);
         }
@@ -82,21 +152,56 @@ public class DocumentManager : MonoBehaviour
         randoms.Sort();
         for (int i = randoms.Count -1; i >= 0; i--)
         {
-            wordsLearned.Add(learnableWords[randoms[i]]);
-            learnableWords.RemoveAt(randoms[i]);
+            wordsLearned.Add(actualLernableWords[randoms[i]]);
+            learnableWords.Remove(actualLernableWords[randoms[i]]);
+            actualLernableWords.RemoveAt(randoms[i]);
+        }
+        foreach (Document doc in documentsRead)
+        {
+            CensorDocument(doc);
         }
     }
 
-    void AddDocumentWordsToLearnable(Document document)
+    public void AddDocumentWordsToLearnable(Document document)
     {
+        if (documentsRead.Contains(document))
+        {
+            return;
+        }
+        document.fullText = document.fullText.Replace("\\n", "\n");
         documentsRead.Add(document);
         foreach (string word in document.fullText.Split(separators, StringSplitOptions.RemoveEmptyEntries))
         {
-            AddToLearnableWords(word);
+            AddToLearnableWords(word.ToLower());
         }
         uncensoredText = document.fullText;
         SetKnowledgeLevel(knowledgeLevel + 10);
+        if (documentsRead.Count > 0)
+        {
+            testText.SetText(documentsRead[0].currentText);
+        }
+    }
 
+    public void LearnNames()
+    {
+        foreach (string word in greenListNAMES)
+        {
+            wordsLearned.Add(word.ToLower());
+            learnableWords.Remove(word.ToLower());
+        }
+        foreach (Document doc in documentsRead)
+        {
+            CensorDocument(doc);
+        }
+    }
+
+    public void LearnSecrets()
+    { 
+        foreach (string word in greenListSECRETS)
+        {
+            wordsLearned.Add(word.ToLower());
+            learnableWords.Remove(word.ToLower());
+        }
         foreach (Document doc in documentsRead)
         {
             CensorDocument(doc);
@@ -140,12 +245,12 @@ public class DocumentManager : MonoBehaviour
         foreach (WordsReplacement wordReplacement in wordReplacements)
         {
             int wordLength = wordReplacement.word.Length;
-            int indexFound = textToCensor.IndexOf(wordReplacement.word);
+            int indexFound = textToCensor.IndexOf(wordReplacement.word, StringComparison.InvariantCultureIgnoreCase);
             while (indexFound != -1)
             {
                 allIndexFound.Add(indexFound);
                 indexFound++;
-                indexFound = textToCensor.IndexOf(wordReplacement.word, indexFound);
+                indexFound = textToCensor.IndexOf(wordReplacement.word, indexFound, StringComparison.InvariantCultureIgnoreCase);
             }
 
             //puede ser que una de las instancias de la palabra no deberia ser censurada y la otra si, porque tal vez una esta incluida dentro de otra palabra que ya se sabe que no deber ser censurada
