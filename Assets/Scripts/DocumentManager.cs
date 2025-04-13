@@ -40,13 +40,9 @@ public class DocumentManager : MonoBehaviour
     [SerializeField] List<string> wordsLearned = new();
     [SerializeField] List<string> redList = new();
     [SerializeField] List<string> greenListNAMES = new();
-    bool namesLearned = false;
     [SerializeField] List<string> greenListSECRETS = new();
-    bool secretsLearned = false;
     [SerializeField] string censoredText;
-    string uncensoredText;
     int knowledgeLevel = 0;
-    [SerializeField] Document[] testDocs;
     [SerializeField] List<Document> documentsRead = new();
     string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n" };
     [SerializeField] TextMeshProUGUI testText;
@@ -174,7 +170,6 @@ public class DocumentManager : MonoBehaviour
         {
             AddToLearnableWords(word.ToLower());
         }
-        uncensoredText = document.fullText;
         SetKnowledgeLevel(knowledgeLevel + 10);
         if (documentsRead.Count > 0)
         {

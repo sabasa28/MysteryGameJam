@@ -22,7 +22,14 @@ public class PlayerMovement : MonoBehaviour
     Camera mainCamera;
     Vector3 movement;
     RaycastHit interactHit;
+    RaycastHit hookHit;
     [SerializeField] float maxInteractDistance;
+    [SerializeField] float maxHookDistance;
+    [SerializeField] float hookPullSpeed;
+    [SerializeField] float hookCooldown;
+    [SerializeField] float maxTimeHooked;
+    bool goingToHook = false;
+    float hookMinTimeToReUse = 0.0f;
     bool inputEnabled = true;
     [SerializeField] float sonarTimer;
     [SerializeField] float sonarAlignTime;
@@ -36,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Color farColor;
     [SerializeField] float distanceForFarColor;
     [SerializeField] float distanceForMediumColor;
+    [SerializeField] Hook hook;
     IInteractable interactable;
     void Awake()
     {
@@ -78,6 +86,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 interactable.AttemptInteract();
             }
+            if (Input.GetKeyDown(KeyCode.Q) && Time.time > hookMinTimeToReUse && !hook.gameObject.activeInHierarchy)
+            {
+                HookRaycast();
+            }
         }
 
         float magnitudeMovement = Mathf.Max(Mathf.Abs(horizontalValue), Mathf.Abs(verticalValue));
@@ -113,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        verticalForce = characterController.isGrounded && verticalForce < 0.0f ? -1.0f : verticalForce + gravityForce;
+        verticalForce = (characterController.isGrounded && verticalForce < 0.0f) || goingToHook ? -1.0f : verticalForce + gravityForce;
         
         characterController.Move((speed * movement + (Vector3.up * verticalForce)) * Time.fixedDeltaTime);
     }
@@ -142,6 +154,38 @@ public class PlayerMovement : MonoBehaviour
         }
         Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * maxInteractDistance, Color.green, 0.1f);
     }
+
+    private void HookRaycast()
+    {
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hookHit, maxHookDistance))
+        {
+            hook.gameObject.SetActive(true);
+            hook.SetTargetPos(hookHit.point);
+            StartCoroutine(GoToHookHit());
+            hookMinTimeToReUse = Time.time + hookCooldown;
+        }
+        else
+        {
+            hook.gameObject.SetActive(true);
+            hook.SetTargetPos(mainCamera.transform.position + mainCamera.transform.forward * maxHookDistance, false);
+        }
+        Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * maxHookDistance, Color.green, 20.0f);
+    }
+
+    public IEnumerator GoToHookHit()
+    {
+        yield return new WaitUntil(()=> hook.hookReachedTarget);
+        goingToHook = true;
+        float maxHitTimer = Time.time + maxTimeHooked;
+        while ((Vector3.Distance(transform.position, hookHit.point) > 2.0f) && Time.time <= maxHitTimer)
+        {
+            characterController.Move(hookPullSpeed * Time.fixedDeltaTime * (hookHit.point - transform.position));
+            yield return new WaitForFixedUpdate();
+        }
+        goingToHook = false;
+        hook.gameObject.SetActive(false);
+    }
+
 
     public void SetInputState(bool newState)
     {
