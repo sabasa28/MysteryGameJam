@@ -45,6 +45,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float distanceForMediumColor;
     [SerializeField] Hook hook;
     IInteractable interactable;
+    [SerializeField] float distToFloor; //es un toque mas en verdad porque flota un toque
+    [SerializeField] GameObject beaconPrefab;
+    [SerializeField] int maxBeacons;
+    [SerializeField] LayerMask defaultLayer;
+    int beaconsPlaced = 0;
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -89,6 +94,10 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q) && Time.time > hookMinTimeToReUse && !hook.gameObject.activeInHierarchy)
             {
                 HookRaycast();
+            }
+            if (Input.GetKeyDown(KeyCode.T) && characterController.isGrounded)
+            {
+                PlaceBeacon();
             }
         }
 
@@ -157,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HookRaycast()
     {
-        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hookHit, maxHookDistance))
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hookHit, maxHookDistance, defaultLayer))
         {
             hook.gameObject.SetActive(true);
             hook.SetTargetPos(hookHit.point);
@@ -248,5 +257,19 @@ public class PlayerMovement : MonoBehaviour
         }
         isSonarActive = false;
         sonar.SetActive(false);
+    }
+
+    void PlaceBeacon()
+    {
+        if (beaconsPlaced >= maxBeacons)
+        {
+            return;
+        }
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit beaconHit, (distToFloor + 0.2f/*small offset just in case*/) * transform.localScale.y, defaultLayer))
+        {
+            Instantiate(beaconPrefab, beaconHit.point, Quaternion.identity);
+            Debug.Log(Vector3.Distance(beaconHit.point, transform.position));
+            beaconsPlaced++;
+        }
     }
 }

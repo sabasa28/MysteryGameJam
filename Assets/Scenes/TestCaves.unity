@@ -224,13 +224,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198534696}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.05}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730767613}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!23 &198534699
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -251,7 +251,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 22055316d9d74954d8d9d3366607a5e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1051,6 +1051,12 @@ MonoBehaviour:
   distanceForFarColor: 30
   distanceForMediumColor: 15
   hook: {fileID: 1730767614}
+  distToFloor: 1
+  beaconPrefab: {fileID: 6749968979082226201, guid: 0cf21e42ce4de874e833003ee6f35ff1, type: 3}
+  maxBeacons: 20
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!54 &529968334
 Rigidbody:
   m_ObjectHideFlags: 0
