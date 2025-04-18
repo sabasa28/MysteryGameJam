@@ -21,12 +21,15 @@ MonoBehaviour:
     love you to join us in this expedition.
 
     - Priimam'
-  currentText: '* ********* *** **** ******* ******* **** ****** *********
+  currentText: '* ********* *** **** ******* ******* **** ****** mountain.
 
     *
-    ******* **** ** being ********** **** ** ************
+    ******* **** ** ***** dispatched **** ** ***********.
 
-    ** *** *** **********
-    ** ***** **** *** ** **** ** ** **** ***********
+    ** *** *** available*
+    we ***** **** *** ** join ** ** this **********.
 
     * *******'
+  placeFoundText: Found next to the body of an alien
+  timeFound: 
+  orderToDisplay: 67

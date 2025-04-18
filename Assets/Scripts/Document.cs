@@ -8,5 +8,7 @@ public class Document : ScriptableObject
 {
     public string fullText;
     public string currentText;
-
+    public string placeFoundText;
+    public string timeFound;
+    public int orderToDisplay;
 }

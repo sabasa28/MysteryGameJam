@@ -23,14 +23,17 @@ MonoBehaviour:
     as soon as I know more.
 
     - Prremp'
-  currentText: 'Do not tell anyone this, but apparently *** surface team that recently
-    went ** investigate *** supposed meteor has made ** incredible discovery.
+  currentText: 'Do *** **** ****** this* but ********** *** ******* **** **** ********
+    **** ** *********** *** supposed ****** *** **** ** ********** *********.
 
     Their
-    commander has already approved * second expedition ** bring down whatever they
+    ********* *** ******* approved * ****** ********** ** ***** down ******** ****
     found.
 
-    There ** * lot of secrecy around it, but I will share more with you
-    as soon as I know more.
+    ***** ** * *** ** secrecy around it* but * will share **** **** ***
+    as **** as * **** ****.
 
-    - Prremp'
+    * ******'
+  placeFoundText: Found in what seems to be a family house
+  timeFound: 
+  orderToDisplay: 8

@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     float cameraRotX = 0.0f;
     float cameraRotY;
     CharacterController characterController;
-    Camera mainCamera;
+    [SerializeField] Camera mainCamera;
     Vector3 movement;
     RaycastHit interactHit;
     RaycastHit hookHit;
@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] int maxBeacons;
     [SerializeField] LayerMask defaultLayer;
     int beaconsPlaced = 0;
+    [SerializeField] PersistentData persistentData; //ignore warcrime
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -57,10 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        mainCamera = Camera.main;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         SetFlashlightState(isFlashlightEnabled);
+        beaconsPlaced = persistentData.GetBeaconsUsed();
     }
 
     void Update()
@@ -69,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         float verticalValue = 0.0f;
         float mouseY = 0.0f;
         float mouseX = 0.0f;
-        if (inputEnabled)
+        if (inputEnabled && !UIGameplay.Get().IsCameraLocked())
         {
             mouseY = Input.GetAxis("Mouse Y");
             mouseX = Input.GetAxis("Mouse X");
@@ -268,8 +267,20 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit beaconHit, (distToFloor + 0.2f/*small offset just in case*/) * transform.localScale.y, defaultLayer))
         {
             Instantiate(beaconPrefab, beaconHit.point, Quaternion.identity);
-            Debug.Log(Vector3.Distance(beaconHit.point, transform.position));
             beaconsPlaced++;
+            persistentData.AddBeacon(beaconHit.point, LevelsManager.Get().GetCurrentSceneName());
+        }
+    }
+
+    public void SpawnPersistentBeacons()
+    {
+        List<Vector3> beaconsToSpawn = LevelsManager.Get().beaconsPosInLoadedLevel;
+        if (beaconsToSpawn != null)
+        {
+            foreach (Vector3 posToSpawnBeacon in beaconsToSpawn)
+            {
+                Instantiate(beaconPrefab, posToSpawnBeacon, Quaternion.identity);
+            }
         }
     }
 }

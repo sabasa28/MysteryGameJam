@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameplayController : MonoBehaviour
 {
     static GameplayController instance;
+
     public static GameplayController Get()
     {
         return instance;
@@ -66,4 +67,10 @@ public class GameplayController : MonoBehaviour
     {
         return currentZone;
     }
+
+    public void SpawnMapBeacons()
+    {
+        playerMovement.SpawnPersistentBeacons();
+    }
+
 }

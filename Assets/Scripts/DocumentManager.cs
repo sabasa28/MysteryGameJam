@@ -297,4 +297,8 @@ public class DocumentManager : MonoBehaviour
         censoredText = textToCensor;
     }
 
+    public List<Document> GetReadDocuments()
+    {
+        return documentsRead;
+    }
 }

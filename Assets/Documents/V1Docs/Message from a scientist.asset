@@ -18,9 +18,12 @@ MonoBehaviour:
     They have
     not explained the reasoning for this decision, but I assume they have some new
     technology they want to test in private.'
-  currentText: 'Premou has chosen ** transport *** foreign object ** *** recently
-    inaugurated Prubei laboratory, since it was "built in * discrete location".
+  currentText: '****** *** ****** ** ********* *** foreign object ** *** ********
+    *********** ****** *********** ***** it *** ****** ** * discrete *********.
 
-    They
-    have not explained *** reasoning for this decision, but I assume they have some
-    new technology they want ** test in private.'
+    ****
+    **** *** ********* *** ********* *** this ********* but * ****** **** **** some
+    *** ********** **** **** ** test ** *******.'
+  placeFoundText: Found in a laboratory
+  timeFound: 
+  orderToDisplay: 15
