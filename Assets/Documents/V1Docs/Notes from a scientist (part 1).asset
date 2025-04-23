@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
+  m_Name: Notes from a scientist (part 1)
+  m_EditorClassIdentifier: 
+  fullText: '"Day 1" We have denominated the foreign object "???". It seems to posses
+    an electronic interior, covered by an extremely resistant metallic exterior.
+    It is outputting all sorts of unkown signals, and I am starting to worry that
+    our technology might not be advanced enough to comprehend it. Others are highly
+    skeptical about its origins, thinking it might be someone playing a joke on us,
+    but I am convinced such complexity can not be achieved on Proima. What an incredible
+    discovery!'
+  currentText: 
+  placeFoundText: 
+  timeFound: 
+  orderToDisplay: 56

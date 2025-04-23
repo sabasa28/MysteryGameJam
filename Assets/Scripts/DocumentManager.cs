@@ -46,7 +46,7 @@ public class DocumentManager : MonoBehaviour
     [SerializeField] List<Document> documentsRead = new();
     string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n" };
     [SerializeField] TextMeshProUGUI testText;
-
+    [SerializeField] PersistentData persistentData;
     [Serializable]
     struct WordsReplacement : IComparable<WordsReplacement>
     {
@@ -68,11 +68,21 @@ public class DocumentManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (string separator in separators)
+        if (persistentData.persistentDocsData.HasData())
         {
-            if (separator != " " && separator != "\n")
+            wordsLearned = persistentData.persistentDocsData.wordsLearned;
+            learnableWords = persistentData.persistentDocsData.learnableWords;
+            documentsRead = persistentData.persistentDocsData.documentsRead;
+            knowledgeLevel = persistentData.persistentDocsData.knowledgeLevel;
+        }
+        else
+        {
+            foreach (string separator in separators)
             {
-                AddToLearnableWords(separator);
+                if (separator != " " && separator != "\n")
+                {
+                    AddToLearnableWords(separator);
+                }
             }
         }
 
@@ -175,6 +185,7 @@ public class DocumentManager : MonoBehaviour
         {
             testText.SetText(documentsRead[0].currentText);
         }
+        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
     }
 
     public void LearnNames()

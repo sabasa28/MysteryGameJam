@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameplayController : MonoBehaviour
 {
@@ -34,13 +35,47 @@ public class GameplayController : MonoBehaviour
     {
         Chat,
         Movement,
-        Cinematic
+        Cinematic,
+        InGameUI
     }
     InputState inputState;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] ChatManager chatManager;
     [SerializeField] ZoneData currentZone;
     [SerializeField] ZoneData[] zones;
+    [SerializeField] Transform outsideOfShipPos;
+    [SerializeField] Transform insideOfShipPos;
+    [SerializeField] Volume helmetVolume;
+    bool inGameMenuOpen = false;
+    [SerializeField] SelectingFinger selectingFinger;
+    bool isPlayerInShip = true;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B) && !playerMovement.isAnimatingUiHand)
+        {
+            inGameMenuOpen = !inGameMenuOpen;
+            ChangeInputState(inGameMenuOpen ? InputState.Chat : InputState.Movement);
+            selectingFinger.gameObject.SetActive(inGameMenuOpen);
+
+            if (inGameMenuOpen)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            if (inGameMenuOpen)
+            {
+                playerMovement.RaiseHand();
+            }
+            else
+            { 
+                playerMovement.LowerHand();
+            }
+        }
+    }
     public void ChangeInputState(InputState newState)
     {
         inputState = newState;
@@ -58,6 +93,11 @@ public class GameplayController : MonoBehaviour
                 playerMovement.SetInputState(false);
                 chatManager.TurnOffTextMode();
                 break;
+            case InputState.InGameUI:
+                playerMovement.SetInputState(false);
+                chatManager.TurnOffTextMode();
+
+                break;
             default:
                 break;
         }
@@ -71,6 +111,25 @@ public class GameplayController : MonoBehaviour
     public void SpawnMapBeacons()
     {
         playerMovement.SpawnPersistentBeacons();
+    }
+
+    public void MovePlayerInOutOfShip()
+    {
+        isPlayerInShip = !isPlayerInShip;
+        StartCoroutine(MovePlayerInOutShipCoroutine(isPlayerInShip));
+    }
+
+    IEnumerator MovePlayerInOutShipCoroutine(bool moveIn)
+    {
+        ChangeInputState(InputState.Cinematic);
+        UIGameplay.Get().FadeOutAndIn();
+        yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
+        playerMovement.GetComponent<CharacterController>().enabled = false;
+        playerMovement.transform.position = moveIn? insideOfShipPos.position : outsideOfShipPos.position;
+        playerMovement.GetComponent<CharacterController>().enabled = true;
+        helmetVolume.enabled = !moveIn;
+        yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
+        ChangeInputState(InputState.Movement);
     }
 
 }

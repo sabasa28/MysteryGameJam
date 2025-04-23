@@ -29,7 +29,7 @@ public class LevelsManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             instance = this;
             nextScene = currentScene;
-            persistentData.ClearData();
+            persistentData.InitializeData();
         }
         else
         {

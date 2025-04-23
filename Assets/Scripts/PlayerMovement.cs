@@ -51,6 +51,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask defaultLayer;
     int beaconsPlaced = 0;
     [SerializeField] PersistentData persistentData; //ignore warcrime
+    [SerializeField] GameObject uiHand;
+    [SerializeField] float uiHandXrotationDown;
+    [SerializeField] float uiHandXrotationUp;
+    [SerializeField] float uiHandMovingTime;
+    [SerializeField] AnimationCurve uiHandCurve;
+    [SerializeField] Animator uiHandAnim;
+    public bool isAnimatingUiHand = false;
+
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -94,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 HookRaycast();
             }
-            if (Input.GetKeyDown(KeyCode.T) && characterController.isGrounded)
+            if (Input.GetKeyDown(KeyCode.T))
             {
                 PlaceBeacon();
             }
@@ -134,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         verticalForce = (characterController.isGrounded && verticalForce < 0.0f) || goingToHook ? -1.0f : verticalForce + gravityForce;
-        
+
         characterController.Move((speed * movement + (Vector3.up * verticalForce)) * Time.fixedDeltaTime);
     }
 
@@ -165,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HookRaycast()
     {
-        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hookHit, maxHookDistance, defaultLayer))
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hookHit, maxHookDistance, defaultLayer, QueryTriggerInteraction.Ignore))
         {
             hook.gameObject.SetActive(true);
             hook.SetTargetPos(hookHit.point);
@@ -182,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator GoToHookHit()
     {
-        yield return new WaitUntil(()=> hook.hookReachedTarget);
+        yield return new WaitUntil(() => hook.hookReachedTarget);
         goingToHook = true;
         float maxHitTimer = Time.time + maxTimeHooked;
         while ((Vector3.Distance(transform.position, hookHit.point) > 2.0f) && Time.time <= maxHitTimer)
@@ -243,10 +251,10 @@ public class PlayerMovement : MonoBehaviour
             float distToInteractable = Vector3.Distance(transform.position, closestInteractablePos);
             if (distToInteractable > distanceForMediumColor)
             {
-                sonarSprite.color = Color.Lerp(mediumColor, farColor, (distToInteractable-distanceForMediumColor) / (distanceForFarColor - distanceForMediumColor));
+                sonarSprite.color = Color.Lerp(mediumColor, farColor, (distToInteractable - distanceForMediumColor) / (distanceForFarColor - distanceForMediumColor));
             }
             else
-            { 
+            {
                 sonarSprite.color = Color.Lerp(closeColor, mediumColor, distToInteractable / distanceForMediumColor);
             }
             sonarPivotY.eulerAngles = new Vector3(sonarPivotY.eulerAngles.x, rotation.eulerAngles.y, sonarPivotY.eulerAngles.z);
@@ -264,12 +272,16 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit beaconHit, (distToFloor + 0.2f/*small offset just in case*/) * transform.localScale.y, defaultLayer))
-        {
-            Instantiate(beaconPrefab, beaconHit.point, Quaternion.identity);
-            beaconsPlaced++;
-            persistentData.AddBeacon(beaconHit.point, LevelsManager.Get().GetCurrentSceneName());
-        }
+        //if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit beaconHit, (distToFloor + 0.2f/*small offset just in case*/) * transform.localScale.y, defaultLayer))
+        //{
+        //    Instantiate(beaconPrefab, beaconHit.point, Quaternion.identity);
+        //    beaconsPlaced++;
+        //    persistentData.AddBeacon(beaconHit.point, LevelsManager.Get().GetCurrentSceneName());
+        //}
+        Vector3 spawnPos = transform.position + Vector3.down;
+        Instantiate(beaconPrefab, spawnPos, Quaternion.identity);
+        beaconsPlaced++;
+        persistentData.AddBeacon(spawnPos, LevelsManager.Get().GetCurrentSceneName());
     }
 
     public void SpawnPersistentBeacons()
@@ -282,5 +294,48 @@ public class PlayerMovement : MonoBehaviour
                 Instantiate(beaconPrefab, posToSpawnBeacon, Quaternion.identity);
             }
         }
+    }
+
+    public void RaiseHand()
+    {
+        StartCoroutine(MoveHand(true));
+    }
+    public void LowerHand()
+    {
+        StartCoroutine(MoveHand(false));
+    }
+
+    IEnumerator MoveHand(bool raise)
+    {
+        isAnimatingUiHand = true;
+        if (raise)
+        {
+            uiHand.SetActive(true);
+        }
+        else
+        {
+            uiHandAnim.SetBool("Open", false);
+            yield return new WaitUntil(() => uiHandAnim.GetCurrentAnimatorStateInfo(0).IsName("Closed"));
+        }
+        Quaternion initialRot = Quaternion.Euler(new Vector3(raise ? uiHandXrotationDown : uiHandXrotationUp, uiHand.transform.localRotation.y, uiHand.transform.localRotation.z));
+        Quaternion endRot = Quaternion.Euler(new Vector3(raise ? uiHandXrotationUp : uiHandXrotationDown, uiHand.transform.localRotation.y, uiHand.transform.localRotation.z));
+        float timer = 0.0f;
+        float t;
+        while (timer <= uiHandMovingTime)
+        {
+            timer += Time.deltaTime;
+            t = uiHandCurve.Evaluate(timer / uiHandMovingTime);
+            uiHand.transform.localRotation = Quaternion.Lerp(initialRot, endRot, t);
+            yield return null;
+        }
+        if (raise)
+        {
+            uiHandAnim.SetBool("Open", true);
+        }
+        else
+        {
+            uiHand.SetActive(false);
+        }
+        isAnimatingUiHand = false;
     }
 }

@@ -65,4 +65,5 @@ MonoBehaviour:
   censoredText: 
   documentsRead: []
   testText: {fileID: 0}
+  persistentData: {fileID: 11400000, guid: be961e185e0d7c94aaa6e516c061b19e, type: 2}
   wordReplacements: []

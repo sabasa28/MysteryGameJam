@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "New Persistent Data", menuName = "Persitent Data")]
+[CreateAssetMenu(fileName = "New Persistent Data", menuName = "Persistent Data")]
 public class PersistentData : ScriptableObject
 {
     [Serializable]
@@ -19,6 +19,56 @@ public class PersistentData : ScriptableObject
         public string SceneName;
     }
     public List<BeaconsInLevel> beaconsInLevels = new();
+
+    [Serializable]
+    public struct PersistentDocsData
+    {
+        public List<string> learnableWords;
+        public List<string> wordsLearned;
+        public List<Document> documentsRead;
+        public int knowledgeLevel;
+        public void InitializeData()
+        {
+            if (learnableWords != null)
+            {
+                learnableWords.Clear();
+            }
+            else
+            {
+                learnableWords = new();
+            }
+            if (wordsLearned != null)
+            {
+                wordsLearned.Clear();
+            }
+            else
+            {
+                wordsLearned = new();
+            }
+            if (documentsRead != null)
+            {
+                documentsRead.Clear();
+            }
+            else
+            {
+                documentsRead = new();
+            }
+        }
+
+        public bool HasData()
+        {
+            if (learnableWords != null && wordsLearned != null && documentsRead != null)
+            {
+                return (learnableWords.Count > 0 || wordsLearned.Count > 0 || documentsRead.Count > 0);
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    public PersistentDocsData persistentDocsData = new();
+
     public void AddBeacon(Vector3 pos, string scene)
     {
         bool found = false;
@@ -58,8 +108,17 @@ public class PersistentData : ScriptableObject
         return null;
     }
 
-    public void ClearData()
+    public void UpdatePersistentDocsData(List<string> wordsLearned, List<string> learnableWords, List<Document> documentsRead, int knowledgeLevel)
+    {
+        persistentDocsData.wordsLearned = wordsLearned;
+        persistentDocsData.learnableWords = learnableWords;
+        persistentDocsData.documentsRead = documentsRead;
+        persistentDocsData.knowledgeLevel = knowledgeLevel;
+    }
+
+    public void InitializeData()
     {
         beaconsInLevels.Clear();
+        persistentDocsData.InitializeData();
     }
 }
