@@ -49,3 +49,10 @@ MonoBehaviour:
   currentZone: {fileID: 0}
   zones:
   - {fileID: 0}
+  outsideOfShipPos: {fileID: 0}
+  insideOfShipPos: {fileID: 0}
+  helmetVolume: {fileID: 0}
+  selectingFinger: {fileID: 0}
+  lightScalar: 1
+  lightAttenuationExponent: 2
+  playerDocs: {fileID: 0}

@@ -7,8 +7,6 @@ public class UIGameplay : MonoBehaviour
 {
     static UIGameplay instance;
     [SerializeField] GameObject InteractText;
-    [SerializeField] GameObject playerDocs;
-    bool playerDocsActive;
     [SerializeField] GameObject fadeOutPanel;
     [SerializeField] Image fadeOutImage;
     [SerializeField] float fadeOutInTime;
@@ -33,25 +31,6 @@ public class UIGameplay : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        playerDocsActive = playerDocs.activeInHierarchy;
-        SetPlayerDocsActiveState(playerDocsActive);
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SetPlayerDocsActiveState(!playerDocsActive);
-        }
-    }
-
-    public bool IsCameraLocked()
-    {
-        return playerDocsActive;
-    }
-
     private void OnDestroy()
     {
         if (instance == this)
@@ -65,31 +44,17 @@ public class UIGameplay : MonoBehaviour
         InteractText.SetActive(bDisplay);
     }
 
-    public void SetPlayerDocsActiveState(bool state)
+    public void FadeOutAndIn(bool startFromWhite = false) 
     {
-        playerDocsActive = state;
-        if (playerDocsActive)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        Cursor.visible = playerDocsActive;
-        playerDocs.SetActive(playerDocsActive);
+        StartCoroutine(FadeOut(startFromWhite));
     }
 
-    public void FadeOutAndIn() 
-    {
-        StartCoroutine(FadeOut());
-    }
-
-    IEnumerator FadeOut()
+    IEnumerator FadeOut(bool startFromWhite = false)
     {
         float timer = 0.0f;
         isFadingOut = true;
         fadeOutPanel.SetActive(true);
+        fadeOutImage.color = startFromWhite ? Color.white : Color.black;
         while (timer < fadeOutInTime)
         {
             timer += Time.deltaTime;

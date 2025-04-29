@@ -45,22 +45,37 @@ public class GameplayController : MonoBehaviour
     [SerializeField] ZoneData[] zones;
     [SerializeField] Transform outsideOfShipPos;
     [SerializeField] Transform insideOfShipPos;
+    [SerializeField] Transform outsideOfLabPos;
+    [SerializeField] Transform insideOfLabPos;
     [SerializeField] Volume helmetVolume;
     bool inGameMenuOpen = false;
     [SerializeField] SelectingFinger selectingFinger;
     bool isPlayerInShip = true;
+    bool isPlayerInLab = false;
+    [SerializeField] float lightScalar;
+    [SerializeField] float lightAttenuationExponent;
+    [SerializeField] GameObject playerDocs;
+    bool playerDocsActive;
 
+    private void Start()
+    {
+        playerDocsActive = playerDocs.activeInHierarchy;
+        SetPlayerDocsActiveState(playerDocsActive);
+    }
     private void Update()
     {
+        Shader.SetGlobalFloat("_LightScalar", lightScalar);
+        Shader.SetGlobalFloat("_LightAttenuationExponent", lightAttenuationExponent);
+
         if (Input.GetKeyDown(KeyCode.B) && !playerMovement.isAnimatingUiHand)
         {
             inGameMenuOpen = !inGameMenuOpen;
             ChangeInputState(inGameMenuOpen ? InputState.Chat : InputState.Movement);
-            selectingFinger.gameObject.SetActive(inGameMenuOpen);
 
             if (inGameMenuOpen)
             {
                 Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = false;
             }
             else
             {
@@ -103,6 +118,11 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    public bool IsCameraLocked()
+    {
+        return playerDocsActive;
+    }
+
     public ZoneData GetCurrentZone()
     {
         return currentZone;
@@ -113,10 +133,47 @@ public class GameplayController : MonoBehaviour
         playerMovement.SpawnPersistentBeacons();
     }
 
+    public void LoadPlayerPersistence()
+    {
+        playerMovement.LoadPersistentData();
+    }
+
+    public void LoadHelmetState(bool helmetState)
+    {
+        helmetVolume.enabled = helmetState;
+        isPlayerInShip = !helmetState;
+    }
+
+    public void SetPlayerDocsActiveState(bool state)
+    {
+        playerDocsActive = state;
+        if (playerDocsActive)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        playerDocs.SetActive(playerDocsActive);
+    }
+
+    public void SetFingerActiveState(bool state)
+    {
+        selectingFinger.gameObject.SetActive(state);
+    }
+
     public void MovePlayerInOutOfShip()
     {
         isPlayerInShip = !isPlayerInShip;
         StartCoroutine(MovePlayerInOutShipCoroutine(isPlayerInShip));
+    }
+
+    public void MovePlayerInOutOfLab()
+    {
+        isPlayerInLab = !isPlayerInLab;
+        StartCoroutine(MovePlayerInOutLabCoroutine(isPlayerInLab));
     }
 
     IEnumerator MovePlayerInOutShipCoroutine(bool moveIn)
@@ -128,8 +185,18 @@ public class GameplayController : MonoBehaviour
         playerMovement.transform.position = moveIn? insideOfShipPos.position : outsideOfShipPos.position;
         playerMovement.GetComponent<CharacterController>().enabled = true;
         helmetVolume.enabled = !moveIn;
+        LevelsManager.Get().persistentData.UpdateHelmetState(helmetVolume.enabled);
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
         ChangeInputState(InputState.Movement);
     }
 
+    IEnumerator MovePlayerInOutLabCoroutine(bool moveIn)
+    {
+        ChangeInputState(InputState.Cinematic);
+        UIGameplay.Get().FadeOutAndIn(moveIn);
+        yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
+        playerMovement.CopyPositionAndRotation(moveIn ? insideOfLabPos : outsideOfLabPos);
+        yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
+        ChangeInputState(InputState.Movement);
+    }
 }

@@ -66,8 +66,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        SetFlashlightState(isFlashlightEnabled);
         beaconsPlaced = persistentData.GetBeaconsUsed();
+        Transform initialTransform = LevelsManager.Get().GoingUp? GameplayController.Get().GetCurrentZone().exit : GameplayController.Get().GetCurrentZone().entrance;
+        CopyPositionAndRotation(initialTransform);
     }
 
     void Update()
@@ -76,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         float verticalValue = 0.0f;
         float mouseY = 0.0f;
         float mouseX = 0.0f;
-        if (inputEnabled && !UIGameplay.Get().IsCameraLocked())
+        if (inputEnabled && !GameplayController.Get().IsCameraLocked())
         {
             mouseY = Input.GetAxis("Mouse Y");
             mouseX = Input.GetAxis("Mouse X");
@@ -102,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 HookRaycast();
             }
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 PlaceBeacon();
             }
@@ -224,6 +225,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isFlashlightEnabled = enabled;
         flashlight.SetActive(enabled);
+        persistentData.UpdateFlashlightState(enabled);
     }
 
     IEnumerator CoyoteTime()
@@ -234,9 +236,10 @@ public class PlayerMovement : MonoBehaviour
 
     void ActivateSonar()
     {
-        Vector3 closestInteractable;
-        GameplayController.Get().GetCurrentZone().GetClosestInteractable(transform.position, out closestInteractable);
-        StartCoroutine(DisplaySonarArrow(closestInteractable));
+        if (GameplayController.Get().GetCurrentZone().GetClosestInteractable(transform.position, out Vector3 closestInteractable))
+        { 
+            StartCoroutine(DisplaySonarArrow(closestInteractable));
+        }
     }
 
     IEnumerator DisplaySonarArrow(Vector3 closestInteractablePos)
@@ -296,6 +299,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void LoadPersistentData()
+    {
+        SetFlashlightState(persistentData.flashlightOn);
+    }
+
     public void RaiseHand()
     {
         StartCoroutine(MoveHand(true));
@@ -315,6 +323,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             uiHandAnim.SetBool("Open", false);
+            GameplayController.Get().SetPlayerDocsActiveState(false);
+            GameplayController.Get().SetFingerActiveState(false);
             yield return new WaitUntil(() => uiHandAnim.GetCurrentAnimatorStateInfo(0).IsName("Closed"));
         }
         Quaternion initialRot = Quaternion.Euler(new Vector3(raise ? uiHandXrotationDown : uiHandXrotationUp, uiHand.transform.localRotation.y, uiHand.transform.localRotation.z));
@@ -331,11 +341,24 @@ public class PlayerMovement : MonoBehaviour
         if (raise)
         {
             uiHandAnim.SetBool("Open", true);
+            yield return new WaitUntil(() => uiHandAnim.GetCurrentAnimatorStateInfo(0).IsName("Opened"));
+            GameplayController.Get().SetPlayerDocsActiveState(true);
+            GameplayController.Get().SetFingerActiveState(true);
         }
         else
         {
             uiHand.SetActive(false);
         }
         isAnimatingUiHand = false;
+    }
+
+    public void CopyPositionAndRotation(Transform transformToCopy)
+    {
+        characterController.enabled = false;
+        transform.position = transformToCopy.position;
+        transform.rotation = transformToCopy.rotation;
+        cameraRotX = transformToCopy.rotation.eulerAngles.x;
+        cameraRotY = transformToCopy.rotation.eulerAngles.y;
+        characterController.enabled = true;
     }
 }

@@ -14,12 +14,14 @@ public class UIPlayerDocs : MonoBehaviour
     List<Document> sortedDocs = new();
     [SerializeField] Transform docsParent;
     [SerializeField] GameObject readingDoc;
+    [SerializeField] GameObject initialOptions;
     [SerializeField] TextMeshProUGUI readingDocTitle;
     [SerializeField] TextMeshProUGUI readingDocFound;
     [SerializeField] TextMeshProUGUI readingDocContent;
 
     private void OnEnable()
     {
+        initialOptions.SetActive(true);
         SetReadingDocActiveState(false);
         SetLogActiveState(false);
         SetDocumentListActiveState(false);
@@ -27,6 +29,7 @@ public class UIPlayerDocs : MonoBehaviour
 
     public void SetDocumentListActiveState(bool state)
     {
+        initialOptions.SetActive(!state);
         documentList.SetActive(state);
         if (!state)
         {
@@ -47,7 +50,7 @@ public class UIPlayerDocs : MonoBehaviour
             for (int i = uIDocuments.Count; i < documents.Count; i++)
             {
                 UIDocument uIDocument = Instantiate(uiDocumentPrefab, docsParent);
-                uIDocument.GetComponent<Button>().onClick.AddListener(delegate { InitializeReadingDocument(uIDocument); });
+                uIDocument.button.onClick.AddListener(delegate { InitializeReadingDocument(uIDocument); });
                 uIDocuments.Add(uIDocument);
             }
         }
@@ -66,6 +69,7 @@ public class UIPlayerDocs : MonoBehaviour
 
     public void SetLogActiveState(bool state)
     {
+        initialOptions.SetActive(!state);
         log.SetActive(state);
     }
 

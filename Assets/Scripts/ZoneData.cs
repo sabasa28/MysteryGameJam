@@ -5,6 +5,8 @@ using UnityEngine;
 public class ZoneData : MonoBehaviour
 {
     [SerializeField] List<GameObject> necessaryInteractions = new List<GameObject>();
+    public Transform entrance;
+    public Transform exit;
 
     public bool GetClosestInteractable(Vector3 pos, out Vector3 interactablePos)
     {

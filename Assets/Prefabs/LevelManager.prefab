@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8061f83900b4f164d97702feb488f923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GoingUp: 1
+  currentScene: 0
+  GoingUp: 0
+  persistentData: {fileID: 0}
+  beaconsPosInLoadedLevel: []

@@ -14,7 +14,7 @@ public class LevelsManager : MonoBehaviour
     }
     Scenes nextScene = Scenes.Surface;
     [SerializeField] Scenes currentScene = Scenes.Surface;
-    public bool GoingUp = true;
+    public bool GoingUp = false;
     public PersistentData persistentData; //we keep this in this persistent object so it won't be deleted when unloading a scene
     public List<Vector3> beaconsPosInLoadedLevel = new();
     public static LevelsManager Get()
@@ -95,6 +95,9 @@ public class LevelsManager : MonoBehaviour
     {
         currentScene = nextScene;
         beaconsPosInLoadedLevel = persistentData.GetLevelBeaconsPos(GetScene(currentScene)) != null? new(persistentData.GetLevelBeaconsPos(GetScene(currentScene))) : null;
-        GameplayController.Get().SpawnMapBeacons();
+        GameplayController gpc = GameplayController.Get();
+        gpc.LoadHelmetState(persistentData.helmetOn);
+        gpc.LoadPlayerPersistence();
+        gpc.SpawnMapBeacons();
     }
 }

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
+  m_Name: About the mission
+  m_EditorClassIdentifier: 
+  fullText: "project NAME\n\nFirst proposed in 2035, and officially beginning in
+    2046, project NAME was humanity's most ambitious attempt to explore the universe.\nDivided
+    into four different phases, it carefully laid foundations, defined requirements,
+    detailed steps, and set realistic objectives needed \nto reach planets far beyond
+    our solar system.\n\nPhase one required a monumental technological jump, as every
+    scientist around the world gathered to figure out the fastest and most \nefficient
+    way to travel through space. Simultaneously, mass industrialization was set in
+    motion to prepare the production of soon-to-be \nneeded satellites, starships,
+    space platforms, and more.\n\nAfter years of progress and unparalleled breakthroughs,
+    phase two began in 2062, when the first unmanned mission to test faster-than-\nlight
+    travel was initiated. Many failures followed, as humanity adapted, improved,
+    and eventually overcame the complex task of traveling \nquickly and safely.\n\nThe
+    year 2087 marks the start of phase three: the first expedition with a crew set
+    to visit and analyze several solar systems where life \ncould be sustainable.
+    The most advanced spacecraft to date, NAME, currently carries 20 volunteers towards
+    every promising star, where \nthey will scan suitable planets in hopes of finding
+    water existing in a liquid state, as well as a breathable atmosphere.\n\nWe find
+    ourselves awaiting for news, while we continue to prepare for the hopefully inevitable
+    day in which we move into phase four: \nthe large scale migration to a new world."
+  currentText: "******* ****\n\n***** ******** ** ***** *** ********** beginning
+    ** ***** ******* **** *** ********** **** ********* attempt ** ******* *** *********\n*******
+    **** **** ********* ******* ** ********* **** ************ ******* *************
+    ******** ****** *** *** ********* ********** needed \n** ***** ******* *** ******
+    *** ***** *******\n\n***** *** ******** * monumental ************* ***** ** *****
+    ********* ****** *** ***** ******** ** ****** *** *** ******* *** **** \n*********
+    way ** travel ******* ****** *************** **** industrialization *** *** **
+    ****** ** ******* *** ********** ** soon****** \nneeded *********** starships*
+    ***** ********** *** *****\n\n***** ***** ** progress *** unparalleled **************
+    ***** *** ***** ** ***** **** *** ***** ******** ******* ** **** ************\n*****
+    travel *** initiated* **** ******** ********* ** ******** ******** *********
+    *** ********** ******** *** ******* **** ** ********* \n******* *** *******\n\n***
+    **** **** ***** *** ***** ** ***** ****** *** ***** ********** **** * **** ***
+    ** ***** *** ******* ******* ***** systems ***** **** \n***** ** ************
+    *** **** ******** ********** ** ***** ***** ********* ******* ** ********** *******
+    ***** ********* ***** ***** \n**** **** **** ******** ******* ** ***** ** *******
+    ***** ******** ** * ****** ****** ** **** ** * ********** ***********\n\n** ****
+    ********* ******** *** ***** ***** ** continue ** ******* *** *** ********* inevitable
+    *** ** ***** ** **** **** ***** ***** \n*** ***** ***** migration ** * *** ******"
+  placeFoundText: found in the ship
+  timeFound: 
+  orderToDisplay: 0

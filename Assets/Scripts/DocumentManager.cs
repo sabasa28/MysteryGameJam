@@ -181,10 +181,6 @@ public class DocumentManager : MonoBehaviour
             AddToLearnableWords(word.ToLower());
         }
         SetKnowledgeLevel(knowledgeLevel + 10);
-        if (documentsRead.Count > 0)
-        {
-            testText.SetText(documentsRead[0].currentText);
-        }
         persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
     }
 

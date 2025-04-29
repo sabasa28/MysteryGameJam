@@ -69,6 +69,8 @@ public class PersistentData : ScriptableObject
     }
     public PersistentDocsData persistentDocsData = new();
 
+    public bool flashlightOn;
+    public bool helmetOn;
     public void AddBeacon(Vector3 pos, string scene)
     {
         bool found = false;
@@ -116,9 +118,21 @@ public class PersistentData : ScriptableObject
         persistentDocsData.knowledgeLevel = knowledgeLevel;
     }
 
+    public void UpdateFlashlightState(bool newState)
+    {
+        flashlightOn = newState;
+    }
+
+    public void UpdateHelmetState(bool newState)
+    {
+        helmetOn = newState;
+    }
+
     public void InitializeData()
     {
         beaconsInLevels.Clear();
         persistentDocsData.InitializeData();
+        flashlightOn = false;
+        helmetOn = false;
     }
 }
