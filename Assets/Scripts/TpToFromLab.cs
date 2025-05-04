@@ -9,7 +9,14 @@ public class TpToFromLab : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameplayController.Get().MovePlayerInOutOfLab();
+            if (GameplayController.Get().IsZoneDone())
+            {
+                GameplayController.Get().MovePlayerInOutOfLab();
+            }
+            else
+            {
+                ChatManager.Get().PlayNotDoneWithZoneChat();
+            }
         }
     }
 }

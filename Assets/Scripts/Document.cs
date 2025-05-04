@@ -11,4 +11,5 @@ public class Document : ScriptableObject
     public string placeFoundText;
     public string timeFound;
     public int orderToDisplay;
+    public bool read;
 }

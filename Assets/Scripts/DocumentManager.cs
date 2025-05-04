@@ -41,12 +41,15 @@ public class DocumentManager : MonoBehaviour
     [SerializeField] List<string> redList = new();
     [SerializeField] List<string> greenListNAMES = new();
     [SerializeField] List<string> greenListSECRETS = new();
-    [SerializeField] string censoredText;
+    [SerializeField] string censoredText; //debug
     int knowledgeLevel = 0;
     [SerializeField] List<Document> documentsRead = new();
+    [SerializeField] List<LogEntry> logsFound = new();
     string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n" };
     [SerializeField] TextMeshProUGUI testText;
     [SerializeField] PersistentData persistentData;
+    [SerializeField] UIHelmet uiHelmet;
+
     [Serializable]
     struct WordsReplacement : IComparable<WordsReplacement>
     {
@@ -74,6 +77,7 @@ public class DocumentManager : MonoBehaviour
             learnableWords = persistentData.persistentDocsData.learnableWords;
             documentsRead = persistentData.persistentDocsData.documentsRead;
             knowledgeLevel = persistentData.persistentDocsData.knowledgeLevel;
+            logsFound = persistentData.persistentDocsData.logsFound;
         }
         else
         {
@@ -175,6 +179,7 @@ public class DocumentManager : MonoBehaviour
             return;
         }
         document.fullText = document.fullText.Replace("\\n", "\n");
+        document.read = false;
         documentsRead.Add(document);
         foreach (string word in document.fullText.Split(separators, StringSplitOptions.RemoveEmptyEntries))
         {
@@ -182,6 +187,7 @@ public class DocumentManager : MonoBehaviour
         }
         SetKnowledgeLevel(knowledgeLevel + 10);
         persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
+        uiHelmet.DisplayNewDocNotif();
     }
 
     public void LearnNames()
@@ -308,4 +314,21 @@ public class DocumentManager : MonoBehaviour
     {
         return documentsRead;
     }
+
+    public void AddLogToFoundLogs(LogEntry newLog)
+    {
+        if (!logsFound.Contains(newLog))
+        {
+            newLog.read = false;
+            logsFound.Add(newLog);
+            persistentData.UpdatePersistentLogsData(logsFound);
+            uiHelmet.DisplayNewLogNotif();
+        }
+    }
+
+    public List<LogEntry> GetFoundLogs()
+    {
+        return logsFound;
+    }
+
 }

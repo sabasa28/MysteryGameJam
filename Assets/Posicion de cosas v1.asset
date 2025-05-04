@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441b7e701905f964eaaffac17b148a95, type: 3}
+  m_Name: Posicion de cosas v1
+  m_EditorClassIdentifier: 
+  beaconsInLevels:
+  - BeaconsPos:
+    - {x: 52.935024, y: 58.3, z: -4.3309565}
+    - {x: 54.082397, y: 58.3, z: -2.8258133}
+    - {x: 54.92416, y: 58.3, z: -1.2352362}
+    - {x: 56.23527, y: 58.3, z: -0.17116928}
+    - {x: 57.95273, y: 58.3, z: -0.43910313}
+    - {x: 58.04637, y: 58.3, z: -3.8436031}
+    - {x: 55.832153, y: 58.3, z: -4.2273903}
+    SceneName: SurfaceScene
+  - BeaconsPos:
+    - {x: 61.57, y: 140, z: -76.58}
+    - {x: 61.583385, y: 140, z: -76.020676}
+    - {x: 61.593124, y: 140, z: -75.0436}
+    - {x: 62.503845, y: 139, z: -73.50039}
+    - {x: 62.509506, y: 139, z: -73.618355}
+    - {x: 62.541637, y: 139, z: -74.28739}
+    - {x: 62.58954, y: 139, z: -75.2845}
+    - {x: 62.627922, y: 139, z: -76.08357}
+    - {x: 62.6759, y: 139, z: -77.08243}
+    - {x: 62.71559, y: 138.99998, z: -78.08163}
+    - {x: 62.741337, y: 139, z: -78.981255}
+    - {x: 63.202023, y: 139, z: -79.42522}
+    - {x: 64.420006, y: 139, z: -79.413864}
+    SceneName: HigherCaveScene

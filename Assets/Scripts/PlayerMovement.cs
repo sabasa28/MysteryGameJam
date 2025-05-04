@@ -58,6 +58,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AnimationCurve uiHandCurve;
     [SerializeField] Animator uiHandAnim;
     public bool isAnimatingUiHand = false;
+    bool hookDiscovered;
+    bool beaconsDiscovered;
+    bool hookAllowed;
+    bool beaconsAllowed;
 
     void Awake()
     {
@@ -99,11 +103,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 interactable.AttemptInteract();
             }
-            if (Input.GetKeyDown(KeyCode.Q) && Time.time > hookMinTimeToReUse && !hook.gameObject.activeInHierarchy)
+            if (Input.GetKeyDown(KeyCode.Q) && hookAllowed && hookDiscovered && Time.time > hookMinTimeToReUse && !hook.gameObject.activeInHierarchy)
             {
                 HookRaycast();
             }
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && beaconsAllowed && beaconsDiscovered)
             {
                 PlaceBeacon();
             }
@@ -156,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 interactable = interactHit.collider.GetComponentInParent<IInteractable>();
             }
-            if (interactable != null)
+            if (interactable != null && inputEnabled)
             {
                 UIGameplay.Get().ChangeInteractTextDisplay(interactable.IsInteractable());
             }
@@ -167,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            interactable = null;
             UIGameplay.Get().ChangeInteractTextDisplay(false);
         }
         Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * maxInteractDistance, Color.green, 0.1f);
@@ -301,7 +306,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void LoadPersistentData()
     {
+        beaconsDiscovered = persistentData.beaconsDiscovered;
+        hookDiscovered = persistentData.hookDiscovered;
         SetFlashlightState(persistentData.flashlightOn);
+    }
+
+    public void LoadZoneData(bool inHookAllowed, bool inBeaconsAllowed)
+    {
+        hookAllowed = inHookAllowed;
+        beaconsAllowed = inBeaconsAllowed;
     }
 
     public void RaiseHand()

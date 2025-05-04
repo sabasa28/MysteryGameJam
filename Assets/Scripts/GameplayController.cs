@@ -36,22 +36,26 @@ public class GameplayController : MonoBehaviour
         Chat,
         Movement,
         Cinematic,
-        InGameUI
+        InGameUI,
+        UI
     }
     InputState inputState;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] ChatManager chatManager;
     [SerializeField] ZoneData currentZone;
-    [SerializeField] ZoneData[] zones;
+    ZoneData initialZone;
+    [SerializeField] ZoneData labZone;
     [SerializeField] Transform outsideOfShipPos;
     [SerializeField] Transform insideOfShipPos;
     [SerializeField] Transform outsideOfLabPos;
     [SerializeField] Transform insideOfLabPos;
     [SerializeField] Volume helmetVolume;
     bool inGameMenuOpen = false;
+    bool optionsMenuOpen = false;
     [SerializeField] SelectingFinger selectingFinger;
     bool isPlayerInShip = true;
     bool isPlayerInLab = false;
+    InputState savedInputState;
     [SerializeField] float lightScalar;
     [SerializeField] float lightAttenuationExponent;
     [SerializeField] GameObject playerDocs;
@@ -59,18 +63,21 @@ public class GameplayController : MonoBehaviour
 
     private void Start()
     {
+        Shader.SetGlobalFloat("_LightScalar", lightScalar); // B)
+        Shader.SetGlobalFloat("_LightAttenuationExponent", lightAttenuationExponent);
+        ChangeInputState(InputState.Movement);
         playerDocsActive = playerDocs.activeInHierarchy;
         SetPlayerDocsActiveState(playerDocsActive);
+        initialZone = currentZone;
+        ChangeCurrentZone(currentZone); // not really changing just loading playerdata
     }
     private void Update()
     {
-        Shader.SetGlobalFloat("_LightScalar", lightScalar);
-        Shader.SetGlobalFloat("_LightAttenuationExponent", lightAttenuationExponent);
 
-        if (Input.GetKeyDown(KeyCode.B) && !playerMovement.isAnimatingUiHand)
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && !playerMovement.isAnimatingUiHand && inputState != InputState.Chat && inputState != InputState.Cinematic)
         {
             inGameMenuOpen = !inGameMenuOpen;
-            ChangeInputState(inGameMenuOpen ? InputState.Chat : InputState.Movement);
+            ChangeInputState(inGameMenuOpen ? InputState.InGameUI : InputState.Movement);
 
             if (inGameMenuOpen)
             {
@@ -86,9 +93,39 @@ public class GameplayController : MonoBehaviour
                 playerMovement.RaiseHand();
             }
             else
-            { 
+            {
                 playerMovement.LowerHand();
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            optionsMenuOpen = !optionsMenuOpen;
+            if (optionsMenuOpen)
+            {
+                savedInputState = inputState;
+                ChangeInputState(InputState.UI);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                ChangeInputState(savedInputState);
+                switch (inputState)
+                {
+                    case InputState.InGameUI:
+                        Cursor.lockState = CursorLockMode.Confined;
+                        Cursor.visible = false;
+                        break;
+                    case InputState.Chat:
+                    case InputState.Movement:
+                    case InputState.Cinematic:
+                    default:
+                        Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
+                        break;
+                }
+            }
+            UIGameplay.Get().ShowMenu(optionsMenuOpen);
         }
     }
     public void ChangeInputState(InputState newState)
@@ -111,7 +148,9 @@ public class GameplayController : MonoBehaviour
             case InputState.InGameUI:
                 playerMovement.SetInputState(false);
                 chatManager.TurnOffTextMode();
-
+                break;
+            case InputState.UI:
+                playerMovement.SetInputState(false);
                 break;
             default:
                 break;
@@ -182,7 +221,7 @@ public class GameplayController : MonoBehaviour
         UIGameplay.Get().FadeOutAndIn();
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
         playerMovement.GetComponent<CharacterController>().enabled = false;
-        playerMovement.transform.position = moveIn? insideOfShipPos.position : outsideOfShipPos.position;
+        playerMovement.transform.position = moveIn ? insideOfShipPos.position : outsideOfShipPos.position;
         playerMovement.GetComponent<CharacterController>().enabled = true;
         helmetVolume.enabled = !moveIn;
         LevelsManager.Get().persistentData.UpdateHelmetState(helmetVolume.enabled);
@@ -197,6 +236,30 @@ public class GameplayController : MonoBehaviour
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
         playerMovement.CopyPositionAndRotation(moveIn ? insideOfLabPos : outsideOfLabPos);
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
+        ChangeCurrentZone(moveIn ? labZone : initialZone);
         ChangeInputState(InputState.Movement);
     }
+
+    void ChangeCurrentZone(ZoneData newZone)
+    {
+        currentZone = newZone;
+        playerMovement.LoadZoneData(currentZone.allowHook, currentZone.allowBeacons);
+    }
+
+    public void DiscoverHook()
+    {
+        LevelsManager.Get().persistentData.hookDiscovered = true;
+        LoadPlayerPersistence();
+    }
+
+    public void DiscoverBeacons()
+    {
+        LevelsManager.Get().persistentData.beaconsDiscovered = true;
+        LoadPlayerPersistence();
+    }
+
+    public bool IsZoneDone()
+    {
+        return !GetCurrentZone().HasNecessaryInteractionLeft();
+    } 
 }

@@ -14,6 +14,10 @@ public class UIGameplay : MonoBehaviour
     public bool isFadingOut = false; //probably should be an enum
     public bool isFaded = false;
     public bool isFadingIn = false;
+    [SerializeField] GameObject menuPanel;
+    [SerializeField] GameObject generalMenuPanel;
+    [SerializeField] GameObject settingsMenuPanel;
+
     public static UIGameplay Get()
     {
         return instance;
@@ -75,5 +79,12 @@ public class UIGameplay : MonoBehaviour
         }
         fadeOutPanel.SetActive(false);
         isFadingIn = false;
+    }
+
+    public void ShowMenu(bool shouldShow)
+    {
+        menuPanel.SetActive(shouldShow);
+        generalMenuPanel.SetActive(shouldShow);
+        settingsMenuPanel.SetActive(!shouldShow);
     }
 }

@@ -26,6 +26,7 @@ public class PersistentData : ScriptableObject
         public List<string> learnableWords;
         public List<string> wordsLearned;
         public List<Document> documentsRead;
+        public List<LogEntry> logsFound;
         public int knowledgeLevel;
         public void InitializeData()
         {
@@ -53,13 +54,21 @@ public class PersistentData : ScriptableObject
             {
                 documentsRead = new();
             }
+            if (logsFound != null)
+            {
+                logsFound.Clear();
+            }
+            else
+            {
+                logsFound = new();
+            }
         }
 
         public bool HasData()
         {
-            if (learnableWords != null && wordsLearned != null && documentsRead != null)
+            if (learnableWords != null && wordsLearned != null && documentsRead != null && logsFound != null)
             {
-                return (learnableWords.Count > 0 || wordsLearned.Count > 0 || documentsRead.Count > 0);
+                return (learnableWords.Count > 0 || wordsLearned.Count > 0 || documentsRead.Count > 0 || logsFound.Count > 0);
             }
             else
             {
@@ -71,6 +80,9 @@ public class PersistentData : ScriptableObject
 
     public bool flashlightOn;
     public bool helmetOn;
+    public bool hookDiscovered = false;
+    public bool beaconsDiscovered = false;
+    public List<TextEntry> chatsAlreadyPlayed = new();
     public void AddBeacon(Vector3 pos, string scene)
     {
         bool found = false;
@@ -118,6 +130,11 @@ public class PersistentData : ScriptableObject
         persistentDocsData.knowledgeLevel = knowledgeLevel;
     }
 
+    public void UpdatePersistentLogsData(List<LogEntry> logsFound)
+    {
+        persistentDocsData.logsFound = logsFound;
+    }
+
     public void UpdateFlashlightState(bool newState)
     {
         flashlightOn = newState;
@@ -132,7 +149,30 @@ public class PersistentData : ScriptableObject
     {
         beaconsInLevels.Clear();
         persistentDocsData.InitializeData();
+        hookDiscovered = false;
+        beaconsDiscovered = false;
         flashlightOn = false;
         helmetOn = false;
+        if (chatsAlreadyPlayed != null)
+        {
+            chatsAlreadyPlayed.Clear();
+        }
+        else
+        {
+            chatsAlreadyPlayed = new(); 
+        }
+    }
+
+    public bool WasChatPlayed(TextEntry chat)
+    {
+        return chatsAlreadyPlayed.Contains(chat);
+    }
+
+    public void AddChatToPlayedChats(TextEntry chat)
+    {
+        if (!chatsAlreadyPlayed.Contains(chat))
+        {
+            chatsAlreadyPlayed.Add(chat);
+        }
     }
 }

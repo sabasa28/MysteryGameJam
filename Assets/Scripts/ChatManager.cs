@@ -15,9 +15,38 @@ public class ChatManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI textField;
     [SerializeField] GameObject textPanel;
     [SerializeField] TextEntry testText;
+    [SerializeField] TextEntry notDoneWithZone;
     [SerializeField] string astrounautName;
     [SerializeField] string AIName;
-    bool inputEnabled;
+
+    #region singleton
+    static ChatManager instance;
+    public static ChatManager Get()
+    {
+        return instance;
+    }
+
+    private void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
+    }
+    #endregion singleton
+
     enum TextState
     {
         buildingText,
@@ -116,5 +145,10 @@ public class ChatManager : MonoBehaviour
     {
         textPanel.SetActive(false);
         textState = TextState.notInTextMode;
+    }
+
+    public void PlayNotDoneWithZoneChat()
+    {
+        StartDisplayingTextEntry(notDoneWithZone);
     }
 }

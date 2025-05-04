@@ -9,4 +9,5 @@ public class LogEntry : ScriptableObject
     public Sprite attachedPhoto;
     public string logText;
     public int orderFound;
+    public bool read;
 }
