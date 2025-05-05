@@ -10,7 +10,8 @@ public class LevelsManager : MonoBehaviour
     {
         Surface,
         HigherCave,
-        LowerCave
+        LowerCave,
+        MainMenu
     }
     Scenes nextScene = Scenes.Surface;
     [SerializeField] Scenes currentScene = Scenes.Surface;
@@ -43,6 +44,12 @@ public class LevelsManager : MonoBehaviour
         {
             instance = null;
         }
+    }
+
+    public void CleanInstance()
+    {
+        instance = null;
+        Destroy(this);
     }
 
     public void LoadHigherCavesScene()

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
+  m_Name: 6
+  m_EditorClassIdentifier: 
+  fullText: Entry 1\n\nWe have decided to denominate the foreign object simply as
+    the\n"Visitor". It seems to possess an electronic interior, covered by an\nextremely
+    resistant metallic exterior. It is outputting all sorts of\nunknown signals,
+    and I am starting to worry that our technology might\nnot be advanced enough
+    to comprehend it. Others are highly skeptical\nabout its origins, thinking it
+    might be someone playing a joke on us,\nbut I am convinced such complexity can
+    not be achieved on Proima.\nWhat an incredible discovery!
+  currentText: '***** *  We **** ******* ** ********** *** foreign object simply
+    ** *** "Visitor". ** ***** ** ******* ** ********** ********* ******* ** ** *********
+    ********* ******** ********. ** ** ********** all ***** ** ******* signals* ***
+    * ** starting ** ***** **** *** ********** might *** be ******** enough ** **********
+    **. Others *** highly ********* about its ******** ******** ** might be *******
+    ******* a **** on *** *** * ** convinced **** ********** *** *** be ********
+    on Proima. **** ** ********** **********'
+  placeFoundText: 
+  timeFound: 
+  orderToDisplay: 0
+  read: 1

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
+  m_Name: 23
+  m_EditorClassIdentifier: 
+  fullText: My name is Premou. I carry with me all the information about the terrible
+    fate of Proima, our planet, that I could gather in\nthe little time that I had
+    left.\n\nWe were visited by an advanced device from beyond the sky. We believe
+    its job was to detect water and notify whatever\nspecies built it about its location.\nSoon
+    after its arrival, red lights surrounded our whole planet, originating from their
+    spaceships.\nIt took us too long to figure out what they were doing, but I doubt
+    there was anything we could have done about it.\n\nThe temperatures began to
+    rapidly rise, and our water evaporated at incredible speeds.\nOur best guess
+    is that these invaders are capable of absorbing the water in the air without
+    needing to enter the\natmosphere, and they do it by artificially boiling the
+    planet below them.\n\nBefore we could even figure anything out, we were forced
+    to retreat deep into the underground caves.\nOur cities crumbled to dust as the
+    surface became dry and devoid of life.\n\nWe never had the chance to contact
+    them. We never got to fight back. We never even saw how they looked.\nWe were
+    killed without notice in such a quick and merciless way.\n\nIf anyone ever finds
+    this, use this as a warning. Your planet might not be safe.\n\nPremou, last of
+    the Povann.
+  currentText: 
+  placeFoundText: 
+  timeFound: 
+  orderToDisplay: 0
+  read: 0

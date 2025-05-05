@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TpToFromLab : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField] EventTriggerBase eventToTrigger;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -17,6 +17,7 @@ public class TpToFromLab : MonoBehaviour
             {
                 ChatManager.Get().PlayNotDoneWithZoneChat();
             }
+            eventToTrigger.TriggerEvent();
         }
     }
 }

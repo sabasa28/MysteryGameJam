@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isAnimatingUiHand = false;
     bool hookDiscovered;
     bool beaconsDiscovered;
+    bool sonarDiscovered;
     bool hookAllowed;
     bool beaconsAllowed;
 
@@ -95,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 SetFlashlightState(!isFlashlightEnabled);
             }
-            if (Input.GetKeyDown(KeyCode.G) && !isSonarActive)
+            if (Input.GetKeyDown(KeyCode.G) && !isSonarActive && sonarDiscovered)
             {
                 ActivateSonar();
             }
@@ -122,9 +123,9 @@ public class PlayerMovement : MonoBehaviour
 
         testgrounded = characterController.isGrounded;
 
-        cameraRotX += cameraSpeed * -mouseY;
+        cameraRotX += cameraSpeed * SettingsData.sensitivity * 2.0f * -mouseY;
         cameraRotX = Mathf.Clamp(cameraRotX, -89.0f, 89.0f);
-        cameraRotY += cameraSpeed * mouseX;
+        cameraRotY += cameraSpeed * SettingsData.sensitivity * 2.0f * mouseX;
         mainCamera.transform.localRotation = Quaternion.Euler(Vector3.right * cameraRotX);
         transform.rotation = Quaternion.Euler(Vector3.up * cameraRotY);
         RayoLaser();
@@ -308,6 +309,7 @@ public class PlayerMovement : MonoBehaviour
     {
         beaconsDiscovered = persistentData.beaconsDiscovered;
         hookDiscovered = persistentData.hookDiscovered;
+        sonarDiscovered = persistentData.sonarDiscovered;
         SetFlashlightState(persistentData.flashlightOn);
     }
 

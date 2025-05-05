@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIGameplay : MonoBehaviour
@@ -17,6 +18,8 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] GameObject menuPanel;
     [SerializeField] GameObject generalMenuPanel;
     [SerializeField] GameObject settingsMenuPanel;
+    [SerializeField] Slider sensitivitySlider;
+    [SerializeField] Slider volumeSlider;
 
     public static UIGameplay Get()
     {
@@ -41,6 +44,12 @@ public class UIGameplay : MonoBehaviour
         {
             instance = null;
         }
+    }
+
+    private void Start()
+    {
+        sensitivitySlider.value = SettingsData.sensitivity;
+        volumeSlider.value = SettingsData.volume;
     }
 
     public void ChangeInteractTextDisplay(bool bDisplay)
@@ -83,8 +92,29 @@ public class UIGameplay : MonoBehaviour
 
     public void ShowMenu(bool shouldShow)
     {
-        menuPanel.SetActive(shouldShow);
-        generalMenuPanel.SetActive(shouldShow);
-        settingsMenuPanel.SetActive(!shouldShow);
+        GameplayController.Get().OnUIMenuStateChanged();
+        ChangeMenuVisibility(false);
+    }
+
+    public void ChangeMenuVisibility(bool newVisibility)
+    {
+        menuPanel.SetActive(newVisibility);
+        generalMenuPanel.SetActive(newVisibility);
+        settingsMenuPanel.SetActive(!newVisibility);
+    }
+
+    public void UpdateVolume()
+    {
+        SettingsData.volume = volumeSlider.value;
+    }
+
+    public void UpdateCameraSensitivity()
+    {
+        SettingsData.sensitivity = sensitivitySlider.value;
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("MainMenuScene");
     }
 }

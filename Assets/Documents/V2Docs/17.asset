@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
+  m_Name: 17
+  m_EditorClassIdentifier: 
+  fullText: Pruvv, they are the ones causing the temperatures to rise!\nThe sea levels
+    seem to have lowered all over the world at tremendous\nspeeds, but I can not
+    figure out the exact process without the data\nfrom the laboratory.\n\nI need
+    you to help me get back in.
+  currentText: 
+  placeFoundText: 
+  timeFound: 
+  orderToDisplay: 0
+  read: 0

@@ -99,35 +99,40 @@ public class GameplayController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            optionsMenuOpen = !optionsMenuOpen;
-            if (optionsMenuOpen)
-            {
-                savedInputState = inputState;
-                ChangeInputState(InputState.UI);
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-            else
-            {
-                ChangeInputState(savedInputState);
-                switch (inputState)
-                {
-                    case InputState.InGameUI:
-                        Cursor.lockState = CursorLockMode.Confined;
-                        Cursor.visible = false;
-                        break;
-                    case InputState.Chat:
-                    case InputState.Movement:
-                    case InputState.Cinematic:
-                    default:
-                        Cursor.lockState = CursorLockMode.Locked;
-                        Cursor.visible = false;
-                        break;
-                }
-            }
-            UIGameplay.Get().ShowMenu(optionsMenuOpen);
+            OnUIMenuStateChanged();
+            UIGameplay.Get().ChangeMenuVisibility(optionsMenuOpen);
         }
     }
+    public void OnUIMenuStateChanged()
+    {
+        optionsMenuOpen = !optionsMenuOpen;
+        if (optionsMenuOpen)
+        {
+            savedInputState = inputState;
+            ChangeInputState(InputState.UI);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            ChangeInputState(savedInputState);
+            switch (inputState)
+            {
+                case InputState.InGameUI:
+                    Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.visible = false;
+                    break;
+                case InputState.Chat:
+                case InputState.Movement:
+                case InputState.Cinematic:
+                default:
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    break;
+            }
+        }
+    }
+
     public void ChangeInputState(InputState newState)
     {
         inputState = newState;
@@ -255,6 +260,12 @@ public class GameplayController : MonoBehaviour
     public void DiscoverBeacons()
     {
         LevelsManager.Get().persistentData.beaconsDiscovered = true;
+        LoadPlayerPersistence();
+    }
+
+    public void DiscoverSonar()
+    {
+        LevelsManager.Get().persistentData.sonarDiscovered = true;
         LoadPlayerPersistence();
     }
 

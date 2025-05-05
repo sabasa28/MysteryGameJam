@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
+  m_Name: 9
+  m_EditorClassIdentifier: 
+  fullText: Premou, we have made a mistake. I stayed after hours to finish an\nanalysis
+    of the Visitor, and I believe the unknown signals we recorded\nstarted when we
+    brought it down here. It seems to react to water and is\ninstructed to activate
+    as it touches it. Furthermore, while we have not\nfigured out what data the Visitor
+    holds, we have repeatedly caught\nsomething coming out of it, as if it were emitting
+    some sort of wave. I\nhave reasons to believe this was never meant for us.\n\nIt
+    is not a message; it is a beacon. And it is leading someone here.
+  currentText: 
+  placeFoundText: 
+  timeFound: 
+  orderToDisplay: 0
+  read: 0

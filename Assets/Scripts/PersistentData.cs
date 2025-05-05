@@ -82,6 +82,7 @@ public class PersistentData : ScriptableObject
     public bool helmetOn;
     public bool hookDiscovered = false;
     public bool beaconsDiscovered = false;
+    public bool sonarDiscovered = false;
     public List<TextEntry> chatsAlreadyPlayed = new();
     public void AddBeacon(Vector3 pos, string scene)
     {
@@ -150,6 +151,7 @@ public class PersistentData : ScriptableObject
         beaconsInLevels.Clear();
         persistentDocsData.InitializeData();
         hookDiscovered = false;
+        sonarDiscovered = false;
         beaconsDiscovered = false;
         flashlightOn = false;
         helmetOn = false;

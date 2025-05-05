@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
+  m_Name: 19
+  m_EditorClassIdentifier: 
+  fullText: The temperature is getting unbearable. We are being forced to retreat\ndeeper
+    and deeper as the water evaporates at unbelievable speeds.\nProima has never
+    lived through something like this before. All the\nnatural disasters that hit
+    this planet can not compare to this. I just hope\nwe actually get to live through
+    it.\nAll the research I have done has been useless. I am scared mom.
+  currentText: 
+  placeFoundText: 
+  timeFound: 
+  orderToDisplay: 0
+  read: 0
