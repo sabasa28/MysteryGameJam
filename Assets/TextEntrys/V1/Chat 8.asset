@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a633f449938a194e9738ad7bc2507bb, type: 3}
+  m_Name: Chat 8
+  m_EditorClassIdentifier: 
+  textLine:
+  - text: I have finished analyzing several of the objects and structures you have
+      found so far.
+    speaker: 1
+  - text: I should be able to upgrade my scanning capabilities to detect nearby points
+      of interest in the cave.
+    speaker: 1
+  - text: If you wish to manually scan, you can do so from the button labeled C in
+      your electropanel.
+    speaker: 1

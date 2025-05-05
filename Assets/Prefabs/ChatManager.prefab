@@ -48,5 +48,6 @@ MonoBehaviour:
   textField: {fileID: 0}
   textPanel: {fileID: 0}
   testText: {fileID: 11400000, guid: 805d852983ed92e4294d99a9c9982143, type: 2}
-  astrounautName: Juancito
-  AIName: Roberto el robot
+  notDoneWithZone: {fileID: 0}
+  astrounautName: You
+  AIName: MIRA

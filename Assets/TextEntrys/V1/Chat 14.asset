@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a633f449938a194e9738ad7bc2507bb, type: 3}
+  m_Name: Chat 14
+  m_EditorClassIdentifier: 
+  textLine:
+  - text: I have been analyzing the bone remains that you gathered earlier.
+    speaker: 1
+  - text: Considering the condition they are in and with all the information obtained
+      so far, I am fairly confident that their deaths happened no more than 20 or
+      30 years ago.
+    speaker: 1
+  - text: We were so close to meeting them...
+    speaker: 0
+  - text: Indeed. I also noticed that while I haven't fully deciphered how their
+      calendar works, the difference in dates between the earliest recovered document
+      and this last one is likely less than 6 months.
+    speaker: 1
+  - text: So does that mean this invading species exterminated the whole planet in
+      just a few months?
+    speaker: 0
+  - text: Seems to be the case.
+    speaker: 1
+  - text: Then we should probably send a message to Earth right now. Let's head back
+      to the ship.
+    speaker: 0

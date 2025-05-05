@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a633f449938a194e9738ad7bc2507bb, type: 3}
+  m_Name: Chat 5
+  m_EditorClassIdentifier: 
+  textLine:
+  - text: MIRA, could you analyze these symbols?
+    speaker: 0
+  - text: Sure. The way the symbols are positioned suggests a form of writing meant
+      to transmit a message, something like a letter, for example.
+    speaker: 1
+  - text: I was able to guess that. I'm more interested in its meaning.
+    speaker: 0
+  - text: Do you wish for me to translate it?
+    speaker: 1
+  - text: If you would be so kind.
+    speaker: 0
+  - text: One moment, please.
+    speaker: 1
+  - text: There are clear patterns and certain repetition in symbols that would suggest
+      this is a language comparable in complexity to our own. However, for me to
+      decipher its meaning with at least 90% certainty, I would need a considerably
+      larger sample size.
+    speaker: 1
+  - text: Then let's see if we can find more.
+    speaker: 0

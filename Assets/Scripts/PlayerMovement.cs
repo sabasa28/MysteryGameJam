@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 SetFlashlightState(!isFlashlightEnabled);
             }
-            if (Input.GetKeyDown(KeyCode.G) && !isSonarActive && sonarDiscovered)
+            if (Input.GetKeyDown(KeyCode.C) && !isSonarActive && sonarDiscovered)
             {
                 ActivateSonar();
             }

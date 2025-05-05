@@ -4,15 +4,47 @@ using UnityEngine;
 
 public class LogTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] LogEntry logEntryToAdd;
+    [SerializeField] EventTriggerBase eventToTrigger;
+    [SerializeField] float timeBeforeTriggering = 0.0f;
+    bool waitingToTrigger = false;
+    private void Start()
     {
-        
+        if (LevelsManager.Get().persistentData.WasLogTriggered(logEntryToAdd))
+        {
+            gameObject.SetActive(false);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (waitingToTrigger)
+        {
+            return;
+        }
+        if (timeBeforeTriggering > 0)
+        {
+            StartCoroutine(WaitAndTrigger());
+        }
+        else
+        {
+            Trigger();
+        }
+    }
+    IEnumerator WaitAndTrigger()
+    {
+        waitingToTrigger = true;
+        yield return new WaitForSeconds(timeBeforeTriggering);
+        Trigger();
     }
 
-    // Update is called once per frame
-    void Update()
+    void Trigger()
     {
-        
+
+        DocumentManager.Get().AddLogToFoundLogs(logEntryToAdd);
+        if (eventToTrigger != null)
+        {
+            eventToTrigger.TriggerEvent();
+        }
+        gameObject.SetActive(false);
     }
 }

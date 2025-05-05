@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a633f449938a194e9738ad7bc2507bb, type: 3}
+  m_Name: Chat 1
+  m_EditorClassIdentifier: 
+  textLine:
+  - text: Initializing...
+    speaker: 1
+  - text: Company policy indicates that expeditions must be carried by a minimum
+      of two crew members.
+    speaker: 1
+  - text: Since you are currently alone, I will be joining you and helping however
+      I can.
+    speaker: 1
+  - text: Sure. Can you begin scanning the nearby area for anything that might be
+      of interest?
+    speaker: 0
+  - text: Of course. I will let you know if I find something.
+    speaker: 1
+  - text: Thanks MIRA.
+    speaker: 0

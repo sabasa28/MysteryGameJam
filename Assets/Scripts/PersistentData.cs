@@ -170,6 +170,16 @@ public class PersistentData : ScriptableObject
         return chatsAlreadyPlayed.Contains(chat);
     }
 
+    public bool WasLogTriggered(LogEntry log)
+    {
+        return persistentDocsData.logsFound.Contains(log);
+    }
+
+    public bool WasDocFound(Document doc)
+    {
+        return persistentDocsData.documentsRead.Contains(doc);
+    }
+
     public void AddChatToPlayedChats(TextEntry chat)
     {
         if (!chatsAlreadyPlayed.Contains(chat))
