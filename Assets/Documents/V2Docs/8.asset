@@ -52,5 +52,5 @@ MonoBehaviour:
     of work ** do before we can share our discoveries.'
   placeFoundText: 
   timeFound: 
-  orderToDisplay: 0
+  orderToDisplay: 16
   read: 1

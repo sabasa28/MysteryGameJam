@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
+  m_Name: F
+  m_EditorClassIdentifier: 
+  attachedPhoto: {fileID: 0}
+  logText: This marked piece likely was some sort of calendar. Since their planet
+    is tidally locked, they probably didn't have a concept of days. The colors suggest
+    that they may have used the rise and fall of tides caused by their moon. While
+    I can't figure out the exact dates of the documents, the AI might be able to
+    make an approximate estimation by comparing them. This means we can sort of guess
+    the order in which these texts were written.
+  orderFound: 0
+  read: 0

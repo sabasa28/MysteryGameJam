@@ -28,5 +28,5 @@ MonoBehaviour:
     on Proima. **** ** ********** **********'
   placeFoundText: 
   timeFound: 
-  orderToDisplay: 0
+  orderToDisplay: 12
   read: 1

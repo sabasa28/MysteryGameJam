@@ -20,6 +20,10 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] GameObject settingsMenuPanel;
     [SerializeField] Slider sensitivitySlider;
     [SerializeField] Slider volumeSlider;
+    [SerializeField] GameObject ShipDoc1;
+    [SerializeField] GameObject ShipDoc2;
+    [SerializeField] GameObject ShipDoc3;
+    bool docOpen = false;
 
     public static UIGameplay Get()
     {
@@ -52,6 +56,16 @@ public class UIGameplay : MonoBehaviour
         volumeSlider.value = SettingsData.volume;
     }
 
+    private void Update()
+    {
+        if (docOpen && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            ShipDoc1.SetActive(false);
+            ShipDoc2.SetActive(false);
+            ShipDoc3.SetActive(false);
+            docOpen = false;
+        }
+    }
     public void ChangeInteractTextDisplay(bool bDisplay)
     {
         InteractText.SetActive(bDisplay);
@@ -116,5 +130,22 @@ public class UIGameplay : MonoBehaviour
     public void ReturnToMenu()
     {
         SceneManager.LoadScene("MainMenuScene");
+    }
+
+    public void DisplayShipDoc1()
+    {
+        ShipDoc1.SetActive(true);
+        docOpen = true;
+    }
+
+    public void DisplayShipDoc2()
+    {
+        ShipDoc2.SetActive(true);
+        docOpen = true;
+    }
+    public void DisplayShipDoc3()
+    {
+        ShipDoc3.SetActive(true);
+        docOpen = true;
     }
 }

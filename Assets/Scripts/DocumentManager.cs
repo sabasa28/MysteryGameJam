@@ -46,7 +46,6 @@ public class DocumentManager : MonoBehaviour
     [SerializeField] List<Document> documentsRead = new();
     [SerializeField] List<LogEntry> logsFound = new();
     string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n" };
-    [SerializeField] TextMeshProUGUI testText;
     [SerializeField] PersistentData persistentData;
     [SerializeField] UIHelmet uiHelmet;
 
@@ -99,27 +98,15 @@ public class DocumentManager : MonoBehaviour
             if (knowledgeLevel<100)
             {
                 SetKnowledgeLevel(knowledgeLevel + 10);
-                if (documentsRead.Count > 0)
-                {
-                    testText.SetText(documentsRead[0].currentText);
-                }
             }
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
             LearnNames();
-            if (documentsRead.Count > 0)
-            {
-                testText.SetText(documentsRead[0].currentText);
-            }
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
             LearnSecrets();
-            if (documentsRead.Count > 0)
-            {
-                testText.SetText(documentsRead[0].currentText);
-            }
         }
     }
 

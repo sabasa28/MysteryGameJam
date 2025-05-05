@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
+  m_Name: D
+  m_EditorClassIdentifier: 
+  attachedPhoto: {fileID: 0}
+  logText: The writing system seems to focus on characters made from several detailed
+    strokes in a vertical line, slightly resembling our own languages with Asian
+    origins. The red drawing on the right almost feels like a warning or notice of
+    some kind, and probably isn't an actual word but a symbol instead.  Probably
+    the most interesting thing in this mural is the squid-like drawings. I wonder
+    if this could have been information about something like an underground aquarium?
+  orderFound: 0
+  read: 0

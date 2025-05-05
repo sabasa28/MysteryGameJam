@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
+  m_Name: A
+  m_EditorClassIdentifier: 
+  attachedPhoto: {fileID: 0}
+  logText: A truly remarkable discovery! Analysis of this bone structure suggests
+    that the creature might have been larger than humans. I took a small sample to
+    do a proper examination on the ship, but I'm hoping to find more remains before
+    heading back.
+  orderFound: 0
+  read: 0

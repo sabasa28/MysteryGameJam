@@ -23,5 +23,5 @@ MonoBehaviour:
     *******.'
   placeFoundText: 
   timeFound: 
-  orderToDisplay: 0
+  orderToDisplay: 6
   read: 1

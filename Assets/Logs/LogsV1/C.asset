@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
+  m_Name: C
+  m_EditorClassIdentifier: 
+  attachedPhoto: {fileID: 0}
+  logText: The capsule containing this species has detailed information about them.
+    Their name can be translated to Povann. They were an advanced underwater civilization
+    that lived all over the oceans of the planet. They had two long tentacle legs
+    with fins for movement, as well as two smaller ones that they used like arms.
+    The tip of the small ones has many tiny fingers, comparable to the tentacles
+    of a jellyfish. There is a mouth at the bottom, used mainly for eating, and another
+    one on the side of their body, used exclusively to communicate. The Povann had
+    a set of grills at the top of their heads and one large eye on each side. Interior
+    scans of their organs show two hearts, each helping pump blood to one of their
+    long legs. The brain rests at the bottom of their body, between the mouths and
+    the hearts. They have a simple, hardened skeleton used to protect their vital
+    organs, accompanied by cartilage covering most of the body.  I should take all
+    this information back to the ship for further investigation. Although I wish
+    I could take the body with me.
+  orderFound: 0
+  read: 0

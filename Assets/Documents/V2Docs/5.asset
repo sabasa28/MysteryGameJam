@@ -23,5 +23,5 @@ MonoBehaviour:
   currentText: 
   placeFoundText: 
   timeFound: 
-  orderToDisplay: 0
+  orderToDisplay: 10
   read: 0
