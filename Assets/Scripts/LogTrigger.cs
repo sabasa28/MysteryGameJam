@@ -41,6 +41,7 @@ public class LogTrigger : MonoBehaviour
     {
 
         DocumentManager.Get().AddLogToFoundLogs(logEntryToAdd);
+        AudioManager.Get().PlayPhotoSound();
         if (eventToTrigger != null)
         {
             eventToTrigger.TriggerEvent();

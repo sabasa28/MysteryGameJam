@@ -48,6 +48,7 @@ public class DocumentManager : MonoBehaviour
     string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n" };
     [SerializeField] PersistentData persistentData;
     [SerializeField] UIHelmet uiHelmet;
+    [SerializeField] List<LogEntry> preexistentLogs = new();
 
     [Serializable]
     struct WordsReplacement : IComparable<WordsReplacement>
@@ -88,25 +89,9 @@ public class DocumentManager : MonoBehaviour
                 }
             }
         }
-
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
+        foreach (LogEntry log in preexistentLogs)
         {
-            if (knowledgeLevel<100)
-            {
-                SetKnowledgeLevel(knowledgeLevel + 10);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            LearnNames();
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            LearnSecrets();
+            AddLogToFoundLogs(log);
         }
     }
 
@@ -165,6 +150,10 @@ public class DocumentManager : MonoBehaviour
         {
             return;
         }
+        if (documentsRead.Count == 0)
+        {
+            ChatManager.Get().PlayFistDocChat();
+        }
         document.fullText = document.fullText.Replace("\\n", "\n");
         document.read = false;
         documentsRead.Add(document);
@@ -184,6 +173,7 @@ public class DocumentManager : MonoBehaviour
             wordsLearned.Add(word.ToLower());
             learnableWords.Remove(word.ToLower());
         }
+        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
         foreach (Document doc in documentsRead)
         {
             CensorDocument(doc);
@@ -197,6 +187,7 @@ public class DocumentManager : MonoBehaviour
             wordsLearned.Add(word.ToLower());
             learnableWords.Remove(word.ToLower());
         }
+        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
         foreach (Document doc in documentsRead)
         {
             CensorDocument(doc);
@@ -306,6 +297,7 @@ public class DocumentManager : MonoBehaviour
     {
         if (!logsFound.Contains(newLog))
         {
+            newLog.logText = newLog.logText.Replace("\\n", "\n");
             newLog.read = false;
             logsFound.Add(newLog);
             persistentData.UpdatePersistentLogsData(logsFound);

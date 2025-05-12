@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: J
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 0}
-  logText: This object seems to chart part of their world, specifically the bottom
-    floor of an ocean.  The planet's name seems to be "Proima". The rest of these
-    labels are hard to decipher, but it is safe to assume that they seem to have
-    built a lot of structures underwater.
+  attachedPhoto: {fileID: 21300000, guid: 08d37715bb099484197d9b450c75b37a, type: 3}
+  logText: 'This object seems to chart part of their world, specifically the bottom
+    floor of an ocean.
+
+
+    The planet''s name seems to be "Proima".
+
+    The rest
+    of these labels are hard to decipher, but it is safe to assume that they seem
+    to have built a lot of structures underwater.'
   orderFound: 0
   read: 0

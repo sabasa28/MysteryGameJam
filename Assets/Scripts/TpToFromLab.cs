@@ -17,7 +17,10 @@ public class TpToFromLab : MonoBehaviour
             {
                 ChatManager.Get().PlayNotDoneWithZoneChat();
             }
-            eventToTrigger.TriggerEvent();
+            if (eventToTrigger != null)
+            {
+                eventToTrigger.TriggerEvent();
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ public class UIPlayerDocs : MonoBehaviour
 {
     [SerializeField] GameObject documentList;
     [SerializeField] GameObject log;
+    [SerializeField] ScrollRect logScroll;
     [SerializeField] UIDocument uiDocumentPrefab;
     [SerializeField] UILogEntry uiLogEntryPrefab;
     List<UIDocument> uIDocuments = new();
@@ -112,6 +113,7 @@ public class UIPlayerDocs : MonoBehaviour
             }
         }
         InitializeUILogEntries();
+        logScroll.verticalNormalizedPosition = 0.0f;
     }
 
     public void InitializeReadingDocument(UIDocument document)

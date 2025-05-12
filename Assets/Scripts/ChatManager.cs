@@ -15,7 +15,10 @@ public class ChatManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI textField;
     [SerializeField] GameObject textPanel;
     [SerializeField] TextEntry testText;
-    [SerializeField] TextEntry notDoneWithZone;
+    [SerializeField] TextEntry notDoneWithZoneChat;
+    [SerializeField] TextEntry doneWithZoneChat;
+    bool doneWithZone = false;
+    [SerializeField] TextEntry firstDocChat;
     [SerializeField] string astrounautName;
     [SerializeField] string AIName;
 
@@ -128,6 +131,7 @@ public class ChatManager : MonoBehaviour
             default:
                 break;
         }
+
         while (currentCharacter < currentText.Length)
         {
             if (skipTextBuilding)
@@ -153,6 +157,23 @@ public class ChatManager : MonoBehaviour
 
     public void PlayNotDoneWithZoneChat()
     {
-        StartDisplayingTextEntry(notDoneWithZone);
+        StartDisplayingTextEntry(notDoneWithZoneChat);
+    }
+
+    public void PlayDoneWithZoneChat()
+    {
+        if (!doneWithZone)
+        {
+            doneWithZone = true;
+            if (GameplayController.Get().GetCurrentZone().zoneDoneChat != null)
+            {
+                StartDisplayingTextEntry(GameplayController.Get().GetCurrentZone().zoneDoneChat);
+            }
+        }
+    }
+
+    public void PlayFistDocChat()
+    {
+        StartDisplayingTextEntry(firstDocChat);
     }
 }

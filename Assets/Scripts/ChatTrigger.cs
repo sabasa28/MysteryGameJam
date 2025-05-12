@@ -15,7 +15,7 @@ public class ChatTrigger : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (waitingToTrigger)
         {

@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: F
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 0}
-  logText: This marked piece likely was some sort of calendar. Since their planet
-    is tidally locked, they probably didn't have a concept of days. The colors suggest
-    that they may have used the rise and fall of tides caused by their moon. While
-    I can't figure out the exact dates of the documents, the AI might be able to
-    make an approximate estimation by comparing them. This means we can sort of guess
-    the order in which these texts were written.
+  attachedPhoto: {fileID: 21300000, guid: 38f88f7e54a8e2a4c9a5bc25e3f6c37f, type: 3}
+  logText: 'This marked piece likely was some sort of calendar.
+
+    Since their
+    planet is tidally locked, they probably didn''t have a concept of days. The colors
+    suggest that they may have used the rise and fall of tides caused by their moon.
+
+    While
+    I can''t figure out the exact dates of the documents, the AI might be able to
+    make an approximate estimation by comparing them.
+
+    This means we can sort
+    of guess the order in which these texts were written.'
   orderFound: 0
   read: 0

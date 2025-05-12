@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: D
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 0}
+  attachedPhoto: {fileID: 21300000, guid: 14a1463ef81f6884ab8034e66163ec22, type: 3}
   logText: The writing system seems to focus on characters made from several detailed
     strokes in a vertical line, slightly resembling our own languages with Asian
-    origins. The red drawing on the right almost feels like a warning or notice of
-    some kind, and probably isn't an actual word but a symbol instead.  Probably
+    origins.\nThe red drawing on the right almost feels like a warning or notice
+    of some kind, and probably isn't an actual word but a symbol instead.\n\nProbably
     the most interesting thing in this mural is the squid-like drawings. I wonder
     if this could have been information about something like an underground aquarium?
   orderFound: 0

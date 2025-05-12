@@ -1801,6 +1801,14 @@ MonoBehaviour:
   coyoteTime: 0.2
   isFlashlightEnabled: 0
   flashlight: {fileID: 4112983044151802501}
+  flashlightSound: {fileID: 8300000, guid: 28773c61c873d0d419ada0fc1611f44a, type: 3}
+  sonarSound: {fileID: 8300000, guid: eee62176511692a4eb6e13c64b65a31c, type: 3}
+  footstepsDirtSound: {fileID: 8300000, guid: 0ec3d57347087e348b2ebaae298352e3, type: 3}
+  footstepsMetalSound: {fileID: 8300000, guid: 0aaa6d4e4653b0043867c5c2142c39b2, type: 3}
+  helmetOnSound: {fileID: 8300000, guid: c7b9d324a15d9204eb32a761c7ce94eb, type: 3}
+  helmetOffSound: {fileID: 8300000, guid: 792710c4c81c634449b448a60294672b, type: 3}
+  inventoryOnOffSound: {fileID: 8300000, guid: 45af02039a5a1494496274237424afe4, type: 3}
+  hookSound: {fileID: 8300000, guid: 0a91fb5ee1289d7479879a14f9bd4c04, type: 3}
   mainCamera: {fileID: 4309764055870501769}
   maxInteractDistance: 3
   maxHookDistance: 40
@@ -1856,6 +1864,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   uiHandAnim: {fileID: 1014615357117975210}
   isAnimatingUiHand: 0
+  minMagnitudeForSteps: 0.5
+  pitchForDirtSteps: 1.5
+  pitchForMetalSteps: 2.65
+  volumeDirtSteps: 0.3
+  volumeMetalSteps: 0.3
 --- !u!143 &6191270722901303704
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1875,7 +1888,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 1.8
   m_Radius: 0.5
   m_SlopeLimit: 15
   m_StepOffset: 0.5
@@ -4677,6 +4690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   documentList: {fileID: 2345176983054936043}
   log: {fileID: 1661575055839204003}
+  logScroll: {fileID: 267587713793324408}
   uiDocumentPrefab: {fileID: 4875014193629695199, guid: 03f014378bd12e8449f1842ce9422dfa, type: 3}
   uiLogEntryPrefab: {fileID: 8112411653485747933, guid: 30f56b2bb2b3cde4f8e3baca8756c75b, type: 3}
   docsParent: {fileID: 4636079877165006907}

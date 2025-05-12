@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
+  m_Name: P
+  m_EditorClassIdentifier: 
+  attachedPhoto: {fileID: 0}
+  logText: 'Closer scanning of the planet confirms previous examinations.
+
+    Its
+    total mass is approximately 0.692 Earths.
+
+    It is tidally locked. While half
+    the planet always receives sunlight, surface temperatures don''t seem extreme.
+
+    It
+    takes 146 Earth hours to complete one full orbit around its star.
+
+    Its moon
+    is about 15% larger than ours.
+
+
+    Surface scans indicate that the planet probably
+    was covered with water in the past, with an estimated volume of 1 billion cubic
+    kilometres, but it sadly dried out completely. If there was ever life here, we
+    are several hundred million years late.
+
+
+    However, some data results seem
+    extremely abnormal. The atmosphere, which is slowly disappearing (probably due
+    to the planet''s orbit being extremely close to its star), shows a gas composition
+    that simply shouldn''t exist in a barren world like this.
+
+
+    After careful
+    consideration, I have decided a closer inspection is required.'
+  orderFound: 0
+  read: 1

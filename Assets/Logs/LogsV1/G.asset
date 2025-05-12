@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: G
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 0}
+  attachedPhoto: {fileID: 21300000, guid: ada6513c8fb995c4f98c4ae52d07def5, type: 3}
   logText: This object is a complex 3D maze with a ring stuck in the middle. After
     fiddling around for a bit, it almost seems like a toy where the objective is
     to either remove the ring or have it reach a specific point.

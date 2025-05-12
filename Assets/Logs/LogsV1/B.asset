@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: B
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 0}
-  logText: Finding a seemingly complete skeleton out in the open like this is quite
-    extraordinary! My previous conclusion is confirmed, as the smaller piece I found
-    earlier coincides with this body. The shape suggests these creatures had a squid-like
-    body, which makes me wonder if these caves used to be completely underwater.
+  attachedPhoto: {fileID: 21300000, guid: bc19749fcbbfa6449b9cbc63f8d9de21, type: 3}
+  logText: 'Finding a seemingly complete skeleton out in the open like this is quite
+    extraordinary!
+
+    My previous conclusion is confirmed, as the smaller piece
+    I found earlier coincides with this body.
+
+    The shape suggests these creatures
+    had a squid-like body, which makes me wonder if these caves used to be completely
+    underwater.'
   orderFound: 0
   read: 0

@@ -16,6 +16,14 @@ public class PlayerMovement : MonoBehaviour
     float lastTimeGrounded;
     [SerializeField] bool isFlashlightEnabled;
     [SerializeField] GameObject flashlight;
+    [SerializeField] AudioClip flashlightSound;
+    [SerializeField] AudioClip sonarSound;
+    [SerializeField] AudioClip footstepsDirtSound;
+    [SerializeField] AudioClip footstepsMetalSound;
+    [SerializeField] AudioClip helmetOnSound;
+    [SerializeField] AudioClip helmetOffSound;
+    [SerializeField] AudioClip inventoryOnOffSound;
+    [SerializeField] AudioClip hookSound;
     float cameraRotX = 0.0f;
     float cameraRotY;
     CharacterController characterController;
@@ -58,6 +66,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AnimationCurve uiHandCurve;
     [SerializeField] Animator uiHandAnim;
     public bool isAnimatingUiHand = false;
+    bool walking = false;
+    [SerializeField] float minMagnitudeForSteps;
+    [SerializeField] float pitchForDirtSteps;
+    [SerializeField] float pitchForMetalSteps;
+    [SerializeField] float volumeDirtSteps;
+    [SerializeField] float volumeMetalSteps;
     bool hookDiscovered;
     bool beaconsDiscovered;
     bool sonarDiscovered;
@@ -121,6 +135,24 @@ public class PlayerMovement : MonoBehaviour
         Vector3 rightNoY = new Vector3(mainCamera.transform.right.x, 0.0f, mainCamera.transform.right.z).normalized;
         movement = forwardNoY * movement.x + rightNoY * movement.y;
 
+        if (walking && (movement.magnitude < minMagnitudeForSteps || !grounded))
+        {
+            walking = false;
+            AudioManager.Get().StopSteps();
+        }
+        if (!walking && (movement.magnitude > minMagnitudeForSteps && grounded))
+        {
+            walking = true;
+            if (GameplayController.Get().IsInShip() || GameplayController.Get().IsInLab())
+            {
+                AudioManager.Get().PlaySteps(footstepsMetalSound, pitchForMetalSteps, volumeMetalSteps);
+            }
+            else
+            { 
+                AudioManager.Get().PlaySteps(footstepsDirtSound, pitchForDirtSteps, volumeDirtSteps);
+            }
+        }
+
         testgrounded = characterController.isGrounded;
 
         cameraRotX += cameraSpeed * SettingsData.sensitivity * 2.0f * -mouseY;
@@ -180,6 +212,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HookRaycast()
     {
+        AudioManager.Get().PlaySFX(hookSound, 0.2f);
         if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hookHit, maxHookDistance, defaultLayer, QueryTriggerInteraction.Ignore))
         {
             hook.gameObject.SetActive(true);
@@ -231,6 +264,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isFlashlightEnabled = enabled;
         flashlight.SetActive(enabled);
+        AudioManager.Get().PlaySFX(flashlightSound, 1);
         persistentData.UpdateFlashlightState(enabled);
     }
 
@@ -243,13 +277,19 @@ public class PlayerMovement : MonoBehaviour
     void ActivateSonar()
     {
         if (GameplayController.Get().GetCurrentZone().GetClosestInteractable(transform.position, out Vector3 closestInteractable))
-        { 
+        {
             StartCoroutine(DisplaySonarArrow(closestInteractable));
+        }
+        else
+        {
+            ChatManager.Get().PlayDoneWithZoneChat();
+            StartCoroutine(DisplaySonarArrow(GameplayController.Get().GetCurrentZone().exitDoor.position));
         }
     }
 
     IEnumerator DisplaySonarArrow(Vector3 closestInteractablePos)
     {
+        AudioManager.Get().PlaySFX(sonarSound, 1.0f);
         sonar.SetActive(true);
         isSonarActive = true;
         float timer = 0.0f;
@@ -337,6 +377,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            AudioManager.Get().PlaySFX(inventoryOnOffSound);
             uiHandAnim.SetBool("Open", false);
             GameplayController.Get().SetPlayerDocsActiveState(false);
             GameplayController.Get().SetFingerActiveState(false);
@@ -355,6 +396,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (raise)
         {
+            AudioManager.Get().PlaySFX(inventoryOnOffSound);
             uiHandAnim.SetBool("Open", true);
             yield return new WaitUntil(() => uiHandAnim.GetCurrentAnimatorStateInfo(0).IsName("Opened"));
             GameplayController.Get().SetPlayerDocsActiveState(true);
@@ -375,5 +417,17 @@ public class PlayerMovement : MonoBehaviour
         cameraRotX = transformToCopy.rotation.eulerAngles.x;
         cameraRotY = transformToCopy.rotation.eulerAngles.y;
         characterController.enabled = true;
+    }
+
+    public void PlayHelmetSound(bool helmetOn)
+    {
+        if (helmetOn)
+        {
+            AudioManager.Get().PlaySFX(helmetOnSound);
+        }
+        else
+        { 
+            AudioManager.Get().PlaySFX(helmetOffSound);
+        }
     }
 }

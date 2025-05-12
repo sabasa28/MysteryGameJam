@@ -47,23 +47,57 @@ MonoBehaviour:
   learnableWords: []
   wordsLearned: []
   redList:
-  - the
-  - is
-  - are
-  - an
-  - to
+  - dispatched
+  - whatever
+  - reasoning
+  - allowed
+  - situations
+  - further
+  - possess
+  - comprehend
+  - composed
+  - hold
+  - wave
+  - someone
+  - days
+  - telescope
+  - free
+  - meeting
+  - act
+  - statement
+  - ships
+  - tremendous
+  - quickly
+  - hit
   greenListNAMES:
+  - Prinma
+  - Prumi
+  - Prossan
+  - Praba
   - Priimam
-  - Pruobo
-  - Prremp
   - Premou
+  - Prremp
+  - Pruuv
+  - Pruobo
+  - Prubei
+  - Proima
   greenListSECRETS:
-  - meteor
+  - invaders
+  - invasion
   - surface
-  - expedition
-  - meteorite
+  - water
+  - Visitor
+  - temperature
+  - float
+  - tentacles
   censoredText: 
   documentsRead: []
-  testText: {fileID: 0}
+  logsFound: []
   persistentData: {fileID: 11400000, guid: be961e185e0d7c94aaa6e516c061b19e, type: 2}
+  uiHelmet: {fileID: 0}
+  preexistentLogs:
+  - {fileID: 11400000, guid: 689455b2db026ff4eb8fffe003e1506c, type: 2}
+  - {fileID: 11400000, guid: cb79a990679c24245a66999d1eb9aebe, type: 2}
+  - {fileID: 11400000, guid: dc600525da7fde0489d351d443c4571d, type: 2}
+  - {fileID: 11400000, guid: d5ab2d47517a67646a4f7712ab49edf9, type: 2}
   wordReplacements: []

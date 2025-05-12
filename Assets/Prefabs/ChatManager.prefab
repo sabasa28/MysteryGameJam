@@ -48,6 +48,8 @@ MonoBehaviour:
   textField: {fileID: 0}
   textPanel: {fileID: 0}
   testText: {fileID: 11400000, guid: 805d852983ed92e4294d99a9c9982143, type: 2}
-  notDoneWithZone: {fileID: 0}
+  notDoneWithZoneChat: {fileID: 11400000, guid: 40e1a9b27ad927246af2e81feb4dcd09, type: 2}
+  doneWithZoneChat: {fileID: 11400000, guid: a2c7f4211ffe85549b5bac401a3745a2, type: 2}
+  firstDocChat: {fileID: 11400000, guid: 8925fb357af981d44b152fb941782384, type: 2}
   astrounautName: You
   AIName: MIRA

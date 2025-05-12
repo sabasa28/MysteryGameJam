@@ -23,7 +23,10 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] GameObject ShipDoc1;
     [SerializeField] GameObject ShipDoc2;
     [SerializeField] GameObject ShipDoc3;
+    [SerializeField] GameObject ShipDoc4;
     bool docOpen = false;
+    bool lastDocOpen = false;
+    bool lastTimerOver = false;
 
     public static UIGameplay Get()
     {
@@ -64,6 +67,10 @@ public class UIGameplay : MonoBehaviour
             ShipDoc2.SetActive(false);
             ShipDoc3.SetActive(false);
             docOpen = false;
+        }
+        if (lastDocOpen && Input.GetKeyDown(KeyCode.Mouse0) && lastTimerOver)
+        {
+            SceneManager.LoadScene("MainMenuScene");
         }
     }
     public void ChangeInteractTextDisplay(bool bDisplay)
@@ -120,6 +127,7 @@ public class UIGameplay : MonoBehaviour
     public void UpdateVolume()
     {
         SettingsData.volume = volumeSlider.value;
+        AudioManager.Get().UpdateVolume();
     }
 
     public void UpdateCameraSensitivity()
@@ -147,5 +155,17 @@ public class UIGameplay : MonoBehaviour
     {
         ShipDoc3.SetActive(true);
         docOpen = true;
+    }
+    public void DisplayShipDoc4()
+    {
+        ShipDoc4.SetActive(true);
+        StartCoroutine(WaitLastTimer());
+        lastDocOpen = true;
+    }
+
+    IEnumerator WaitLastTimer()
+    {
+        yield return new WaitForSeconds(5.0f);
+        lastTimerOver = true;
     }
 }

@@ -7,8 +7,21 @@ public class ZoneData : MonoBehaviour
     [SerializeField] List<GameObject> necessaryInteractions = new List<GameObject>();
     public Transform entrance;
     public Transform exit;
+    public Transform exitDoor;
+    public TextEntry zoneDoneChat;
     public bool allowHook;
     public bool allowBeacons;
+
+    public void CheckNecessaryInteractions()
+    {
+        for (int i = necessaryInteractions.Count - 1; i >= 0; i--)
+        {
+            if (!necessaryInteractions[i].activeInHierarchy)
+            {
+                necessaryInteractions.RemoveAt(i);
+            }
+        }
+    }
 
     public bool GetClosestInteractable(Vector3 pos, out Vector3 interactablePos)
     {
@@ -39,5 +52,10 @@ public class ZoneData : MonoBehaviour
     public bool HasNecessaryInteractionLeft()
     {
         return necessaryInteractions.Count > 0;
+    }
+
+    public void AddNecessaryInteraction(GameObject interactable)
+    {
+        necessaryInteractions.Add(interactable);
     }
 }

@@ -12,6 +12,11 @@ public class LevelChangeVolume : MonoBehaviour
         {
             return;
         }
+        if (GameplayController.Get().GetCurrentZone().HasNecessaryInteractionLeft())
+        {
+            ChatManager.Get().PlayNotDoneWithZoneChat();
+            return;
+        }
         triggered = true;
         switch (SceneToSwitchTo)
         {

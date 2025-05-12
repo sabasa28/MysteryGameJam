@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
+  m_Name: Q
+  m_EditorClassIdentifier: 
+  attachedPhoto: {fileID: 0}
+  logText: 'I have finally obtained permission to land on TRAPPIST-1 e. Protocol
+    requires one person to always stay at the ship, but I argued that forcing someone
+    to come would be worse, as they would need to jump several times to reach me.
+    Our engines can only achieve faster-than-light travel so many times, and the
+    risk of getting more people and ships stranded is greater than my own safety.
+
+
+    I
+    don''t have any intention of getting stuck on this planet, and while the logical
+    thing to do is return, I believe that this mission is more important than anything
+    else. And I know the higher-ups agree.'
+  orderFound: 0
+  read: 1

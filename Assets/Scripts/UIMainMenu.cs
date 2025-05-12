@@ -42,6 +42,7 @@ public class UIMainMenu : MonoBehaviour
     public void UpdateVolume()
     {
         SettingsData.volume = volumeSlider.value;
+        AudioManager.Get().UpdateVolume();
     }
 
     public void UpdateCameraSensitivity()

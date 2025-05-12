@@ -45,6 +45,7 @@ public class GameplayController : MonoBehaviour
     [SerializeField] ZoneData currentZone;
     ZoneData initialZone;
     [SerializeField] ZoneData labZone;
+    [SerializeField] ZoneData lowerCavesReturnZone;
     [SerializeField] Transform outsideOfShipPos;
     [SerializeField] Transform insideOfShipPos;
     [SerializeField] Transform outsideOfLabPos;
@@ -188,6 +189,16 @@ public class GameplayController : MonoBehaviour
         isPlayerInShip = !helmetState;
     }
 
+    public bool IsInShip()
+    {
+        return isPlayerInShip;
+    }
+    
+    public bool IsInLab()
+    {
+        return isPlayerInShip;
+    }
+
     public void SetPlayerDocsActiveState(bool state)
     {
         playerDocsActive = state;
@@ -229,7 +240,8 @@ public class GameplayController : MonoBehaviour
         playerMovement.transform.position = moveIn ? insideOfShipPos.position : outsideOfShipPos.position;
         playerMovement.GetComponent<CharacterController>().enabled = true;
         helmetVolume.enabled = !moveIn;
-        LevelsManager.Get().persistentData.UpdateHelmetState(helmetVolume.enabled);
+        LevelsManager.Get().persistentData.UpdateHelmetState(!moveIn);
+        playerMovement.PlayHelmetSound(!moveIn);
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
         ChangeInputState(InputState.Movement);
     }
@@ -239,15 +251,20 @@ public class GameplayController : MonoBehaviour
         ChangeInputState(InputState.Cinematic);
         UIGameplay.Get().FadeOutAndIn(moveIn);
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
+        if (!moveIn)
+        {
+            LevelsManager.Get().persistentData.isReturning = true;
+        }
         playerMovement.CopyPositionAndRotation(moveIn ? insideOfLabPos : outsideOfLabPos);
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
-        ChangeCurrentZone(moveIn ? labZone : initialZone);
+        ChangeCurrentZone(moveIn ? labZone : lowerCavesReturnZone);
         ChangeInputState(InputState.Movement);
     }
 
     void ChangeCurrentZone(ZoneData newZone)
     {
         currentZone = newZone;
+        newZone.CheckNecessaryInteractions();
         playerMovement.LoadZoneData(currentZone.allowHook, currentZone.allowBeacons);
     }
 
@@ -272,5 +289,6 @@ public class GameplayController : MonoBehaviour
     public bool IsZoneDone()
     {
         return !GetCurrentZone().HasNecessaryInteractionLeft();
-    } 
+    }
+
 }

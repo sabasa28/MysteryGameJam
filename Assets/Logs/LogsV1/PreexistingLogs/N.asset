@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
+  m_Name: N
+  m_EditorClassIdentifier: 
+  attachedPhoto: {fileID: 0}
+  logText: 'We have finally made our first jump, leaving our home behind. As expected,
+    most of us woke up feeling quite dizzy, and it took a couple of hours to fully
+    recover. Marcus continues to dwell on the long term effects that faster-than-light
+    travel could have on us, but there''s no point in worrying now. We have a mission
+    to carry out, and all of humanity depends on us now.
+
+
+    One month from now,
+    team 1 will be detaching from the main ship and setting out to explore the first
+    solar system. Small probes have made it this far, back when FTL was being tested,
+    but it will be the first time a person touches a planet outside our own solar
+    system. As part of team 10, it will be a long while before I get to do some exploration
+    myself, but there''s plenty of work to do in the meantime.
+
+
+    And... so many
+    jumps left. Can''t say I''m looking forward to that.'
+  orderFound: 0
+  read: 1

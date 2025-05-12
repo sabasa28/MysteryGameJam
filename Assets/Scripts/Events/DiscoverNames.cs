@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiscoverNames : MonoBehaviour
+public class DiscoverNames : EventTriggerBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void TriggerEvent()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        DocumentManager.Get().LearnNames();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DocumentHolder : MonoBehaviour, IInteractable
 {
     [SerializeField] Document document;
+    [SerializeField] EventTriggerBase eventToTrigger;
 
     private void Start()
     {
@@ -18,10 +19,14 @@ public class DocumentHolder : MonoBehaviour, IInteractable
     {
         RemoveFromNecessaryInteractables();
         DocumentManager.Get().AddDocumentWordsToLearnable(document);
+        if (eventToTrigger != null)
+        {
+            eventToTrigger.TriggerEvent();
+        }
         gameObject.SetActive(false);
     }
 
-    public bool IsInteractable()
+    public virtual bool IsInteractable()
     {
         return true;
     }

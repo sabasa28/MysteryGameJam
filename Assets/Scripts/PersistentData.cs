@@ -83,6 +83,9 @@ public class PersistentData : ScriptableObject
     public bool hookDiscovered = false;
     public bool beaconsDiscovered = false;
     public bool sonarDiscovered = false;
+    public bool isReturning = false;
+    public bool canEndGame = false;
+
     public List<TextEntry> chatsAlreadyPlayed = new();
     public void AddBeacon(Vector3 pos, string scene)
     {
@@ -155,6 +158,8 @@ public class PersistentData : ScriptableObject
         beaconsDiscovered = false;
         flashlightOn = false;
         helmetOn = false;
+        isReturning = false;
+        canEndGame = false;
         if (chatsAlreadyPlayed != null)
         {
             chatsAlreadyPlayed.Clear();

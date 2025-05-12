@@ -8,7 +8,8 @@ public class ShipDoc : MonoBehaviour, IInteractable
     {
         Doc1,
         Doc2,
-        Doc3
+        Doc3,
+        Doc4
     }
     [SerializeField] ShipDocNum shipDocNum;
     public void Interact()
@@ -24,12 +25,22 @@ public class ShipDoc : MonoBehaviour, IInteractable
             case ShipDocNum.Doc3:
                 UIGameplay.Get().DisplayShipDoc3();
                 break;
+            case ShipDocNum.Doc4:
+                UIGameplay.Get().DisplayShipDoc4();
+                break;
         }
     }
 
     public bool IsInteractable()
     {
-        return true;
+        if (shipDocNum != ShipDocNum.Doc4)
+        {
+            return true;
+        }
+        else
+        {
+            return LevelsManager.Get().persistentData.canEndGame;
+        }
     }
 
     public void RemoveFromNecessaryInteractables()

@@ -7,8 +7,12 @@ using TMPro;
 public class UIHelmet : MonoBehaviour
 {
     [SerializeField] Image newLogPanel;
+    Vector3 initialNewLogPanelPos;
+    Color initialNewLogColor;
     [SerializeField] TextMeshProUGUI newLogText;
     [SerializeField] Image newDocPanel;
+    Vector3 initialNewDocPanelPos;
+    Color initialNewDocColor;
     [SerializeField] TextMeshProUGUI newDocText;
     [SerializeField] float movementTime;
     [SerializeField] float stillTime;
@@ -16,13 +20,21 @@ public class UIHelmet : MonoBehaviour
     Coroutine logCoroutine;
     Coroutine docCoroutine;
 
+    private void Awake()
+    {
+        initialNewLogPanelPos = newLogPanel.transform.localPosition;
+        initialNewLogColor = newLogPanel.color;
+        initialNewDocPanelPos = newDocPanel.transform.localPosition;
+        initialNewDocColor = newDocPanel.color;
+    }
+
     public void DisplayNewLogNotif()
     {
         if (logCoroutine != null)
         {
             StopCoroutine(logCoroutine);
         }
-        logCoroutine = StartCoroutine(DisplayNotif(newLogPanel, newLogText));
+        logCoroutine = StartCoroutine(DisplayNotif(newLogPanel, newLogText, initialNewLogPanelPos, initialNewLogColor));
     }
 
     public void DisplayNewDocNotif()
@@ -31,32 +43,31 @@ public class UIHelmet : MonoBehaviour
         {
             StopCoroutine(docCoroutine);
         }
-        docCoroutine = StartCoroutine(DisplayNotif(newDocPanel, newDocText));
+        docCoroutine = StartCoroutine(DisplayNotif(newDocPanel, newDocText, initialNewDocPanelPos, initialNewDocColor));
     }
-    IEnumerator DisplayNotif(Image image, TextMeshProUGUI text)
+    IEnumerator DisplayNotif(Image image, TextMeshProUGUI text, Vector3 endPos, Color targetImageColor)
     {
         float timer = 0.0f;
-        Color imageColor = image.color;
-        Color textColor = text.color;
-        Color imageColorNoAlpha = new Color(imageColor.r, imageColor.g, imageColor.b, 0.0f);
-        Color textColorNoAlpha = new Color(textColor.r, textColor.g, textColor.b, 0.0f);
+        Color targetTextColor = text.color;
+        targetTextColor.a = 1;
+        Color imageColorNoAlpha = new Color(targetImageColor.r, targetImageColor.g, targetImageColor.b, 0.0f);
+        Color textColorNoAlpha = new Color(targetTextColor.r, targetTextColor.g, targetTextColor.b, 0.0f);
         image.gameObject.SetActive(true);
         Transform panelTransform = image.transform;
-        Vector3 endPos = panelTransform.localPosition;
-        Vector3 initialPos = panelTransform.localPosition + new Vector3(xStartOffset, 0.0f, 0.0f);
+        Vector3 initialPos = endPos + new Vector3(xStartOffset, 0.0f, 0.0f);
         panelTransform.localPosition = initialPos;
         float t = 0.0f;
         while (timer < movementTime)
         {
             timer += Time.deltaTime;
             t = timer / movementTime;
-            image.color = Color.Lerp(imageColorNoAlpha, imageColor, t);
-            text.color = Color.Lerp(textColorNoAlpha, textColor, t);
+            image.color = Color.Lerp(imageColorNoAlpha, targetImageColor, t);
+            text.color = Color.Lerp(textColorNoAlpha, targetTextColor, t);
             panelTransform.localPosition = Vector3.Lerp(initialPos, endPos, t);
             yield return null;
         }
-        image.color = imageColor;
-        text.color = textColor;
+        image.color = targetImageColor;
+        text.color = targetTextColor;
         panelTransform.localPosition = endPos;
         yield return new WaitForSeconds(stillTime);
         timer = 0.0f;
@@ -64,13 +75,13 @@ public class UIHelmet : MonoBehaviour
         {
             timer += Time.deltaTime;
             t = timer / movementTime;
-            image.color = Color.Lerp(imageColor, imageColorNoAlpha, t);
-            text.color = Color.Lerp(textColor, textColorNoAlpha, t);
+            image.color = Color.Lerp(targetImageColor, imageColorNoAlpha, t);
+            text.color = Color.Lerp(targetTextColor, textColorNoAlpha, t);
             panelTransform.localPosition = Vector3.Lerp(endPos, initialPos, t);
             yield return null;
         }
-        image.color = imageColor;
-        text.color = textColor;
+        image.color = targetImageColor;
+        text.color = targetTextColor;
         panelTransform.localPosition = endPos;
         image.gameObject.SetActive(false);
     }

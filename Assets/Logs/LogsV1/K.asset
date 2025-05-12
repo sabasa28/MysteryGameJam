@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: K
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 0}
-  logText: Now this is odd. Scanning of this weird fragment shows a completely different
-    internal design compared to everything else found so far. It could be an outdated
-    piece of technology, or maybe something experimental. It's too small to make
-    any conclusions, I need to find more.
+  attachedPhoto: {fileID: 21300000, guid: 6d1eb8491f216624493a2a7887337b0a, type: 3}
+  logText: 'Now this is odd. Scanning of this weird fragment shows a completely different
+    internal design compared to everything else found so far.
+
+    It could be an
+    outdated piece of technology, or maybe something experimental.
+
+    It''s too
+    small to make any conclusions, I need to find more.'
   orderFound: 0
   read: 0
