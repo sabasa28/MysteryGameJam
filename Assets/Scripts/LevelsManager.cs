@@ -18,6 +18,7 @@ public class LevelsManager : MonoBehaviour
     public bool GoingUp = false;
     public PersistentData persistentData; //we keep this in this persistent object so it won't be deleted when unloading a scene
     public List<Vector3> beaconsPosInLoadedLevel = new();
+    public bool playedInitialAnimation = false;
     public static LevelsManager Get()
     {
         return instance;

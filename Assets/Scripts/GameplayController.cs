@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GameplayController : MonoBehaviour
 {
@@ -54,8 +55,8 @@ public class GameplayController : MonoBehaviour
     bool inGameMenuOpen = false;
     bool optionsMenuOpen = false;
     [SerializeField] SelectingFinger selectingFinger;
-    bool isPlayerInShip = true;
-    bool isPlayerInLab = false;
+    [SerializeField] bool isPlayerInShip = true;
+    [SerializeField] bool isPlayerInLab = false;
     InputState savedInputState;
     [SerializeField] float lightScalar;
     [SerializeField] float lightAttenuationExponent;
@@ -66,7 +67,16 @@ public class GameplayController : MonoBehaviour
     {
         Shader.SetGlobalFloat("_LightScalar", lightScalar); // B)
         Shader.SetGlobalFloat("_LightAttenuationExponent", lightAttenuationExponent);
-        ChangeInputState(InputState.Movement);
+        LevelsManager levelsManager = LevelsManager.Get();
+        if (!levelsManager.GoingUp && levelsManager.GetCurrentSceneName() == "SurfaceScene")
+        {
+            ChangeInputState(InputState.Cinematic);
+            playerMovement.InitalAnimation();
+        }
+        else
+        { 
+            ChangeInputState(InputState.Movement);
+        }
         playerDocsActive = playerDocs.activeInHierarchy;
         SetPlayerDocsActiveState(playerDocsActive);
         initialZone = currentZone;
@@ -84,17 +94,11 @@ public class GameplayController : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = false;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-            if (inGameMenuOpen)
-            {
                 playerMovement.RaiseHand();
             }
             else
             {
+                Cursor.lockState = CursorLockMode.Locked;
                 playerMovement.LowerHand();
             }
         }
@@ -137,6 +141,7 @@ public class GameplayController : MonoBehaviour
     public void ChangeInputState(InputState newState)
     {
         inputState = newState;
+        playerMovement.StopEnablingInputCoroutine(); //in case we try to change input right after changing input to movement, which takes one frame
         switch (inputState)
         {
             case InputState.Chat:
@@ -196,7 +201,7 @@ public class GameplayController : MonoBehaviour
     
     public bool IsInLab()
     {
-        return isPlayerInShip;
+        return isPlayerInLab;
     }
 
     public void SetPlayerDocsActiveState(bool state)
@@ -219,8 +224,12 @@ public class GameplayController : MonoBehaviour
         selectingFinger.gameObject.SetActive(state);
     }
 
-    public void MovePlayerInOutOfShip()
+    public void MovePlayerInOutOfShip(float customFadeOutInTime = -1.0f)
     {
+        if (customFadeOutInTime > 0.0f)
+        {
+            UIGameplay.Get().SetCustomTimeForNextFade(customFadeOutInTime);
+        }
         isPlayerInShip = !isPlayerInShip;
         StartCoroutine(MovePlayerInOutShipCoroutine(isPlayerInShip));
     }
@@ -234,7 +243,7 @@ public class GameplayController : MonoBehaviour
     IEnumerator MovePlayerInOutShipCoroutine(bool moveIn)
     {
         ChangeInputState(InputState.Cinematic);
-        UIGameplay.Get().FadeOutAndIn();
+        UIGameplay.Get().FadeOutAndIn(false);
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
         playerMovement.GetComponent<CharacterController>().enabled = false;
         playerMovement.transform.position = moveIn ? insideOfShipPos.position : outsideOfShipPos.position;
@@ -261,10 +270,27 @@ public class GameplayController : MonoBehaviour
         ChangeInputState(InputState.Movement);
     }
 
+    public void OnInitialAnimationEnded()
+    {
+        ChatManager.Get().PlayWakeUpChat();
+        StartCoroutine(WaitUntilChatEndAndOpenTablet());
+    }
+
+    IEnumerator WaitUntilChatEndAndOpenTablet()
+    {
+        yield return new WaitUntil(() => inputState == InputState.Movement);
+        inGameMenuOpen = true;
+        ChangeInputState(InputState.InGameUI);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+        playerMovement.RaiseHand();
+    }
+
     void ChangeCurrentZone(ZoneData newZone)
     {
         currentZone = newZone;
         newZone.CheckNecessaryInteractions();
+        ChatManager.Get().doneWithZone = false;
         playerMovement.LoadZoneData(currentZone.allowHook, currentZone.allowBeacons);
     }
 
@@ -291,4 +317,24 @@ public class GameplayController : MonoBehaviour
         return !GetCurrentZone().HasNecessaryInteractionLeft();
     }
 
+    public void StartEndGameCinematic()
+    {
+        ChangeInputState(InputState.Cinematic);
+        MovePlayerInOutOfShip(3.0f);
+        StartCoroutine(StartEndAnimation());
+    }
+
+    IEnumerator StartEndAnimation()
+    { 
+        yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
+        yield return new WaitUntil(() => !UIGameplay.Get().isFaded);
+        Animator playerAnim = playerMovement.GetComponent<Animator>();
+        playerAnim.enabled = true;
+        playerAnim.SetBool("HasReceivedTerribleNews", true);
+    }
+
+    public void SwitchToResultsScene()
+    {
+        SceneManager.LoadScene("ResultsScreenScene");
+    }
 }

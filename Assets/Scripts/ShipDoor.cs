@@ -6,9 +6,24 @@ public class ShipDoor : MonoBehaviour, IInteractable
 {
     [SerializeField] float timeBetweenInteractions;
     bool interactable = true;
+    [SerializeField] TextEntry cantExitLog;
+    [SerializeField] TextEntry cantEnterLog;
     public void Interact()
     {
-        GameplayController.Get().MovePlayerInOutOfShip();
+        GameplayController gc = GameplayController.Get();
+        LevelsManager lvlmg = LevelsManager.Get();
+        if (gc.IsInShip() && !lvlmg.persistentData.PlayerReadAnyLog())
+        {
+            ChatManager.Get().StartDisplayingTextEntry(cantExitLog);
+        }
+        else if (!gc.IsInShip() && (lvlmg.persistentData.isReturning && !gc.IsZoneDone()))
+        {
+            ChatManager.Get().StartDisplayingTextEntry(cantEnterLog);
+        }
+        else
+        {
+            gc.MovePlayerInOutOfShip();
+        }
         StartCoroutine(InteractCooldown());
     }
 

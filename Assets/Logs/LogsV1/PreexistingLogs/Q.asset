@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: Q
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 0}
+  attachedPhoto: {fileID: 21300000, guid: d99e9125d5e5f574b86cb3f8c3e04de4, type: 3}
   logText: 'I have finally obtained permission to land on TRAPPIST-1 e. Protocol
     requires one person to always stay at the ship, but I argued that forcing someone
     to come would be worse, as they would need to jump several times to reach me.
@@ -25,4 +25,4 @@ MonoBehaviour:
     thing to do is return, I believe that this mission is more important than anything
     else. And I know the higher-ups agree.'
   orderFound: 0
-  read: 1
+  read: 0

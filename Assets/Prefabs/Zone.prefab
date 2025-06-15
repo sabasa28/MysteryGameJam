@@ -50,5 +50,7 @@ MonoBehaviour:
   - {fileID: 0}
   entrance: {fileID: 0}
   exit: {fileID: 0}
+  exitDoor: {fileID: 0}
+  zoneDoneChat: {fileID: 0}
   allowHook: 1
   allowBeacons: 0

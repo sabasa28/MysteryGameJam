@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float hookPullSpeed;
     [SerializeField] float hookCooldown;
     [SerializeField] float maxTimeHooked;
+    [SerializeField] float timeBeforeGoingToHook;
     bool goingToHook = false;
     float hookMinTimeToReUse = 0.0f;
     bool inputEnabled = true;
@@ -43,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float sonarAlignTime;
     bool isSonarActive = false;
     [SerializeField] SpriteRenderer sonarSprite;
+    [SerializeField] SpriteRenderer sonarSprite2;
     [SerializeField] Transform sonarPivotY;
     [SerializeField] Transform sonarPivotX;
     [SerializeField] GameObject sonar;
@@ -72,15 +74,32 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float pitchForMetalSteps;
     [SerializeField] float volumeDirtSteps;
     [SerializeField] float volumeMetalSteps;
+    bool playingStepsSound = false;
+    AudioClip overridenStepsSound = null;
     bool hookDiscovered;
     bool beaconsDiscovered;
     bool sonarDiscovered;
     bool hookAllowed;
     bool beaconsAllowed;
+    Animator animator;
+    Coroutine enablingInputCoroutine = null;
+    [SerializeField] AudioClip endAnimMetal1;
+    [SerializeField] AudioClip endAnimMetal2;
+    [SerializeField] AudioClip endAnimMetal3;
+    [SerializeField] AudioClip endAnimMetal4;
+    [SerializeField] AudioClip endAnimDirt1;
+    int endAnimSteps = 0;
 
     void Awake()
     {
+        Time.timeScale = 1.0f;//quitar
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        if (!LevelsManager.Get().playedInitialAnimation)
+        {
+            animator.enabled = true;
+            LevelsManager.Get().playedInitialAnimation = true;
+        }
     }
 
     void Start()
@@ -139,18 +158,12 @@ public class PlayerMovement : MonoBehaviour
         {
             walking = false;
             AudioManager.Get().StopSteps();
+            playingStepsSound = false;
         }
         if (!walking && (movement.magnitude > minMagnitudeForSteps && grounded))
         {
             walking = true;
-            if (GameplayController.Get().IsInShip() || GameplayController.Get().IsInLab())
-            {
-                AudioManager.Get().PlaySteps(footstepsMetalSound, pitchForMetalSteps, volumeMetalSteps);
-            }
-            else
-            { 
-                AudioManager.Get().PlaySteps(footstepsDirtSound, pitchForDirtSteps, volumeDirtSteps);
-            }
+            PlayStepSound();
         }
 
         testgrounded = characterController.isGrounded;
@@ -231,6 +244,7 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator GoToHookHit()
     {
         yield return new WaitUntil(() => hook.hookReachedTarget);
+        yield return new WaitForSeconds(timeBeforeGoingToHook);
         goingToHook = true;
         float maxHitTimer = Time.time + maxTimeHooked;
         while ((Vector3.Distance(transform.position, hookHit.point) > 2.0f) && Time.time <= maxHitTimer)
@@ -247,11 +261,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (newState)
         {
-            StartCoroutine(WaitAndEnableInput()); //we do this hack because otherwise when we re-enabled the input using an input that is used for movement it will also trigger. example: skiping the last dialog will make you jump
+            enablingInputCoroutine = StartCoroutine(WaitAndEnableInput()); //we do this hack because otherwise when we re-enabled the input using an input that is used for movement it will also trigger. example: skiping the last dialog will make you jump
         }
         else
         {
             inputEnabled = newState;
+        }
+    }
+
+    public void StopEnablingInputCoroutine()
+    {
+        if (enablingInputCoroutine != null)
+        {
+            StopCoroutine(enablingInputCoroutine);
         }
     }
     IEnumerator WaitAndEnableInput()
@@ -283,7 +305,10 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             ChatManager.Get().PlayDoneWithZoneChat();
-            StartCoroutine(DisplaySonarArrow(GameplayController.Get().GetCurrentZone().exitDoor.position));
+            if (GameplayController.Get().GetCurrentZone().exitDoor)
+            {
+                StartCoroutine(DisplaySonarArrow(GameplayController.Get().GetCurrentZone().exitDoor.position));
+            }
         }
     }
 
@@ -301,10 +326,12 @@ public class PlayerMovement : MonoBehaviour
             if (distToInteractable > distanceForMediumColor)
             {
                 sonarSprite.color = Color.Lerp(mediumColor, farColor, (distToInteractable - distanceForMediumColor) / (distanceForFarColor - distanceForMediumColor));
+                sonarSprite2.color = Color.Lerp(mediumColor, farColor, (distToInteractable - distanceForMediumColor) / (distanceForFarColor - distanceForMediumColor));
             }
             else
             {
                 sonarSprite.color = Color.Lerp(closeColor, mediumColor, distToInteractable / distanceForMediumColor);
+                sonarSprite2.color = Color.Lerp(closeColor, mediumColor, distToInteractable / distanceForMediumColor);
             }
             sonarPivotY.eulerAngles = new Vector3(sonarPivotY.eulerAngles.x, rotation.eulerAngles.y, sonarPivotY.eulerAngles.z);
             sonarPivotX.eulerAngles = new Vector3(rotation.eulerAngles.x, sonarPivotX.eulerAngles.y, sonarPivotX.eulerAngles.z);
@@ -419,6 +446,18 @@ public class PlayerMovement : MonoBehaviour
         characterController.enabled = true;
     }
 
+    public void InitalAnimation()
+    {
+        UIGameplay.Get().FadeIn();
+        animator.SetTrigger("InitialAnimation");
+    }
+
+    public void OnInitialAnimationEnded()
+    {
+        GameplayController.Get().OnInitialAnimationEnded();
+        animator.enabled = false;
+    }
+
     public void PlayHelmetSound(bool helmetOn)
     {
         if (helmetOn)
@@ -430,4 +469,67 @@ public class PlayerMovement : MonoBehaviour
             AudioManager.Get().PlaySFX(helmetOffSound);
         }
     }
+
+    public void ForceDirtSteps(bool shouldForce)
+    {
+        overridenStepsSound = shouldForce? footstepsDirtSound : null;
+        if (playingStepsSound)
+        {
+            AudioManager.Get().StopSteps();
+            PlayStepSound();
+        }
+    }
+
+    public void PlayStepSound()
+    {
+        if (overridenStepsSound != null)
+        {
+            AudioManager.Get().PlaySteps(overridenStepsSound, pitchForDirtSteps, volumeDirtSteps); //I'm only overriding for dirt, if we end up overriding for other mats I'll have to deal with pitch and volume diffs
+        }
+        else if (GameplayController.Get().IsInShip() || GameplayController.Get().IsInLab())
+        {
+            AudioManager.Get().PlaySteps(footstepsMetalSound, pitchForMetalSteps, volumeMetalSteps);
+            playingStepsSound = true;
+        }
+        else
+        {
+            AudioManager.Get().PlaySteps(footstepsDirtSound, pitchForDirtSteps, volumeDirtSteps);
+            playingStepsSound = true;
+        }
+    }
+
+    public void EndGame()
+    {
+        GameplayController.Get().SwitchToResultsScene();
+    }
+
+    //solo mi padre puede juzgarme
+    public void PlayAnimStep()
+    {
+        endAnimSteps++;
+        switch (endAnimSteps)
+        {
+            case 1:
+                AudioManager.Get().PlayIndividualStep(endAnimMetal1, pitchForMetalSteps, volumeMetalSteps);
+                break;
+            case 2:
+                AudioManager.Get().PlayIndividualStep(endAnimMetal2, pitchForMetalSteps, volumeMetalSteps);
+                break;
+            case 3:
+                AudioManager.Get().PlayIndividualStep(endAnimMetal3, pitchForMetalSteps, volumeMetalSteps);
+                break;
+            case 4:
+                AudioManager.Get().PlayIndividualStep(endAnimMetal4, pitchForMetalSteps, volumeMetalSteps);
+                break;
+            case 5:
+            case 6:
+            default:
+                AudioManager.Get().PlayIndividualStep(endAnimDirt1, pitchForDirtSteps, volumeDirtSteps);
+                break;
+        }
+    }
+
+
+
+
 }

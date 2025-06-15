@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: N
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 0}
+  attachedPhoto: {fileID: 21300000, guid: d99e9125d5e5f574b86cb3f8c3e04de4, type: 3}
   logText: 'We have finally made our first jump, leaving our home behind. As expected,
     most of us woke up feeling quite dizzy, and it took a couple of hours to fully
     recover. Marcus continues to dwell on the long term effects that faster-than-light
@@ -31,4 +31,4 @@ MonoBehaviour:
     And... so many
     jumps left. Can''t say I''m looking forward to that.'
   orderFound: 0
-  read: 1
+  read: 0

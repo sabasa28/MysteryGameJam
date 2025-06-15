@@ -49,6 +49,7 @@ public class DocumentManager : MonoBehaviour
     [SerializeField] PersistentData persistentData;
     [SerializeField] UIHelmet uiHelmet;
     [SerializeField] List<LogEntry> preexistentLogs = new();
+    [SerializeField] int knowledgePerDoc;
 
     [Serializable]
     struct WordsReplacement : IComparable<WordsReplacement>
@@ -91,7 +92,8 @@ public class DocumentManager : MonoBehaviour
         }
         foreach (LogEntry log in preexistentLogs)
         {
-            AddLogToFoundLogs(log);
+            AddLogToFoundLogs(log, true);
+            persistentData.AddLogToExisting(log);
         }
     }
 
@@ -161,7 +163,7 @@ public class DocumentManager : MonoBehaviour
         {
             AddToLearnableWords(word.ToLower());
         }
-        SetKnowledgeLevel(knowledgeLevel + 10);
+        SetKnowledgeLevel(knowledgeLevel + knowledgePerDoc);
         persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
         uiHelmet.DisplayNewDocNotif();
     }
@@ -293,7 +295,7 @@ public class DocumentManager : MonoBehaviour
         return documentsRead;
     }
 
-    public void AddLogToFoundLogs(LogEntry newLog)
+    public void AddLogToFoundLogs(LogEntry newLog, bool isPreexisting = false)
     {
         if (!logsFound.Contains(newLog))
         {
@@ -301,7 +303,10 @@ public class DocumentManager : MonoBehaviour
             newLog.read = false;
             logsFound.Add(newLog);
             persistentData.UpdatePersistentLogsData(logsFound);
-            uiHelmet.DisplayNewLogNotif();
+            if (!isPreexisting)
+            {
+                uiHelmet.DisplayNewLogNotif();
+            }
         }
     }
 

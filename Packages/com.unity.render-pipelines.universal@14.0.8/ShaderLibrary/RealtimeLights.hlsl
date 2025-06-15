@@ -7,8 +7,8 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LightCookie/LightCookie.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Clustering.hlsl"
-float _LightScalar;
-float _LightAttenuationExponent;
+float _LightScalar = 1.0f;
+float _LightAttenuationExponent = 2.0f;
 // Abstraction over Light shading data.
 struct Light
 {

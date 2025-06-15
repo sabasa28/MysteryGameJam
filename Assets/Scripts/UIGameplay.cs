@@ -10,7 +10,9 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] GameObject InteractText;
     [SerializeField] GameObject fadeOutPanel;
     [SerializeField] Image fadeOutImage;
-    [SerializeField] float fadeOutInTime;
+    [SerializeField] float fadeOutInDefaultTime;
+    float fadeOutInCustomTime;
+    [SerializeField] float fadeInTime;
     [SerializeField] float fadedTime;
     public bool isFadingOut = false; //probably should be an enum
     public bool isFaded = false;
@@ -18,12 +20,15 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] GameObject menuPanel;
     [SerializeField] GameObject generalMenuPanel;
     [SerializeField] GameObject settingsMenuPanel;
+    [SerializeField] GameObject controlsMenuPanel;
     [SerializeField] Slider sensitivitySlider;
     [SerializeField] Slider volumeSlider;
     [SerializeField] GameObject ShipDoc1;
     [SerializeField] GameObject ShipDoc2;
     [SerializeField] GameObject ShipDoc3;
     [SerializeField] GameObject ShipDoc4;
+    [SerializeField] GameObject ShipDoc5;
+    [SerializeField] Button EndGameButton;
     bool docOpen = false;
     bool lastDocOpen = false;
     bool lastTimerOver = false;
@@ -68,10 +73,6 @@ public class UIGameplay : MonoBehaviour
             ShipDoc3.SetActive(false);
             docOpen = false;
         }
-        if (lastDocOpen && Input.GetKeyDown(KeyCode.Mouse0) && lastTimerOver)
-        {
-            SceneManager.LoadScene("MainMenuScene");
-        }
     }
     public void ChangeInteractTextDisplay(bool bDisplay)
     {
@@ -83,8 +84,15 @@ public class UIGameplay : MonoBehaviour
         StartCoroutine(FadeOut(startFromWhite));
     }
 
-    IEnumerator FadeOut(bool startFromWhite = false)
+    public void FadeIn(bool startFromWhite = false)
     {
+        StartCoroutine(FadeIn());
+    }
+
+    IEnumerator FadeOut(bool startFromWhite)
+    {
+        float fadeOutInTime = fadeOutInCustomTime > 0 ? fadeOutInCustomTime : fadeOutInDefaultTime;
+        fadeOutInCustomTime = -1.0f;
         float timer = 0.0f;
         isFadingOut = true;
         fadeOutPanel.SetActive(true);
@@ -111,6 +119,22 @@ public class UIGameplay : MonoBehaviour
         isFadingIn = false;
     }
 
+    IEnumerator FadeIn()
+    {
+        fadeOutImage.color = Color.black;
+        fadeOutPanel.SetActive(true);
+        float timer = 0.0f;
+        isFadingIn = true;
+        while (timer < fadeInTime)
+        {
+            timer += Time.deltaTime;
+            fadeOutImage.color = new Color(fadeOutImage.color.r, fadeOutImage.color.g, fadeOutImage.color.b, 1 - (timer / fadeInTime));
+            yield return null;
+        }
+        fadeOutPanel.SetActive(false);
+        isFadingIn = false;
+    }
+
     public void ShowMenu(bool shouldShow)
     {
         GameplayController.Get().OnUIMenuStateChanged();
@@ -122,6 +146,7 @@ public class UIGameplay : MonoBehaviour
         menuPanel.SetActive(newVisibility);
         generalMenuPanel.SetActive(newVisibility);
         settingsMenuPanel.SetActive(!newVisibility);
+        controlsMenuPanel.SetActive(!newVisibility);
     }
 
     public void UpdateVolume()
@@ -158,14 +183,34 @@ public class UIGameplay : MonoBehaviour
     }
     public void DisplayShipDoc4()
     {
+        GameplayController.Get().ChangeInputState(GameplayController.InputState.UI);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         ShipDoc4.SetActive(true);
-        StartCoroutine(WaitLastTimer());
-        lastDocOpen = true;
+        ShipDoc5.SetActive(false);
     }
-
+    public void DisplayShipDoc5()
+    {
+        ShipDoc5.SetActive(true);
+        ShipDoc4.SetActive(false);
+        EndGameButton.interactable = false;
+        StartCoroutine(WaitLastTimer());
+    }
     IEnumerator WaitLastTimer()
     {
-        yield return new WaitForSeconds(5.0f);
-        lastTimerOver = true;
+        yield return new WaitForSeconds(1.0f);
+        EndGameButton.interactable = true;
+    }
+    public void StartEndingCinematic()
+    {
+        ShipDoc5.SetActive(false);
+        GameplayController.Get().ChangeInputState(GameplayController.InputState.UI);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        GameplayController.Get().StartEndGameCinematic();
+    }
+    public void SetCustomTimeForNextFade(float customTime)
+    {
+        fadeOutInCustomTime = customTime;
     }
 }

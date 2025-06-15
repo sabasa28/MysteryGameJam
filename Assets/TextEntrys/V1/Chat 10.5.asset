@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a633f449938a194e9738ad7bc2507bb, type: 3}
+  m_Name: Chat 10.5
+  m_EditorClassIdentifier: 
+  textLine:
+  - text: This is... incredible.
+    speaker: 0
+  - text: Indeed. Based on the type of technology that I'm scanning ahead, this edification
+      seems to be something similar to a laboratory.
+    speaker: 1
+  - text: I think we hit the jackpot here.
+    speaker: 0
+  - text: Make sure to log any important piece of data that you ran into and grab
+      every document that you can find. Use my scanner if you need help finding the
+      latter ones.
+    speaker: 1
+  - text: Yeah, obviously.
+    speaker: 0
+  - text: By the way, where is this artificial light coming from? What energy source?
+    speaker: 0
+  - text: I think you will find the answer to that up ahead.
+    speaker: 1

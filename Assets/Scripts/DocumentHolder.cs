@@ -9,10 +9,12 @@ public class DocumentHolder : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        if (LevelsManager.Get().persistentData.WasDocFound(document))
+        PersistentData persistentData = LevelsManager.Get().persistentData;
+        if (persistentData.WasDocFound(document))
         {
             gameObject.SetActive(false);
         }
+        persistentData.AddDocToExisting(document);
     }
 
     public void Interact()
@@ -28,7 +30,7 @@ public class DocumentHolder : MonoBehaviour, IInteractable
 
     public virtual bool IsInteractable()
     {
-        return true;
+        return gameObject.activeInHierarchy && !LevelsManager.Get().persistentData.WasDocFound(document);
     }
 
     public void RemoveFromNecessaryInteractables()

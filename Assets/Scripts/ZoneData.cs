@@ -16,9 +16,10 @@ public class ZoneData : MonoBehaviour
     {
         for (int i = necessaryInteractions.Count - 1; i >= 0; i--)
         {
-            if (!necessaryInteractions[i].activeInHierarchy)
+            if (!necessaryInteractions[i].GetComponent<IInteractable>().IsInteractable())
             {
                 necessaryInteractions.RemoveAt(i);
+                continue;
             }
         }
     }

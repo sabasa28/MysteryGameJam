@@ -12,28 +12,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441b7e701905f964eaaffac17b148a95, type: 3}
   m_Name: PersistentData
   m_EditorClassIdentifier: 
-  beaconsInLevels:
-  - BeaconsPos:
-    - {x: 52.935024, y: 58.3, z: -4.3309565}
-    - {x: 54.082397, y: 58.3, z: -2.8258133}
-    - {x: 54.92416, y: 58.3, z: -1.2352362}
-    - {x: 56.23527, y: 58.3, z: -0.17116928}
-    - {x: 57.95273, y: 58.3, z: -0.43910313}
-    - {x: 58.04637, y: 58.3, z: -3.8436031}
-    - {x: 55.832153, y: 58.3, z: -4.2273903}
-    SceneName: SurfaceScene
-  - BeaconsPos:
-    - {x: 61.57, y: 140, z: -76.58}
-    - {x: 61.583385, y: 140, z: -76.020676}
-    - {x: 61.593124, y: 140, z: -75.0436}
-    - {x: 62.503845, y: 139, z: -73.50039}
-    - {x: 62.509506, y: 139, z: -73.618355}
-    - {x: 62.541637, y: 139, z: -74.28739}
-    - {x: 62.58954, y: 139, z: -75.2845}
-    - {x: 62.627922, y: 139, z: -76.08357}
-    - {x: 62.6759, y: 139, z: -77.08243}
-    - {x: 62.71559, y: 138.99998, z: -78.08163}
-    - {x: 62.741337, y: 139, z: -78.981255}
-    - {x: 63.202023, y: 139, z: -79.42522}
-    - {x: 64.420006, y: 139, z: -79.413864}
-    SceneName: HigherCaveScene
+  beaconsInLevels: []
+  persistentDocsData:
+    learnableWords: []
+    wordsLearned: []
+    documentsRead: []
+    existingDocuments:
+    - {fileID: 11400000, guid: 8d6e66612ae68c94e907d818cfa44e46, type: 2}
+    - {fileID: 11400000, guid: 99dec87929a436f4c9f50dca631d91d0, type: 2}
+    - {fileID: 11400000, guid: dd864b32417ae5c46ae035d7fcec8b57, type: 2}
+    - {fileID: 11400000, guid: 7af9f69f01c15b84a81edd4ee1a95b32, type: 2}
+    - {fileID: 11400000, guid: 78f019f4628698e439546c2ea36199f4, type: 2}
+    - {fileID: 11400000, guid: a5409ac204b1287409f8fb237ebc9bcb, type: 2}
+    - {fileID: 11400000, guid: fa0fdf34760e82c469600c972ca1216f, type: 2}
+    - {fileID: 11400000, guid: 53296dc6761febb44af75bccc7824b6c, type: 2}
+    - {fileID: 11400000, guid: df9780f3b4163f24ea70d3a94e53ed70, type: 2}
+    - {fileID: 11400000, guid: 76e6178d6822c3a488512e4452ffb70a, type: 2}
+    - {fileID: 11400000, guid: bdf254493962aee4ba044176a7da961d, type: 2}
+    - {fileID: 11400000, guid: d366ae94fe4c0fb479f9389cff205675, type: 2}
+    - {fileID: 11400000, guid: 60653b1884f36b847870e4209170842d, type: 2}
+    - {fileID: 11400000, guid: 28b93cbe80ce0e44fb450eb84d594282, type: 2}
+    - {fileID: 11400000, guid: e4159afd8552e7f41ae6261f35296805, type: 2}
+    - {fileID: 11400000, guid: 24d7e1cbc6f85124fa67f1384391d397, type: 2}
+    - {fileID: 11400000, guid: 454abd322b1d25246a2ce36660555de1, type: 2}
+    - {fileID: 11400000, guid: 5d72e0b6f9c470d449580743c0104301, type: 2}
+    - {fileID: 11400000, guid: 083b80ffbe0aa0440b86788a38e4ac46, type: 2}
+    - {fileID: 11400000, guid: 2dfdba640b9a60e4ebc1d8672d468578, type: 2}
+    - {fileID: 11400000, guid: 387369c7847973144b5307cc1e96db73, type: 2}
+    logsFound:
+    - {fileID: 11400000, guid: 689455b2db026ff4eb8fffe003e1506c, type: 2}
+    - {fileID: 11400000, guid: cb79a990679c24245a66999d1eb9aebe, type: 2}
+    - {fileID: 11400000, guid: dc600525da7fde0489d351d443c4571d, type: 2}
+    - {fileID: 11400000, guid: d5ab2d47517a67646a4f7712ab49edf9, type: 2}
+    existingLogs:
+    - {fileID: 11400000, guid: 0e0295f6d2553df4096fde6fb26e7fd4, type: 2}
+    - {fileID: 11400000, guid: 689455b2db026ff4eb8fffe003e1506c, type: 2}
+    - {fileID: 11400000, guid: cb79a990679c24245a66999d1eb9aebe, type: 2}
+    - {fileID: 11400000, guid: dc600525da7fde0489d351d443c4571d, type: 2}
+    - {fileID: 11400000, guid: d5ab2d47517a67646a4f7712ab49edf9, type: 2}
+    - {fileID: 11400000, guid: 142a9e6f9e1ffeb40aed63722f303a32, type: 2}
+    - {fileID: 11400000, guid: b5f25663a3e712e4fb4f1b2ec1b3135d, type: 2}
+    - {fileID: 11400000, guid: 60fb5f63891449e45a1256f7d663614a, type: 2}
+    - {fileID: 11400000, guid: a8427633f686fe14ca442e4564166d22, type: 2}
+    - {fileID: 11400000, guid: ecd68fea14f5b1c4b9f0b88521dc1c26, type: 2}
+    - {fileID: 11400000, guid: bfb54eb65f7cf4b4f96981b460c4edd8, type: 2}
+    - {fileID: 11400000, guid: 41b45e5c77ea1aa49b025caa603126cb, type: 2}
+    - {fileID: 11400000, guid: 72af8e5988676c14aab3007c2d4e5e0b, type: 2}
+    - {fileID: 11400000, guid: 9bb393f3b4f6eeb43ad103b6980f7e6c, type: 2}
+    - {fileID: 11400000, guid: 0c96609286a9b944494bcb76d14ddaee, type: 2}
+    knowledgeLevel: 0
+  flashlightOn: 0
+  helmetOn: 0
+  hookDiscovered: 0
+  beaconsDiscovered: 0
+  sonarDiscovered: 0
+  isReturning: 0
+  canEndGame: 0
+  chatsAlreadyPlayed: []

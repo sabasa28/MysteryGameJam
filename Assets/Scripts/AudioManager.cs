@@ -70,9 +70,19 @@ public class AudioManager : MonoBehaviour
         audioSource.PlayOneShot(uiBackClip, 1.0f * SettingsData.volume);
     }
 
-    public void PlaySteps(AudioClip clip, float pitch, float volume)
+    public void PlaySteps(AudioClip clip, float pitch, float volume) //we asume loop is true
     {
         stepsSource.Stop();
+        stepsSource.clip = clip;
+        stepsSource.pitch = pitch;
+        stepsSource.volume = SettingsData.volume * volume;
+        stepsSource.Play();
+    }
+
+    public void PlayIndividualStep(AudioClip clip, float pitch, float volume)
+    {
+        stepsSource.Stop();
+        stepsSource.loop = false;
         stepsSource.clip = clip;
         stepsSource.pitch = pitch;
         stepsSource.volume = SettingsData.volume * volume;

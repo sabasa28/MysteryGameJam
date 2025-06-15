@@ -26,7 +26,9 @@ public class PersistentData : ScriptableObject
         public List<string> learnableWords;
         public List<string> wordsLearned;
         public List<Document> documentsRead;
+        public List<Document> existingDocuments;
         public List<LogEntry> logsFound;
+        public List<LogEntry> existingLogs;
         public int knowledgeLevel;
         public void InitializeData()
         {
@@ -54,6 +56,14 @@ public class PersistentData : ScriptableObject
             {
                 documentsRead = new();
             }
+            if (existingDocuments != null)
+            {
+                existingDocuments.Clear();
+            }
+            else
+            {
+                existingDocuments = new();
+            }
             if (logsFound != null)
             {
                 logsFound.Clear();
@@ -62,6 +72,15 @@ public class PersistentData : ScriptableObject
             {
                 logsFound = new();
             }
+            if (existingLogs != null)
+            {
+                existingLogs.Clear();
+            }
+            else
+            {
+                existingLogs = new();
+            }
+            knowledgeLevel = 0;
         }
 
         public bool HasData()
@@ -134,9 +153,25 @@ public class PersistentData : ScriptableObject
         persistentDocsData.knowledgeLevel = knowledgeLevel;
     }
 
+    public void AddDocToExisting(Document doc)
+    {
+        if (!persistentDocsData.existingDocuments.Contains(doc))
+        {
+            persistentDocsData.existingDocuments.Add(doc);
+        }
+    }
+
     public void UpdatePersistentLogsData(List<LogEntry> logsFound)
     {
         persistentDocsData.logsFound = logsFound;
+    }
+
+    public void AddLogToExisting(LogEntry log)
+    {
+        if (!persistentDocsData.existingLogs.Contains(log))
+        {
+            persistentDocsData.existingLogs.Add(log);
+        }
     }
 
     public void UpdateFlashlightState(bool newState)
@@ -191,5 +226,17 @@ public class PersistentData : ScriptableObject
         {
             chatsAlreadyPlayed.Add(chat);
         }
+    }
+
+    public bool PlayerReadAnyLog()
+    {
+        foreach (LogEntry log in persistentDocsData.logsFound)
+        {
+            if (log.read)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -24,6 +24,8 @@ public class UIPlayerDocs : MonoBehaviour
     [SerializeField] TextMeshProUGUI readingDocFound;
     [SerializeField] TextMeshProUGUI readingDocContent;
     [SerializeField] GameObject logImageDisplay;
+    bool firstDisplay = true;
+    [SerializeField] GameObject firstDisplayText;
 
     private void OnEnable()
     {
@@ -31,6 +33,19 @@ public class UIPlayerDocs : MonoBehaviour
         SetReadingDocActiveState(false);
         SetLogActiveState(false);
         SetDocumentListActiveState(false);
+        if (firstDisplay)
+        {
+            firstDisplay = false;
+        }
+        else
+        { 
+            firstDisplayText.SetActive(false);
+        }
+    }
+
+    private void OnDisable()
+    {
+        SetLogActiveState(false);
     }
 
     public void SetDocumentListActiveState(bool state)

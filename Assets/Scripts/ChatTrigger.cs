@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ChatTrigger : MonoBehaviour
 {
-    [SerializeField] TextEntry textEntryToDisplay;
-    [SerializeField] EventTriggerBase eventToTrigger;
+    [SerializeField] protected TextEntry textEntryToDisplay;
+    [SerializeField] protected EventTriggerBase eventToTrigger;
     [SerializeField] float timeBeforeTriggering = 0.0f;
     bool waitingToTrigger = false;
-    private void Start()
+    protected virtual void Start()
     {
         if (LevelsManager.Get().persistentData.WasChatPlayed(textEntryToDisplay))
         {

@@ -17,7 +17,8 @@ public class ChatManager : MonoBehaviour
     [SerializeField] TextEntry testText;
     [SerializeField] TextEntry notDoneWithZoneChat;
     [SerializeField] TextEntry doneWithZoneChat;
-    bool doneWithZone = false;
+    [SerializeField] TextEntry wakeUpChat;
+    public bool doneWithZone = false;
     [SerializeField] TextEntry firstDocChat;
     [SerializeField] string astrounautName;
     [SerializeField] string AIName;
@@ -175,5 +176,10 @@ public class ChatManager : MonoBehaviour
     public void PlayFistDocChat()
     {
         StartDisplayingTextEntry(firstDocChat);
+    }
+
+    public void PlayWakeUpChat()
+    {
+        StartDisplayingTextEntry(wakeUpChat);
     }
 }

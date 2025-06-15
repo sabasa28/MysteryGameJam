@@ -10,10 +10,12 @@ public class LogTrigger : MonoBehaviour
     bool waitingToTrigger = false;
     private void Start()
     {
-        if (LevelsManager.Get().persistentData.WasLogTriggered(logEntryToAdd))
+        PersistentData persistentData = LevelsManager.Get().persistentData;
+        if (persistentData.WasLogTriggered(logEntryToAdd))
         {
             gameObject.SetActive(false);
         }
+        persistentData.AddLogToExisting(logEntryToAdd);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -39,7 +41,6 @@ public class LogTrigger : MonoBehaviour
 
     void Trigger()
     {
-
         DocumentManager.Get().AddLogToFoundLogs(logEntryToAdd);
         AudioManager.Get().PlayPhotoSound();
         if (eventToTrigger != null)
