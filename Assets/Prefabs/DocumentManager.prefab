@@ -100,5 +100,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cb79a990679c24245a66999d1eb9aebe, type: 2}
   - {fileID: 11400000, guid: dc600525da7fde0489d351d443c4571d, type: 2}
   - {fileID: 11400000, guid: d5ab2d47517a67646a4f7712ab49edf9, type: 2}
-  knowledgePerDoc: 5
+  knowledgePerDoc: 7
   wordReplacements: []

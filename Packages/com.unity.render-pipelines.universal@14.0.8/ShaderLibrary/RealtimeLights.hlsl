@@ -7,8 +7,7 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LightCookie/LightCookie.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Clustering.hlsl"
-float _LightScalar = 1.0f;
-float _LightAttenuationExponent = 2.0f;
+
 // Abstraction over Light shading data.
 struct Light
 {
@@ -87,8 +86,8 @@ float DistanceAttenuation(float distanceSqr, half2 distanceAttenuation)
 //return lightAtten * smoothFactor;
 float distance = sqrt(distanceSqr);
 float range = rsqrt(distanceAttenuation.x);
-float distance01 = saturate(1 - (distance / range));
-float lightAtten = pow(distance01, _LightAttenuationExponent);
+float distance01 = saturate(1.0f - (distance / range));
+float lightAtten = pow(distance01, 2.0f);
 return lightAtten;
 }
 
@@ -104,6 +103,7 @@ half AngleAttenuation(half3 spotDirection, half3 lightDirection, half2 spotAtten
     // If we precompute the terms in a MAD instruction
     half SdotL = dot(spotDirection, lightDirection);
     half atten = saturate(SdotL * spotAttenuation.x + spotAttenuation.y);
+    atten = atten * atten * (3.0f - 2.0f * atten);
     return atten * atten;
 }
 

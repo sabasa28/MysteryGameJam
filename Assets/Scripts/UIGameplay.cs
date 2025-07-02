@@ -30,8 +30,6 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] GameObject ShipDoc5;
     [SerializeField] Button EndGameButton;
     bool docOpen = false;
-    bool lastDocOpen = false;
-    bool lastTimerOver = false;
 
     public static UIGameplay Get()
     {

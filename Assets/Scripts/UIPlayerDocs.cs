@@ -17,7 +17,7 @@ public class UIPlayerDocs : MonoBehaviour
     List<LogEntry> logs;
     List<Document> sortedDocs = new();
     [SerializeField] Transform docsParent;
-    [SerializeField] Transform logsParent;
+    [SerializeField] RectTransform logsParent;
     [SerializeField] GameObject readingDoc;
     [SerializeField] GameObject initialOptions;
     [SerializeField] TextMeshProUGUI readingDocTitle;
@@ -26,6 +26,8 @@ public class UIPlayerDocs : MonoBehaviour
     [SerializeField] GameObject logImageDisplay;
     bool firstDisplay = true;
     [SerializeField] GameObject firstDisplayText;
+    [SerializeField] GameObject sortingButton;
+    [SerializeField] TextMeshProUGUI sortingButtonText;
 
     private void OnEnable()
     {
@@ -52,6 +54,7 @@ public class UIPlayerDocs : MonoBehaviour
     {
         initialOptions.SetActive(!state);
         documentList.SetActive(state);
+        sortingButton.SetActive(LevelsManager.Get().persistentData.calendarDiscovered);
         if (!state)
         {
             return;
@@ -128,7 +131,16 @@ public class UIPlayerDocs : MonoBehaviour
             }
         }
         InitializeUILogEntries();
-        logScroll.verticalNormalizedPosition = 0.0f;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(logsParent);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(logsParent); // esta es la cosa mas estupida que hice pero 2 funcionan y 1 no
+        if (LevelsManager.Get().persistentData.PlayerReadAnyLog())
+        {
+            logScroll.verticalNormalizedPosition = 0.0f;
+        }
+        else
+        {
+            logScroll.verticalNormalizedPosition = 1.0f;
+        }
     }
 
     public void InitializeReadingDocument(UIDocument document)
@@ -171,7 +183,10 @@ public class UIPlayerDocs : MonoBehaviour
     public void UpdateDocsSortedByDate()
     {
         sortedDocs = new List<Document>(documents);
-        sortedDocs.Sort((x,y) => x.orderToDisplay - y.orderToDisplay);
+        if (LevelsManager.Get().persistentData.persistentDocsData.docsSortedByDate)
+        {
+            sortedDocs.Sort((x,y) => x.orderToDisplay - y.orderToDisplay);
+        }
     }
 
     public void SetLogImageAndDisplay(Image newImage)
@@ -204,6 +219,15 @@ public class UIPlayerDocs : MonoBehaviour
         }
         button.interactable = true;
         logImageDisplay.transform.localScale = Vector3.one;
+    }
+
+    public void SwitchSortingCriteria()
+    {
+        LevelsManager levelManager = LevelsManager.Get();
+        bool previousValue = levelManager.persistentData.persistentDocsData.docsSortedByDate;
+        levelManager.persistentData.persistentDocsData.docsSortedByDate = !previousValue;
+        sortingButtonText.text = previousValue? "Found" : "Date";
+        InitializeDocsUI();
     }
 
 }

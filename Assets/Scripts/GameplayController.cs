@@ -58,15 +58,11 @@ public class GameplayController : MonoBehaviour
     [SerializeField] bool isPlayerInShip = true;
     [SerializeField] bool isPlayerInLab = false;
     InputState savedInputState;
-    [SerializeField] float lightScalar;
-    [SerializeField] float lightAttenuationExponent;
     [SerializeField] GameObject playerDocs;
     bool playerDocsActive;
 
     private void Start()
     {
-        Shader.SetGlobalFloat("_LightScalar", lightScalar); // B)
-        Shader.SetGlobalFloat("_LightAttenuationExponent", lightAttenuationExponent);
         LevelsManager levelsManager = LevelsManager.Get();
         if (!levelsManager.GoingUp && levelsManager.GetCurrentSceneName() == "SurfaceScene")
         {
@@ -253,6 +249,7 @@ public class GameplayController : MonoBehaviour
         playerMovement.PlayHelmetSound(!moveIn);
         yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
         ChangeInputState(InputState.Movement);
+        playerMovement.SetJumpAllowed(!moveIn);
     }
 
     IEnumerator MovePlayerInOutLabCoroutine(bool moveIn)
@@ -310,6 +307,11 @@ public class GameplayController : MonoBehaviour
     {
         LevelsManager.Get().persistentData.sonarDiscovered = true;
         LoadPlayerPersistence();
+    }
+
+    public void DiscoverCalendar()
+    {
+        LevelsManager.Get().persistentData.calendarDiscovered = true;
     }
 
     public bool IsZoneDone()

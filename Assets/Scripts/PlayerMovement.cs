@@ -81,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
     bool sonarDiscovered;
     bool hookAllowed;
     bool beaconsAllowed;
+    bool jumpAllowed = true;
     Animator animator;
     Coroutine enablingInputCoroutine = null;
     [SerializeField] AudioClip endAnimMetal1;
@@ -95,18 +96,19 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = 1.0f;//quitar
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
         if (!LevelsManager.Get().playedInitialAnimation)
         {
             animator.enabled = true;
             LevelsManager.Get().playedInitialAnimation = true;
         }
-    }
-
-    void Start()
-    {
         beaconsPlaced = persistentData.GetBeaconsUsed();
         Transform initialTransform = LevelsManager.Get().GoingUp? GameplayController.Get().GetCurrentZone().exit : GameplayController.Get().GetCurrentZone().entrance;
         CopyPositionAndRotation(initialTransform);
+        jumpAllowed = !GameplayController.Get().IsInShip();
     }
 
     void Update()
@@ -121,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
             mouseX = Input.GetAxis("Mouse X");
             horizontalValue = Input.GetAxis("Horizontal");
             verticalValue = Input.GetAxis("Vertical");
-            if (Input.GetButtonDown("Jump") && grounded && verticalForce < 0.0f)
+            if (Input.GetButtonDown("Jump") && jumpAllowed && grounded && verticalForce < 0.0f)
             {
                 verticalForce += jumpForce;
             }
@@ -529,7 +531,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-
+    public void SetJumpAllowed(bool newJumpAllowed)
+    { 
+        jumpAllowed = newJumpAllowed;
+    }
 
 }

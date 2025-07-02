@@ -123,7 +123,7 @@ MonoBehaviour:
   fadeOutImage: {fileID: 9187289951018907324}
   fadeOutInDefaultTime: 1
   fadeInTime: 2
-  fadedTime: 1
+  fadedTime: 1.5
   isFadingOut: 0
   isFaded: 0
   isFadingIn: 0

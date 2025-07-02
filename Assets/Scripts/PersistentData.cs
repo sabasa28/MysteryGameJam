@@ -29,6 +29,7 @@ public class PersistentData : ScriptableObject
         public List<Document> existingDocuments;
         public List<LogEntry> logsFound;
         public List<LogEntry> existingLogs;
+        public bool docsSortedByDate;
         public int knowledgeLevel;
         public void InitializeData()
         {
@@ -81,6 +82,7 @@ public class PersistentData : ScriptableObject
                 existingLogs = new();
             }
             knowledgeLevel = 0;
+            docsSortedByDate = false;
         }
 
         public bool HasData()
@@ -102,6 +104,7 @@ public class PersistentData : ScriptableObject
     public bool hookDiscovered = false;
     public bool beaconsDiscovered = false;
     public bool sonarDiscovered = false;
+    public bool calendarDiscovered = false;
     public bool isReturning = false;
     public bool canEndGame = false;
 
@@ -190,6 +193,7 @@ public class PersistentData : ScriptableObject
         persistentDocsData.InitializeData();
         hookDiscovered = false;
         sonarDiscovered = false;
+        calendarDiscovered = false;
         beaconsDiscovered = false;
         flashlightOn = false;
         helmetOn = false;

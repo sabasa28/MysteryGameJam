@@ -17,3 +17,8 @@ MonoBehaviour:
     speaker: 1
   - text: There's probably more to be found, but it might not be as important.
     speaker: 1
+  - text: The scanner will now point towards the exit of this zone in case you get
+      lost.
+    speaker: 1
+  - text: ...
+    speaker: 0
