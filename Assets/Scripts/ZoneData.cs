@@ -11,6 +11,7 @@ public class ZoneData : MonoBehaviour
     public TextEntry zoneDoneChat;
     public bool allowHook;
     public bool allowBeacons;
+    public bool allowFlashlight;
 
     public void CheckNecessaryInteractions()
     {

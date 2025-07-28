@@ -67,7 +67,7 @@ public class GameplayController : MonoBehaviour
         if (!levelsManager.GoingUp && levelsManager.GetCurrentSceneName() == "SurfaceScene")
         {
             ChangeInputState(InputState.Cinematic);
-            playerMovement.InitalAnimation();
+            playerMovement.InitialPlayerSpawn();
         }
         else
         { 
@@ -81,7 +81,7 @@ public class GameplayController : MonoBehaviour
     private void Update()
     {
 
-        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && !playerMovement.isAnimatingUiHand && inputState != InputState.Chat && inputState != InputState.Cinematic)
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic)
         {
             inGameMenuOpen = !inGameMenuOpen;
             ChangeInputState(inGameMenuOpen ? InputState.InGameUI : InputState.Movement);
@@ -188,6 +188,7 @@ public class GameplayController : MonoBehaviour
     {
         helmetVolume.enabled = helmetState;
         isPlayerInShip = !helmetState;
+        playerMovement.SetJumpAllowed(!isPlayerInShip);
     }
 
     public bool IsInShip()
@@ -276,11 +277,6 @@ public class GameplayController : MonoBehaviour
     IEnumerator WaitUntilChatEndAndOpenTablet()
     {
         yield return new WaitUntil(() => inputState == InputState.Movement);
-        inGameMenuOpen = true;
-        ChangeInputState(InputState.InGameUI);
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
-        playerMovement.RaiseHand();
     }
 
     void ChangeCurrentZone(ZoneData newZone)
@@ -288,7 +284,7 @@ public class GameplayController : MonoBehaviour
         currentZone = newZone;
         newZone.CheckNecessaryInteractions();
         ChatManager.Get().doneWithZone = false;
-        playerMovement.LoadZoneData(currentZone.allowHook, currentZone.allowBeacons);
+        playerMovement.LoadZoneData(currentZone.allowHook, currentZone.allowBeacons, currentZone.allowFlashlight);
     }
 
     public void DiscoverHook()
@@ -338,5 +334,31 @@ public class GameplayController : MonoBehaviour
     public void SwitchToResultsScene()
     {
         SceneManager.LoadScene("ResultsScreenScene");
+    }
+
+    public bool TabletEnabled()
+    {
+        return playerMovement.IsTabletEnabled();
+    }
+
+    public void EnableAndOpenTablet()
+    {
+        playerMovement.EnableTablet();
+        inGameMenuOpen = true;
+        ChangeInputState(InputState.InGameUI);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+        playerMovement.RaiseHand();
+    }
+
+    public void MovePlayerCameraAndReturn(Transform targetPos, float goingTime, float returningTime)
+    {
+        ChangeInputState(InputState.InGameUI);
+        playerMovement.MoveCameraAndReturn(targetPos, goingTime, returningTime);
+    }
+
+    public void ReturnPlayerCamera()
+    { 
+        playerMovement.ReturnCameraToPlayer();
     }
 }

@@ -163,7 +163,7 @@ public class DocumentManager : MonoBehaviour
         {
             AddToLearnableWords(word.ToLower());
         }
-        SetKnowledgeLevel(knowledgeLevel + knowledgePerDoc);
+        SetKnowledgeLevel(LevelsManager.Get().persistentData.PlayerFoundAnyDoc()? knowledgeLevel + knowledgePerDoc : knowledgeLevel);
         persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
         uiHelmet.DisplayNewDocNotif();
     }

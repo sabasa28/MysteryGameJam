@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float uiHandMovingTime;
     [SerializeField] AnimationCurve uiHandCurve;
     [SerializeField] Animator uiHandAnim;
-    public bool isAnimatingUiHand = false;
+    bool isAnimatingUiHand = false;
     bool walking = false;
     [SerializeField] float minMagnitudeForSteps;
     [SerializeField] float pitchForDirtSteps;
@@ -81,7 +81,9 @@ public class PlayerMovement : MonoBehaviour
     bool sonarDiscovered;
     bool hookAllowed;
     bool beaconsAllowed;
-    bool jumpAllowed = true;
+    bool flashlightAllowed;
+    bool jumpAllowed = false;
+    bool tabletAllowed = true;
     Animator animator;
     Coroutine enablingInputCoroutine = null;
     [SerializeField] AudioClip endAnimMetal1;
@@ -90,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioClip endAnimMetal4;
     [SerializeField] AudioClip endAnimDirt1;
     int endAnimSteps = 0;
+    bool triggerCameraReturn = false;
+    bool cameraDettached = false;
 
     void Awake()
     {
@@ -108,7 +112,6 @@ public class PlayerMovement : MonoBehaviour
         beaconsPlaced = persistentData.GetBeaconsUsed();
         Transform initialTransform = LevelsManager.Get().GoingUp? GameplayController.Get().GetCurrentZone().exit : GameplayController.Get().GetCurrentZone().entrance;
         CopyPositionAndRotation(initialTransform);
-        jumpAllowed = !GameplayController.Get().IsInShip();
     }
 
     void Update()
@@ -127,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 verticalForce += jumpForce;
             }
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && flashlightAllowed)
             {
                 SetFlashlightState(!isFlashlightEnabled);
             }
@@ -169,12 +172,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         testgrounded = characterController.isGrounded;
-
-        cameraRotX += cameraSpeed * SettingsData.sensitivity * 2.0f * -mouseY;
-        cameraRotX = Mathf.Clamp(cameraRotX, -89.0f, 89.0f);
-        cameraRotY += cameraSpeed * SettingsData.sensitivity * 2.0f * mouseX;
-        mainCamera.transform.localRotation = Quaternion.Euler(Vector3.right * cameraRotX);
-        transform.rotation = Quaternion.Euler(Vector3.up * cameraRotY);
+        if (!cameraDettached)
+        {
+            cameraRotX += cameraSpeed * SettingsData.sensitivity * 2.0f * -mouseY;
+            cameraRotX = Mathf.Clamp(cameraRotX, -89.0f, 89.0f);
+            cameraRotY += cameraSpeed * SettingsData.sensitivity * 2.0f * mouseX;
+            mainCamera.transform.localRotation = Quaternion.Euler(Vector3.right * cameraRotX);
+            transform.rotation = Quaternion.Euler(Vector3.up * cameraRotY);
+        }
         RayoLaser();
     }
 
@@ -284,11 +289,11 @@ public class PlayerMovement : MonoBehaviour
         inputEnabled = true;
     }
 
-    void SetFlashlightState(bool enabled)
+    void SetFlashlightState(bool enabled, bool playSound = true)
     {
         isFlashlightEnabled = enabled;
         flashlight.SetActive(enabled);
-        AudioManager.Get().PlaySFX(flashlightSound, 1);
+        if (playSound) AudioManager.Get().PlaySFX(flashlightSound, 1);
         persistentData.UpdateFlashlightState(enabled);
     }
 
@@ -382,10 +387,15 @@ public class PlayerMovement : MonoBehaviour
         SetFlashlightState(persistentData.flashlightOn);
     }
 
-    public void LoadZoneData(bool inHookAllowed, bool inBeaconsAllowed)
+    public void LoadZoneData(bool inHookAllowed, bool inBeaconsAllowed, bool inFlashLightAllowed)
     {
         hookAllowed = inHookAllowed;
         beaconsAllowed = inBeaconsAllowed;
+        flashlightAllowed = inFlashLightAllowed;
+        if (!flashlightAllowed && isFlashlightEnabled)
+        {
+            SetFlashlightState(false, false);
+        }
     }
 
     public void RaiseHand()
@@ -438,6 +448,22 @@ public class PlayerMovement : MonoBehaviour
         isAnimatingUiHand = false;
     }
 
+    public bool CanModifyTabletState()
+    {
+        return !isAnimatingUiHand && tabletAllowed;
+    }
+
+    public bool IsTabletEnabled()
+    {
+        return tabletAllowed;
+    }
+
+    public void EnableTablet()
+    {
+        tabletAllowed = true;
+
+    }
+
     public void CopyPositionAndRotation(Transform transformToCopy)
     {
         characterController.enabled = false;
@@ -448,8 +474,9 @@ public class PlayerMovement : MonoBehaviour
         characterController.enabled = true;
     }
 
-    public void InitalAnimation()
+    public void InitialPlayerSpawn()
     {
+        tabletAllowed = false;
         UIGameplay.Get().FadeIn();
         animator.SetTrigger("InitialAnimation");
     }
@@ -536,4 +563,44 @@ public class PlayerMovement : MonoBehaviour
         jumpAllowed = newJumpAllowed;
     }
 
+    public void MoveCameraAndReturn(Transform targetTransform, float goingTime, float returningTime)
+    {
+        StartCoroutine(MoveCameraAndReturnCoroutine(targetTransform, goingTime, returningTime));
+    }
+
+    IEnumerator MoveCameraAndReturnCoroutine(Transform newPosNRot, float goingTime, float returningTime)
+    {
+        float timer = 0.0f;
+        Vector3 initialCamPos = mainCamera.transform.position;
+        Quaternion initialCamRot = mainCamera.transform.rotation;
+        cameraDettached = true;
+        while (timer < goingTime)
+        {
+            mainCamera.transform.SetPositionAndRotation(Vector3.Slerp(initialCamPos, newPosNRot.position, timer/goingTime), Quaternion.Slerp(initialCamRot, newPosNRot.rotation, timer/goingTime));
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.transform.SetPositionAndRotation(newPosNRot.position, newPosNRot.rotation);
+        timer = 0.0f;
+
+        yield return new WaitUntil(() => triggerCameraReturn == true);
+
+        while (timer < returningTime)
+        {
+            mainCamera.transform.SetPositionAndRotation(Vector3.Slerp(newPosNRot.position, initialCamPos, timer / returningTime), Quaternion.Slerp(newPosNRot.rotation, initialCamRot, timer / returningTime));
+            
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        mainCamera.transform.SetPositionAndRotation(initialCamPos, initialCamRot);
+        triggerCameraReturn = false;
+        cameraDettached = false;
+        GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);
+    }
+
+    public void ReturnCameraToPlayer()
+    {
+        triggerCameraReturn = true;
+    }
 }

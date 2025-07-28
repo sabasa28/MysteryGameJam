@@ -21,6 +21,7 @@ public class ChatManager : MonoBehaviour
     public bool doneWithZone = false;
     [SerializeField] TextEntry firstDocChat;
     [SerializeField] string astrounautName;
+    [SerializeField] string unknownName;
     [SerializeField] string AIName;
 
     #region singleton
@@ -128,6 +129,10 @@ public class ChatManager : MonoBehaviour
                 break;
             case Speaker.AstronautThought:
                 textField.fontStyle = FontStyles.Italic;
+                break;
+            case Speaker.Unknown:
+                textField.fontStyle = FontStyles.Normal;
+                currentText = unknownName + ":\n" + currentText;
                 break;
             default:
                 break;

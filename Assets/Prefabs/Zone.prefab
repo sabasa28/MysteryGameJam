@@ -54,3 +54,4 @@ MonoBehaviour:
   zoneDoneChat: {fileID: 0}
   allowHook: 1
   allowBeacons: 0
+  allowFlashlight: 1

@@ -243,4 +243,9 @@ public class PersistentData : ScriptableObject
         }
         return false;
     }
+
+    public bool PlayerFoundAnyDoc()
+    {
+        return persistentDocsData.documentsRead.Count > 0;
+    }
 }

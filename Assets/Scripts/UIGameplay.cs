@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIGameplay : MonoBehaviour
 {
-    static UIGameplay instance;
+    static UIGameplay Instance;
     [SerializeField] GameObject InteractText;
-    [SerializeField] GameObject fadeOutPanel;
-    [SerializeField] Image fadeOutImage;
+    [SerializeField] GameObject FadeOutPanel;
+    [SerializeField] Image FadeOutImage;
     [SerializeField] float fadeOutInDefaultTime;
     float fadeOutInCustomTime;
     [SerializeField] float fadeInTime;
@@ -17,30 +18,31 @@ public class UIGameplay : MonoBehaviour
     public bool isFadingOut = false; //probably should be an enum
     public bool isFaded = false;
     public bool isFadingIn = false;
-    [SerializeField] GameObject menuPanel;
-    [SerializeField] GameObject generalMenuPanel;
-    [SerializeField] GameObject settingsMenuPanel;
-    [SerializeField] GameObject controlsMenuPanel;
-    [SerializeField] Slider sensitivitySlider;
-    [SerializeField] Slider volumeSlider;
+    [SerializeField] GameObject MenuPanel;
+    [SerializeField] GameObject GeneralMenuPanel;
+    [SerializeField] GameObject SettingsMenuPanel;
+    [SerializeField] GameObject ControlsMenuPanel;
+    [SerializeField] Slider SensitivitySlider;
+    [SerializeField] Slider VolumeSlider;
     [SerializeField] GameObject ShipDoc1;
     [SerializeField] GameObject ShipDoc2;
     [SerializeField] GameObject ShipDoc3;
     [SerializeField] GameObject ShipDoc4;
     [SerializeField] GameObject ShipDoc5;
     [SerializeField] Button EndGameButton;
+    [SerializeField] TextMeshProUGUI TimescaleText;
     bool docOpen = false;
 
     public static UIGameplay Get()
     {
-        return instance;
+        return Instance;
     }
 
     private void Awake()
     {
-        if (!instance)
+        if (!Instance)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
@@ -50,16 +52,17 @@ public class UIGameplay : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (instance == this)
+        if (Instance == this)
         {
-            instance = null;
+            Instance = null;
         }
     }
 
     private void Start()
     {
-        sensitivitySlider.value = SettingsData.sensitivity;
-        volumeSlider.value = SettingsData.volume;
+        SensitivitySlider.value = SettingsData.sensitivity;
+        VolumeSlider.value = SettingsData.volume;
+        UpdateTimeScaleText();
     }
 
     private void Update()
@@ -93,12 +96,12 @@ public class UIGameplay : MonoBehaviour
         fadeOutInCustomTime = -1.0f;
         float timer = 0.0f;
         isFadingOut = true;
-        fadeOutPanel.SetActive(true);
-        fadeOutImage.color = startFromWhite ? Color.white : Color.black;
+        FadeOutPanel.SetActive(true);
+        FadeOutImage.color = startFromWhite ? Color.white : Color.black;
         while (timer < fadeOutInTime)
         {
             timer += Time.deltaTime;
-            fadeOutImage.color = new Color(fadeOutImage.color.r, fadeOutImage.color.g, fadeOutImage.color.b, timer / fadeOutInTime);
+            FadeOutImage.color = new Color(FadeOutImage.color.r, FadeOutImage.color.g, FadeOutImage.color.b, timer / fadeOutInTime);
             yield return null;
         }
         isFadingOut = false;
@@ -110,26 +113,26 @@ public class UIGameplay : MonoBehaviour
         while (timer < fadeOutInTime)
         {
             timer += Time.deltaTime;
-            fadeOutImage.color = new Color(fadeOutImage.color.r, fadeOutImage.color.g, fadeOutImage.color.b, 1 - (timer / fadeOutInTime));
+            FadeOutImage.color = new Color(FadeOutImage.color.r, FadeOutImage.color.g, FadeOutImage.color.b, 1 - (timer / fadeOutInTime));
             yield return null;
         }
-        fadeOutPanel.SetActive(false);
+        FadeOutPanel.SetActive(false);
         isFadingIn = false;
     }
 
     IEnumerator FadeIn()
     {
-        fadeOutImage.color = Color.black;
-        fadeOutPanel.SetActive(true);
+        FadeOutImage.color = Color.black;
+        FadeOutPanel.SetActive(true);
         float timer = 0.0f;
         isFadingIn = true;
         while (timer < fadeInTime)
         {
             timer += Time.deltaTime;
-            fadeOutImage.color = new Color(fadeOutImage.color.r, fadeOutImage.color.g, fadeOutImage.color.b, 1 - (timer / fadeInTime));
+            FadeOutImage.color = new Color(FadeOutImage.color.r, FadeOutImage.color.g, FadeOutImage.color.b, 1 - (timer / fadeInTime));
             yield return null;
         }
-        fadeOutPanel.SetActive(false);
+        FadeOutPanel.SetActive(false);
         isFadingIn = false;
     }
 
@@ -141,21 +144,21 @@ public class UIGameplay : MonoBehaviour
 
     public void ChangeMenuVisibility(bool newVisibility)
     {
-        menuPanel.SetActive(newVisibility);
-        generalMenuPanel.SetActive(newVisibility);
-        settingsMenuPanel.SetActive(!newVisibility);
-        controlsMenuPanel.SetActive(!newVisibility);
+        MenuPanel.SetActive(newVisibility);
+        GeneralMenuPanel.SetActive(newVisibility);
+        SettingsMenuPanel.SetActive(!newVisibility);
+        ControlsMenuPanel.SetActive(!newVisibility);
     }
 
     public void UpdateVolume()
     {
-        SettingsData.volume = volumeSlider.value;
+        SettingsData.volume = VolumeSlider.value;
         AudioManager.Get().UpdateVolume();
     }
 
     public void UpdateCameraSensitivity()
     {
-        SettingsData.sensitivity = sensitivitySlider.value;
+        SettingsData.sensitivity = SensitivitySlider.value;
     }
 
     public void ReturnToMenu()
@@ -210,5 +213,31 @@ public class UIGameplay : MonoBehaviour
     public void SetCustomTimeForNextFade(float customTime)
     {
         fadeOutInCustomTime = customTime;
+    }
+
+    public void IncreaseTimeScale()
+    {
+        Time.timeScale += 0.5f;
+        UpdateTimeScaleText();
+    }
+
+    public void DecreaseTimeScale()
+    {
+        if (Time.timeScale > 0.0f)
+        {
+            Time.timeScale -= 0.5f;
+            UpdateTimeScaleText();
+        }
+    }
+
+    public void ResetTimeScale()
+    {
+        Time.timeScale = 1.0f;
+        UpdateTimeScaleText();
+    }
+
+    public void UpdateTimeScaleText()
+    {
+        TimescaleText.text = "Current Speed x" + Time.timeScale;
     }
 }

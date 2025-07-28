@@ -57,6 +57,7 @@ public class LevelsManager : MonoBehaviour
     {
         GoingUp = nextScene > Scenes.HigherCave;
         nextScene = Scenes.HigherCave;
+        currentScene = nextScene;
         SceneManager.LoadScene("LoadingScreenScene");
     }
 
@@ -64,6 +65,7 @@ public class LevelsManager : MonoBehaviour
     {
         GoingUp = nextScene > Scenes.LowerCave;
         nextScene = Scenes.LowerCave;
+        currentScene = nextScene;
         SceneManager.LoadScene("LoadingScreenScene");
     }
 
@@ -71,6 +73,7 @@ public class LevelsManager : MonoBehaviour
     {
         GoingUp = nextScene > Scenes.Surface;
         nextScene = Scenes.Surface;
+        currentScene = nextScene;
         SceneManager.LoadScene("LoadingScreenScene");
     }
 
@@ -101,7 +104,6 @@ public class LevelsManager : MonoBehaviour
 
     public void OnLoadingNextSceneCompleted()
     {
-        currentScene = nextScene;
         beaconsPosInLoadedLevel = persistentData.GetLevelBeaconsPos(GetScene(currentScene)) != null? new(persistentData.GetLevelBeaconsPos(GetScene(currentScene))) : null;
         GameplayController gpc = GameplayController.Get();
         gpc.LoadHelmetState(persistentData.helmetOn);

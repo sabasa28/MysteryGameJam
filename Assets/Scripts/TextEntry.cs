@@ -7,7 +7,8 @@ public enum Speaker
 {
     AstronautSpeak,
     AI,
-    AstronautThought
+    AstronautThought,
+    Unknown
 
 }
 [Serializable]
