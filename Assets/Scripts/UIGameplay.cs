@@ -31,6 +31,12 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] GameObject ShipDoc5;
     [SerializeField] Button EndGameButton;
     [SerializeField] TextMeshProUGUI TimescaleText;
+    [SerializeField] TextMeshProUGUI FPSText;
+    int framesSinceLastUpdate = 0;
+    float timeBeforeUpdatingFPS = 0.5f;
+    float fpsDisplayTimer = 0.0f;
+    float trollTimer = 0.0f;
+    float timeBeforeTrolling = 10.0f;
     bool docOpen = false;
 
     public static UIGameplay Get()
@@ -73,6 +79,24 @@ public class UIGameplay : MonoBehaviour
             ShipDoc2.SetActive(false);
             ShipDoc3.SetActive(false);
             docOpen = false;
+            GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);
+        }
+        trollTimer += Time.unscaledDeltaTime;
+        fpsDisplayTimer += Time.unscaledDeltaTime;
+        framesSinceLastUpdate++;
+        if (fpsDisplayTimer > timeBeforeUpdatingFPS && FPSText)
+        {
+            if (trollTimer < timeBeforeTrolling)
+            {
+                FPSText.text = "FPS: " + (int)(framesSinceLastUpdate / timeBeforeUpdatingFPS);
+            }
+            else
+            { 
+                FPSText.text = "putoelquelee";
+                trollTimer = 0.0f;
+            }
+            framesSinceLastUpdate = 0;
+            fpsDisplayTimer = 0.0f;
         }
     }
     public void ChangeInteractTextDisplay(bool bDisplay)
@@ -169,19 +193,27 @@ public class UIGameplay : MonoBehaviour
     public void DisplayShipDoc1()
     {
         ShipDoc1.SetActive(true);
-        docOpen = true;
+        OnRegularShipDocOpen();
     }
 
     public void DisplayShipDoc2()
     {
         ShipDoc2.SetActive(true);
-        docOpen = true;
+        OnRegularShipDocOpen();
     }
+
     public void DisplayShipDoc3()
     {
         ShipDoc3.SetActive(true);
-        docOpen = true;
+        OnRegularShipDocOpen();
     }
+
+    void OnRegularShipDocOpen()
+    { 
+        docOpen = true;
+        GameplayController.Get().ChangeInputState(GameplayController.InputState.UI);
+    }
+
     public void DisplayShipDoc4()
     {
         GameplayController.Get().ChangeInputState(GameplayController.InputState.UI);

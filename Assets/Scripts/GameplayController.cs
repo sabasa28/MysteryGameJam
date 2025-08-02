@@ -80,8 +80,8 @@ public class GameplayController : MonoBehaviour
     }
     private void Update()
     {
-
-        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic)
+        //es muy tonto que esto este aca
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic && !IsOptionsMenuOpen())
         {
             inGameMenuOpen = !inGameMenuOpen;
             ChangeInputState(inGameMenuOpen ? InputState.InGameUI : InputState.Movement);
@@ -136,6 +136,10 @@ public class GameplayController : MonoBehaviour
 
     public void ChangeInputState(InputState newState)
     {
+        if (newState != InputState.UI)
+        {
+            savedInputState = newState;
+        }
         inputState = newState;
         playerMovement.StopEnablingInputCoroutine(); //in case we try to change input right after changing input to movement, which takes one frame
         switch (inputState)
@@ -360,5 +364,20 @@ public class GameplayController : MonoBehaviour
     public void ReturnPlayerCamera()
     { 
         playerMovement.ReturnCameraToPlayer();
+    }
+
+    public void OnCurrentZoneNecessaryInteractableFound(GameObject InteractableFound)
+    {
+        playerMovement.StopTrackingFoundInteractable(InteractableFound);
+    }
+
+    public void ForcePlayerSonar()
+    {
+        playerMovement.ActivateSonar();
+    }
+
+    public bool IsOptionsMenuOpen()
+    {
+        return optionsMenuOpen;
     }
 }

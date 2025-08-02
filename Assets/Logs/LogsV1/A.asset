@@ -20,4 +20,4 @@ MonoBehaviour:
     to do a proper examination on the ship, but I''m hoping to find more remains
     before heading back.'
   orderFound: 0
-  read: 0
+  read: 1

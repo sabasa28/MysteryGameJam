@@ -6,6 +6,7 @@ public class ChatTrigger : MonoBehaviour
 {
     [SerializeField] protected TextEntry textEntryToDisplay;
     [SerializeField] protected EventTriggerBase eventToTrigger;
+    [SerializeField] protected EventTriggerBase eventToTriggerAfterChat;
     [SerializeField] float timeBeforeTriggering = 0.0f;
     bool waitingToTrigger = false;
     protected virtual void Start()
@@ -39,7 +40,7 @@ public class ChatTrigger : MonoBehaviour
 
     void Trigger()
     {
-        ChatManager.Get().StartDisplayingTextEntry(textEntryToDisplay);
+        ChatManager.Get().StartDisplayingTextEntry(textEntryToDisplay, eventToTriggerAfterChat);
         if (eventToTrigger != null)
         {
             eventToTrigger.TriggerEvent();

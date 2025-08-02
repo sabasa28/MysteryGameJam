@@ -25,29 +25,30 @@ public class ZoneData : MonoBehaviour
         }
     }
 
-    public bool GetClosestInteractable(Vector3 pos, out Vector3 interactablePos)
+    public bool GetClosestInteractable(Vector3 pos, out GameObject closestInteractable)
     {
         if (necessaryInteractions.Count == 0)
         {
-            interactablePos = Vector3.zero;
+            closestInteractable = null;
             return false;
         }
         float closestDist = 9999.9f; //very far!
-        interactablePos = Vector3.zero;
+        closestInteractable = null;
         foreach (GameObject interactable in necessaryInteractions)
         {
             float distToInteractable = Vector3.Distance(interactable.transform.position, pos);
             if (distToInteractable < closestDist)
             {
                 closestDist = distToInteractable;
-                interactablePos = interactable.transform.position;
+                closestInteractable = interactable;
             }
         }
-        return closestDist != 9999.9f;
+        return closestInteractable != null;
     }
 
     public void RemoveFromNecessaryInteractions(GameObject gameObjectToRemove)
     {
+        GameplayController.Get().OnCurrentZoneNecessaryInteractableFound(gameObjectToRemove);
         necessaryInteractions.Remove(gameObjectToRemove);
     }
 

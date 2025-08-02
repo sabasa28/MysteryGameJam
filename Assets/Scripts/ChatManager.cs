@@ -23,6 +23,7 @@ public class ChatManager : MonoBehaviour
     [SerializeField] string astrounautName;
     [SerializeField] string unknownName;
     [SerializeField] string AIName;
+    EventTriggerBase eventToTriggerAfterChat = null;
 
     #region singleton
     static ChatManager instance;
@@ -65,8 +66,9 @@ public class ChatManager : MonoBehaviour
         //StartDisplayingTextEntry(testText);
     }
 
-    public void StartDisplayingTextEntry(TextEntry textEntry)
+    public void StartDisplayingTextEntry(TextEntry textEntry, EventTriggerBase newEventToTriggerAfterChat = null)
     {
+        eventToTriggerAfterChat = newEventToTriggerAfterChat;
         GameplayController.Get().ChangeInputState(GameplayController.InputState.Chat);
         textPanel.SetActive(true);
         currentTextEntry = textEntry;
@@ -86,7 +88,7 @@ public class ChatManager : MonoBehaviour
         {
             return;
         }
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && !GameplayController.Get().IsOptionsMenuOpen())
         {
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
             {
@@ -105,6 +107,11 @@ public class ChatManager : MonoBehaviour
                 }
                 else
                 {
+                    if (eventToTriggerAfterChat)
+                    {
+                        eventToTriggerAfterChat.TriggerEvent();
+                        eventToTriggerAfterChat = null;
+                    }
                     GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);
                 }
             }

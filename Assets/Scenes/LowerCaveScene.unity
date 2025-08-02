@@ -2840,6 +2840,18 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5240177705990974415, guid: eb09f8fb842c1984b98a1bf4c6d92ca9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -42.1675
+      objectReference: {fileID: 0}
+    - target: {fileID: 5240177705990974415, guid: eb09f8fb842c1984b98a1bf4c6d92ca9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -159.75684
+      objectReference: {fileID: 0}
+    - target: {fileID: 5240177705990974415, guid: eb09f8fb842c1984b98a1bf4c6d92ca9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 68.254715
+      objectReference: {fileID: 0}
     - target: {fileID: 8342120593953130605, guid: eb09f8fb842c1984b98a1bf4c6d92ca9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70.02

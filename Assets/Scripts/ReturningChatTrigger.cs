@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ReturningChatTrigger : ChatTrigger
 {
+    [SerializeField] GameObject FakewallToActivate;
     protected override void Start()
     {
         if (LevelsManager.Get().persistentData.WasChatPlayed(textEntryToDisplay) && LevelsManager.Get().persistentData.isReturning)
@@ -17,6 +18,10 @@ public class ReturningChatTrigger : ChatTrigger
         if (!LevelsManager.Get().persistentData.isReturning)
         {
             return;
+        }
+        if (FakewallToActivate)
+        {
+            FakewallToActivate.SetActive(true);
         }
         base.OnTriggerEnter(other);
     }

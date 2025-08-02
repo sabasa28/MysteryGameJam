@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform sonarPivotY;
     [SerializeField] Transform sonarPivotX;
     [SerializeField] GameObject sonar;
+    Transform trackedTransform;
     [SerializeField] Color closeColor;
     [SerializeField] Color mediumColor;
     [SerializeField] Color farColor;
@@ -134,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 SetFlashlightState(!isFlashlightEnabled);
             }
-            if (Input.GetKeyDown(KeyCode.C) && !isSonarActive && sonarDiscovered)
+            if (Input.GetKeyDown(KeyCode.C))
             {
                 ActivateSonar();
             }
@@ -303,33 +304,39 @@ public class PlayerMovement : MonoBehaviour
         grounded = characterController.isGrounded;
     }
 
-    void ActivateSonar()
+    public void ActivateSonar()
     {
-        if (GameplayController.Get().GetCurrentZone().GetClosestInteractable(transform.position, out Vector3 closestInteractable))
+        if (isSonarActive || !sonarDiscovered)
         {
-            StartCoroutine(DisplaySonarArrow(closestInteractable));
+            return;
+        }
+        if (GameplayController.Get().GetCurrentZone().GetClosestInteractable(transform.position, out GameObject closestInteractable))
+        {
+            StartCoroutine(DisplaySonarArrow(closestInteractable.transform));
         }
         else
         {
             ChatManager.Get().PlayDoneWithZoneChat();
             if (GameplayController.Get().GetCurrentZone().exitDoor)
             {
-                StartCoroutine(DisplaySonarArrow(GameplayController.Get().GetCurrentZone().exitDoor.position));
+                StartCoroutine(DisplaySonarArrow(GameplayController.Get().GetCurrentZone().exitDoor));
             }
         }
     }
 
-    IEnumerator DisplaySonarArrow(Vector3 closestInteractablePos)
+    IEnumerator DisplaySonarArrow(Transform closestInteractableTransform)
     {
+        trackedTransform = closestInteractableTransform;
+        Vector3 interactableTrackedPos = trackedTransform.position;
         AudioManager.Get().PlaySFX(sonarSound, 1.0f);
         sonar.SetActive(true);
         isSonarActive = true;
         float timer = 0.0f;
-        while (timer < sonarTimer)
+        while (timer < sonarTimer && trackedTransform != null)
         {
-            Vector3 slerpedVector = Vector3.Slerp(transform.forward, closestInteractablePos - transform.position, timer / sonarAlignTime);
+            Vector3 slerpedVector = Vector3.Slerp(transform.forward, interactableTrackedPos - transform.position, timer / sonarAlignTime);
             Quaternion rotation = Quaternion.LookRotation(slerpedVector, Vector3.up);
-            float distToInteractable = Vector3.Distance(transform.position, closestInteractablePos);
+            float distToInteractable = Vector3.Distance(transform.position, interactableTrackedPos);
             if (distToInteractable > distanceForMediumColor)
             {
                 sonarSprite.color = Color.Lerp(mediumColor, farColor, (distToInteractable - distanceForMediumColor) / (distanceForFarColor - distanceForMediumColor));
@@ -347,6 +354,16 @@ public class PlayerMovement : MonoBehaviour
         }
         isSonarActive = false;
         sonar.SetActive(false);
+        trackedTransform = null;
+    }
+
+    public void StopTrackingFoundInteractable(GameObject interactableFound)
+    {
+        if (trackedTransform != null && trackedTransform == interactableFound.transform)
+        {
+            trackedTransform = null;
+            //this will stop the sonar coroutine
+        }
     }
 
     void PlaceBeacon()
@@ -573,10 +590,12 @@ public class PlayerMovement : MonoBehaviour
         float timer = 0.0f;
         Vector3 initialCamPos = mainCamera.transform.position;
         Quaternion initialCamRot = mainCamera.transform.rotation;
+        Vector3 initialLocalCamPos = mainCamera.transform.localPosition;
+        Quaternion initialLocalCamRot = mainCamera.transform.localRotation;
         cameraDettached = true;
         while (timer < goingTime)
         {
-            mainCamera.transform.SetPositionAndRotation(Vector3.Slerp(initialCamPos, newPosNRot.position, timer/goingTime), Quaternion.Slerp(initialCamRot, newPosNRot.rotation, timer/goingTime));
+            mainCamera.transform.SetPositionAndRotation(Vector3.Lerp(initialCamPos, newPosNRot.position, timer/goingTime), Quaternion.Slerp(initialCamRot, newPosNRot.rotation, timer/goingTime));
             timer += Time.deltaTime;
             yield return null;
         }
@@ -584,16 +603,17 @@ public class PlayerMovement : MonoBehaviour
         timer = 0.0f;
 
         yield return new WaitUntil(() => triggerCameraReturn == true);
-
+        Vector3 posToLocal = mainCamera.transform.localPosition;
+        Quaternion rotToLocal = mainCamera.transform.localRotation;
         while (timer < returningTime)
         {
-            mainCamera.transform.SetPositionAndRotation(Vector3.Slerp(newPosNRot.position, initialCamPos, timer / returningTime), Quaternion.Slerp(newPosNRot.rotation, initialCamRot, timer / returningTime));
+            mainCamera.transform.SetLocalPositionAndRotation(Vector3.Lerp(posToLocal, initialLocalCamPos, timer / returningTime), Quaternion.Slerp(rotToLocal, initialLocalCamRot, timer / returningTime));
             
             timer += Time.deltaTime;
             yield return null;
         }
 
-        mainCamera.transform.SetPositionAndRotation(initialCamPos, initialCamRot);
+        mainCamera.transform.SetLocalPositionAndRotation(initialLocalCamPos, initialLocalCamRot);
         triggerCameraReturn = false;
         cameraDettached = false;
         GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);

@@ -74,11 +74,11 @@ public class DocumentManager : MonoBehaviour
     {
         if (persistentData.persistentDocsData.HasData())
         {
-            wordsLearned = persistentData.persistentDocsData.wordsLearned;
-            learnableWords = persistentData.persistentDocsData.learnableWords;
-            documentsRead = persistentData.persistentDocsData.documentsRead;
+            wordsLearned = new List<string>(persistentData.persistentDocsData.wordsLearned);
+            learnableWords = new List<string>(persistentData.persistentDocsData.learnableWords);
+            documentsRead = new List<Document>(persistentData.persistentDocsData.documentsRead);
             knowledgeLevel = persistentData.persistentDocsData.knowledgeLevel;
-            logsFound = persistentData.persistentDocsData.logsFound;
+            logsFound = new List<LogEntry>(persistentData.persistentDocsData.logsFound);
         }
         else
         {
@@ -148,6 +148,7 @@ public class DocumentManager : MonoBehaviour
 
     public void AddDocumentWordsToLearnable(Document document)
     {
+        LevelsManager.Get().persistentData.PlayerFoundAnyDoc();
         if (documentsRead.Contains(document))
         {
             return;
