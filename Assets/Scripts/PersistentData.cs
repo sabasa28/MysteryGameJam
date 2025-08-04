@@ -25,7 +25,7 @@ public class PersistentData : ScriptableObject
     {
         public List<string> learnableWords;
         public List<string> wordsLearned;
-        public List<Document> documentsRead;
+        public List<Document> documentsFound;
         public List<Document> existingDocuments;
         public List<LogEntry> logsFound;
         public List<LogEntry> existingLogs;
@@ -49,13 +49,13 @@ public class PersistentData : ScriptableObject
             {
                 wordsLearned = new();
             }
-            if (documentsRead != null)
+            if (documentsFound != null)
             {
-                documentsRead.Clear();
+                documentsFound.Clear();
             }
             else
             {
-                documentsRead = new();
+                documentsFound = new();
             }
             if (existingDocuments != null)
             {
@@ -87,9 +87,9 @@ public class PersistentData : ScriptableObject
 
         public bool HasData()
         {
-            if (learnableWords != null && wordsLearned != null && documentsRead != null && logsFound != null)
+            if (learnableWords != null && wordsLearned != null && documentsFound != null && logsFound != null)
             {
-                return (learnableWords.Count > 0 || wordsLearned.Count > 0 || documentsRead.Count > 0 || logsFound.Count > 0);
+                return (learnableWords.Count > 0 || wordsLearned.Count > 0 || documentsFound.Count > 0 || logsFound.Count > 0);
             }
             else
             {
@@ -152,7 +152,7 @@ public class PersistentData : ScriptableObject
     {
         persistentDocsData.wordsLearned = wordsLearned;
         persistentDocsData.learnableWords = learnableWords;
-        persistentDocsData.documentsRead = documentsRead;
+        persistentDocsData.documentsFound = documentsRead;
         persistentDocsData.knowledgeLevel = knowledgeLevel;
     }
 
@@ -221,7 +221,7 @@ public class PersistentData : ScriptableObject
 
     public bool WasDocFound(Document doc)
     {
-        return persistentDocsData.documentsRead.Contains(doc);
+        return persistentDocsData.documentsFound.Contains(doc);
     }
 
     public void AddChatToPlayedChats(TextEntry chat)
@@ -246,6 +246,6 @@ public class PersistentData : ScriptableObject
 
     public bool PlayerFoundAnyDoc()
     {
-        return persistentDocsData.documentsRead.Count > 0;
+        return persistentDocsData.documentsFound.Count > 0;
     }
 }

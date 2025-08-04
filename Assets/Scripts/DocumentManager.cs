@@ -43,7 +43,7 @@ public class DocumentManager : MonoBehaviour
     [SerializeField] List<string> greenListSECRETS = new();
     [SerializeField] string censoredText; //debug
     int knowledgeLevel = 0;
-    [SerializeField] List<Document> documentsRead = new();
+    [SerializeField] List<Document> documentsFound = new();
     [SerializeField] List<LogEntry> logsFound = new();
     string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n" };
     [SerializeField] PersistentData persistentData;
@@ -76,7 +76,7 @@ public class DocumentManager : MonoBehaviour
         {
             wordsLearned = new List<string>(persistentData.persistentDocsData.wordsLearned);
             learnableWords = new List<string>(persistentData.persistentDocsData.learnableWords);
-            documentsRead = new List<Document>(persistentData.persistentDocsData.documentsRead);
+            documentsFound = new List<Document>(persistentData.persistentDocsData.documentsFound);
             knowledgeLevel = persistentData.persistentDocsData.knowledgeLevel;
             logsFound = new List<LogEntry>(persistentData.persistentDocsData.logsFound);
         }
@@ -140,7 +140,7 @@ public class DocumentManager : MonoBehaviour
             learnableWords.Remove(actualLernableWords[randoms[i]]);
             actualLernableWords.RemoveAt(randoms[i]);
         }
-        foreach (Document doc in documentsRead)
+        foreach (Document doc in documentsFound)
         {
             CensorDocument(doc);
         }
@@ -149,23 +149,27 @@ public class DocumentManager : MonoBehaviour
     public void AddDocumentWordsToLearnable(Document document)
     {
         LevelsManager.Get().persistentData.PlayerFoundAnyDoc();
-        if (documentsRead.Contains(document))
+        if (documentsFound.Contains(document))
         {
             return;
         }
-        if (documentsRead.Count == 0)
+        if (documentsFound.Count == 0)
         {
             ChatManager.Get().PlayFistDocChat();
         }
+        if (documentsFound.Count == 1)
+        {
+            ChatManager.Get().PlaySecondDocChat();
+        }
         document.fullText = document.fullText.Replace("\\n", "\n");
         document.read = false;
-        documentsRead.Add(document);
+        documentsFound.Add(document);
         foreach (string word in document.fullText.Split(separators, StringSplitOptions.RemoveEmptyEntries))
         {
             AddToLearnableWords(word.ToLower());
         }
         SetKnowledgeLevel(LevelsManager.Get().persistentData.PlayerFoundAnyDoc()? knowledgeLevel + knowledgePerDoc : knowledgeLevel);
-        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
+        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsFound, knowledgeLevel);
         uiHelmet.DisplayNewDocNotif();
     }
 
@@ -176,8 +180,8 @@ public class DocumentManager : MonoBehaviour
             wordsLearned.Add(word.ToLower());
             learnableWords.Remove(word.ToLower());
         }
-        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
-        foreach (Document doc in documentsRead)
+        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsFound, knowledgeLevel);
+        foreach (Document doc in documentsFound)
         {
             CensorDocument(doc);
         }
@@ -190,8 +194,8 @@ public class DocumentManager : MonoBehaviour
             wordsLearned.Add(word.ToLower());
             learnableWords.Remove(word.ToLower());
         }
-        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsRead, knowledgeLevel);
-        foreach (Document doc in documentsRead)
+        persistentData.UpdatePersistentDocsData(wordsLearned, learnableWords, documentsFound, knowledgeLevel);
+        foreach (Document doc in documentsFound)
         {
             CensorDocument(doc);
         }
@@ -293,7 +297,7 @@ public class DocumentManager : MonoBehaviour
 
     public List<Document> GetReadDocuments()
     {
-        return documentsRead;
+        return documentsFound;
     }
 
     public void AddLogToFoundLogs(LogEntry newLog, bool isPreexisting = false)
@@ -316,4 +320,19 @@ public class DocumentManager : MonoBehaviour
         return logsFound;
     }
 
+    public bool AreAllFoundDocumentsRead()
+    {
+        for (int i = documentsFound.Count-1; i >= 0; i--)
+        {
+            if (documentsFound[i].read == false)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public bool AreAllFoundLogsRead()
+    {
+        return logsFound[logsFound.Count - 1].read; //instead of checking all we just check the last one since logs are all read automatically when the travelers log is opened
+    }
 }

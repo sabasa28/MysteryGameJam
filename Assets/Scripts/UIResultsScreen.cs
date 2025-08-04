@@ -17,7 +17,7 @@ public class UIResultsScreen : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         PersistentData persistentData = LevelsManager.Get().persistentData;
-        docsText.text = "You found " + persistentData.persistentDocsData.documentsRead.Count + " out of " + persistentData.persistentDocsData.existingDocuments.Count + " documents.";
+        docsText.text = "You found " + persistentData.persistentDocsData.documentsFound.Count + " out of " + persistentData.persistentDocsData.existingDocuments.Count + " documents.";
         logsText.text = "You found " + persistentData.persistentDocsData.logsFound.Count + " out of " + persistentData.persistentDocsData.existingLogs.Count + " logs.";
     }
 

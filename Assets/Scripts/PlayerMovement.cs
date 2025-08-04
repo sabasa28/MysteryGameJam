@@ -401,7 +401,7 @@ public class PlayerMovement : MonoBehaviour
         beaconsDiscovered = persistentData.beaconsDiscovered;
         hookDiscovered = persistentData.hookDiscovered;
         sonarDiscovered = persistentData.sonarDiscovered;
-        SetFlashlightState(persistentData.flashlightOn);
+        SetFlashlightState((persistentData.flashlightOn && flashlightAllowed));
     }
 
     public void LoadZoneData(bool inHookAllowed, bool inBeaconsAllowed, bool inFlashLightAllowed)
@@ -616,7 +616,6 @@ public class PlayerMovement : MonoBehaviour
         mainCamera.transform.SetLocalPositionAndRotation(initialLocalCamPos, initialLocalCamRot);
         triggerCameraReturn = false;
         cameraDettached = false;
-        GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);
     }
 
     public void ReturnCameraToPlayer()

@@ -18,6 +18,7 @@ public class UIPlayerDocs : MonoBehaviour
     List<Document> sortedDocs = new();
     [SerializeField] Transform docsParent;
     [SerializeField] RectTransform logsParent;
+    [SerializeField] GameObject logsSpacer;
     [SerializeField] GameObject readingDoc;
     [SerializeField] GameObject initialOptions;
     [SerializeField] TextMeshProUGUI readingDocTitle;
@@ -28,10 +29,15 @@ public class UIPlayerDocs : MonoBehaviour
     [SerializeField] GameObject firstDisplayText;
     [SerializeField] GameObject sortingButton;
     [SerializeField] TextMeshProUGUI sortingButtonText;
+    [SerializeField] GameObject anyDocUnreadIndicator;
+    [SerializeField] GameObject anyLogUnreadIndicator;
 
     private void OnEnable()
     {
         initialOptions.SetActive(true);
+        DocumentManager documentManager = DocumentManager.Get();
+        anyDocUnreadIndicator.SetActive(!documentManager.AreAllFoundDocumentsRead());
+        anyLogUnreadIndicator.SetActive(!documentManager.AreAllFoundLogsRead());
         SetReadingDocActiveState(false);
         SetLogActiveState(false);
         SetDocumentListActiveState(false);
@@ -53,14 +59,16 @@ public class UIPlayerDocs : MonoBehaviour
     public void SetDocumentListActiveState(bool state)
     {
         initialOptions.SetActive(!state);
+        DocumentManager documentManager = DocumentManager.Get();
         documentList.SetActive(state);
         sortingButton.SetActive(LevelsManager.Get().persistentData.calendarDiscovered);
         if (!state)
         {
+            anyDocUnreadIndicator.SetActive(!documentManager.AreAllFoundDocumentsRead());
             return;
         }
 
-        documents = DocumentManager.Get().GetReadDocuments();
+        documents = documentManager.GetReadDocuments();
         if (uIDocuments.Count > documents.Count) //no se si esto va a pasar pero por si acaso
         {
             for (int i = uIDocuments.Count - 1; i > documents.Count - 1; i--)
@@ -95,6 +103,7 @@ public class UIPlayerDocs : MonoBehaviour
     public void SetLogActiveState(bool state)
     {
         initialOptions.SetActive(!state);
+        DocumentManager documentManager = DocumentManager.Get();
         log.SetActive(state);
         logImageDisplay.SetActive(!state);
         if (!state)
@@ -109,10 +118,11 @@ public class UIPlayerDocs : MonoBehaviour
                     }
                 }
             }
+            anyLogUnreadIndicator.SetActive(!documentManager.AreAllFoundLogsRead()); //tecnicamente siempre false pero igual es barato, mas legible y menos propenso a bugs en el futuro
             return;
         }
 
-        logs = DocumentManager.Get().GetFoundLogs();
+        logs = documentManager.GetFoundLogs();
         if (uiLogEntries.Count > logs.Count) //no se si esto va a pasar pero por si acaso
         {
             for (int i = uiLogEntries.Count - 1; i > logs.Count - 1; i--)
@@ -128,9 +138,11 @@ public class UIPlayerDocs : MonoBehaviour
                 UILogEntry uilogEntry = Instantiate(uiLogEntryPrefab, logsParent);
                 uilogEntry.image.onClick.AddListener(delegate { SetLogImageAndDisplay(uilogEntry.image.image); });
                 uiLogEntries.Add(uilogEntry);
+                Instantiate(logsSpacer, logsParent);
             }
         }
         InitializeUILogEntries();
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(logsParent);
         LayoutRebuilder.ForceRebuildLayoutImmediate(logsParent); // esta es la cosa mas estupida que hice pero 2 funcionan y 1 no
         if (LevelsManager.Get().persistentData.PlayerReadAnyLog())

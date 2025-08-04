@@ -88,14 +88,11 @@ public class GameplayController : MonoBehaviour
 
             if (inGameMenuOpen)
             {
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = false;
-                playerMovement.RaiseHand();
+                OpenTablet();
             }
             else
             {
-                Cursor.lockState = CursorLockMode.Locked;
-                playerMovement.LowerHand();
+                CloseTablet();
             }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -104,6 +101,20 @@ public class GameplayController : MonoBehaviour
             UIGameplay.Get().ChangeMenuVisibility(optionsMenuOpen);
         }
     }
+
+    void OpenTablet()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+        playerMovement.RaiseHand();
+    }
+
+    void CloseTablet()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        playerMovement.LowerHand();
+    }
+
     public void OnUIMenuStateChanged()
     {
         optionsMenuOpen = !optionsMenuOpen;
