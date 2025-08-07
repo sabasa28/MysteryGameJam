@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: L
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: 6ec8245c29fe987419e0c68fc1b6f55d, type: 3}
-  logText: 'This planet continues to surprise me. This device appears to belong to
-    a completely different species, and has been preserved in near perfect conditions.
+  logText: 'This planet continues to surprise me! The strange fragment I found earlier
+    must belong to this.\nThis device appears to belong to a completely different
+    species, and has been preserved in near perfect conditions.
 
-    I
-    will need better equipment to transport this safely for a complete examination.'
+    I will need
+    better equipment to transport this safely for a complete examination.'
   orderFound: 0
   read: 0

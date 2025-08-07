@@ -45,7 +45,7 @@ public class DocumentManager : MonoBehaviour
     int knowledgeLevel = 0;
     [SerializeField] List<Document> documentsFound = new();
     [SerializeField] List<LogEntry> logsFound = new();
-    string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n" };
+    string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n", "\"" };
     [SerializeField] PersistentData persistentData;
     [SerializeField] UIHelmet uiHelmet;
     [SerializeField] List<LogEntry> preexistentLogs = new();

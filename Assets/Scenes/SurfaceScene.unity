@@ -4969,8 +4969,8 @@ MonoBehaviour:
 
     The
     hibernation chambers have been modernized and adapted from their originally intended
-    usage. Since the development of faster-than-light travel, their purpose was shifted
-    from making extremely long journeys possible to protecting the crew members,
+    usage. Since the development of faster-than-light travel, their purpose was expanded
+    from making extremely long journeys possible to also protecting the crew members,
     as the process has shown to cause severe dizziness and physical fatigue.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5189,30 +5189,30 @@ MonoBehaviour:
 
 
     Phase
-    one required a monumental technological jump, as every scientist around the world
-    gathered to figure out the fastest and most efficient way to travel through space.
-    Simultaneously, mass industrialization was set in motion to prepare the production
-    of soon-to-be needed satellites, starships, space platforms, and more.
+    one required a monumental technological jump, as every renowned scientist around
+    the world gathered to figure out the fastest and most efficient way to travel
+    through space. Simultaneously, mass industrialization was set in motion to prepare
+    the production of soon-to-be-needed satellites, starships, space platforms, and
+    more.
 
 
-    After
-    years of progress and unparalleled breakthroughs, phase two began in 2062, when
-    the first unmanned mission to test faster-than-light travel was initiated. Many
-    failures followed, as humanity adapted, improved, and eventually overcame the
-    complex task of traveling quickly and safely.
+    After years of progress and unparalleled breakthroughs, phase two
+    began in 2062, when the first unmanned mission to test faster-than-light travel
+    was initiated. Many failures followed, as humanity adapted, improved, and eventually
+    overcame the complex task of traveling quickly and safely.
 
 
-    The year 2087 marks the start
-    of phase three: the first expedition with a crew set to visit and analyze several
-    solar systems where life could be sustainable. The most advanced spacecraft to
-    date, Pinta IV, currently carries 20 volunteers towards every promising star,
-    where they will scan suitable planets in hopes of finding water existing in a
-    liquid state, as well as a breathable atmosphere.
+    The year 2086
+    marks the start of phase three: the first expedition with a crew set to visit
+    and analyze several solar systems where life could be sustainable. The most advanced
+    spacecraft to date, Pinta IV, currently carries 20 volunteers towards every promising
+    star, where they will scan planets in hopes of finding suitable conditions for
+    human survival.
 
 
-    We find ourselves waiting
-    for news, while we continue to prepare for the hopefully inevitable day in which
-    we move into phase four: the large scale migration to a new world.'
+    We find ourselves waiting for news, while we continue to
+    prepare for the glorious day in which we move into phase four: the large scale
+    migration to a new world.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5239,7 +5239,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.2
+  m_fontSize: 25.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11213,27 +11213,31 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Extraordinary Earth update: April 10th, 2091
+  m_text: 'Extraordinary Earth update: November 10th, 2091
 
 
-    As of today, April
+    As of today, November
     10th of the year 2091, humanity has made contact with the first advanced extraterrestrial
     civilization.
 
 
-    We have been visited by a red probe with an impressively
-    sophisticated design. While our scientists try to decipher what information it
-    might carry, all planet Earth eagerly awaits the return of the remaining crew
+    We have been visited by a probe with an impressively sophisticated
+    design. It is made out of a red artificial metal never seen on our planet, and
+    its shape is reminiscent of a crab. For the time being, we have assigned it the
+    name  "The Visitor".
+
+    While our scientists try to decipher what information
+    it might carry, all planet Earth eagerly awaits the return of the remaining crew
     members of Pinta IV.
 
 
-    It is without a doubt thanks to your expeditions through
+    It is without a doubt thanks to your expeditions throughout
     the stars that we have finally been noticed, and it is a pleasure to declare
-    the mission of project STARS as a success.
+    the mission of project STARS successful.
 
 
     The whole world owes our future
-    as an intergalactic species to you.
+    as an interplanetary species to you.
 
 
     Well done, and see you soon.
@@ -11266,7 +11270,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.8
+  m_fontSize: 29.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12183,40 +12187,43 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Monthly Earth update: April 5th, 2091
+  m_text: 'Monthly Earth update: November 5th, 2091
 
 
-    Team 7 has returned home safely,
-    and we are eagerly awaiting the arrival of teams 8 and 9 by the end of the month.
-    That only leaves team 10, which has had the duration of their mission extended
-    due to the circumstances you all know. We have been given approval to continue
-    even with a single crew member, as the results from this expedition are of utmost
-    importance. From everyone here on Earth, we wish you the best of luck in the
-    remainder of your journey.
+    Team 7 has returned home
+    safely, and we are eagerly awaiting the arrival of teams 8 and 9 by the end of
+    the month. That only leaves team 10, which has had the duration of their mission
+    extended due to the circumstances you all know. We have been given approval to
+    continue even with a single crew member, as the results from this expedition
+    are of the utmost importance.
+
+    From everyone here on Earth, we wish you the
+    best of luck in the remainder of your journey.
 
 
     Now for the news:
 
 
-    The construction of
-    Pinta V is nearly done, and the second wave of astronauts has already been selected.
-    We expect to launch the next expedition a year from now. We hope you can share
-    your experiences with the new crew members to help them on their mission.
+    The
+    construction of Pinta V is nearly done, and the second wave of astronauts has
+    already been selected. We expect to launch the next expedition a year from now.
+    We hope you can share your experiences with the new crew members to help them
+    on their mission.
 
 
-    Also,
-    as we mentioned before, while you won''t be taking part of Pinta V''s journey,
-    we have a whole year of aptitude tests ahead to select the third wave of astronauts.
-    All of you have priority in case you wish to carry out another expedition.
+    Also, as we mentioned before, while you won''t be taking
+    part of Pinta V''s journey, we have a whole year of aptitude tests ahead to select
+    the third wave of astronauts. All of you have priority in case you wish to carry
+    out another expedition.
 
 
-    Finally,
-    we have extremely exciting news to share with you. You will have to wait a few
-    more days, however, as an official statement is being made right now. We can''t
-    wait to tell you all about it.
+    Finally, we have extremely exciting news to share
+    with you. You will have to wait a few more days however, as an official statement
+    is being made right now. We can''t wait to tell you all about it.
 
 
-    May the stars guide you to our future.
+    May the
+    stars guide you to our future.
 
 
     STARS'
@@ -12246,7 +12253,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.2
+  m_fontSize: 24.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

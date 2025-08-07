@@ -13,24 +13,25 @@ MonoBehaviour:
   m_Name: C
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: 9bf918ecddb954a4db8c2f3a9837a18c, type: 3}
-  logText: 'The capsule containing this species has detailed information about them.
+  logText: 'The capsule containing this specimen has detailed information about them.
+
 
     Their
     name can be translated to Povann. They were an advanced underwater civilization
     that lived all over the oceans of the planet.
 
-    They had two long tentacle
-    legs with fins for movement, as well as two smaller ones that they used like
-    arms.
-
-    The tip of the small ones has many tiny fingers, comparable to the
-    tentacles of a jellyfish.
-
-    There is a mouth at the bottom, used mainly for
-    eating, and another one on the side of their body, used exclusively to communicate.
+    They have two long tentacle
+    legs with fins for movement, as well as two smaller ones that they use like arms.
 
     The
-    Povann had a set of grills at the top of their heads and one large eye on each
+    tip of the small ones have many tiny fingers, comparable to the tentacles of
+    a jellyfish.
+
+    There is a mouth at the bottom, used mainly for eating, and
+    another one on the side of their body, used exclusively to communicate.
+
+    The
+    Povann have a set of grills at the top of their heads and one large eye on each
     side.
 
     Interior scans of their organs show two hearts, each helping pump
@@ -47,4 +48,4 @@ MonoBehaviour:
     I should take all this information back to the ship for further
     investigation. Although I wish I could take the body with me.'
   orderFound: 0
-  read: 0
+  read: 1

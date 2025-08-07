@@ -13,22 +13,23 @@ MonoBehaviour:
   m_Name: N
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: d99e9125d5e5f574b86cb3f8c3e04de4, type: 3}
-  logText: 'We have finally made our first jump, leaving our home behind. As expected,
-    most of us woke up feeling quite dizzy, and it took a couple of hours to fully
-    recover. Marcus continues to dwell on the long term effects that faster-than-light
-    travel could have on us, but there''s no point in worrying now. We have a mission
-    to carry out, and all of humanity depends on us now.
+  logText: 'October 3rd, 2086\n\nWe have finally made our first jump, leaving our
+    home behind. As expected, most of us woke up feeling quite dizzy, and it took
+    a couple of hours to fully recover. Marcus continues to dwell on the long term
+    effects that faster-than-light travel could have on us, but there''s no point
+    in worrying now. We have a mission to carry out, and all of humanity depends
+    on us.
 
 
-    One month from now,
-    team 1 will be detaching from the main ship and setting out to explore the first
-    solar system. Small probes have made it this far, back when FTL was being tested,
-    but it will be the first time a person touches a planet outside our own solar
-    system. As part of team 10, it will be a long while before I get to do some exploration
-    myself, but there''s plenty of work to do in the meantime.
+    One month from now, team 1 will be detaching from the main ship
+    and setting out to explore the first solar system. Small probes have made it
+    this far, back when FTL was being tested, but it will be the first time a person
+    touches a planet outside our own solar system. As part of team 10, it will be
+    a long while before I get to do some exploration myself, but there''s plenty
+    of work to do in the meantime.
 
 
-    And... so many
-    jumps left. Can''t say I''m looking forward to that.'
+    And so many jumps left. Can''t say I''m
+    looking forward to that.'
   orderFound: 0
-  read: 0
+  read: 1

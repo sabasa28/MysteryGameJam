@@ -12,13 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 19
   m_EditorClassIdentifier: 
-  fullText: The temperature is getting unbearable. We are being forced to retreat\ndeeper
-    and deeper as the water evaporates at unbelievable speeds.\nProima has never
-    lived through something like this before. All the\nnatural disasters that hit
-    this planet can not compare to this. I just hope\nwe actually get to live through
-    it.\nAll the research I have done has been useless. I am scared mom.
-  currentText: 
+  fullText: 'The temperature is getting unbearable. We are being forced to retreat
+
+    deeper
+    and deeper as the water evaporates at unbelievable speeds.
+
+    Proima has never
+    lived through something like this before. All the
+
+    natural disasters that
+    hit this planet can not compare to this. I just hope
+
+    we actually get to
+    live through it.
+
+    All the research I have done has been useless. I am scared
+    mom.'
+  currentText: 'The *********** is getting unbearable. We are being forced to retreat
+
+    deeper
+    and deeper as the ***** evaporates at unbelievable speeds.
+
+    ****** has never
+    lived through something like this before. All the
+
+    natural disasters that
+    *** this planet can not compare to this. I just hope
+
+    we actually get to
+    live through it.
+
+    All the research I have done has been useless. I am scared
+    mom.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 38
-  read: 0
+  read: 1
