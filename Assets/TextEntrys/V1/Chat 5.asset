@@ -16,7 +16,7 @@ MonoBehaviour:
   - text: MIRA, could you analyze these symbols?
     speaker: 0
   - text: Sure. The way the symbols are positioned suggests a form of writing meant
-      to transmit a message, something like a letter, for example.
+      to transmit a message, like a note or a letter.
     speaker: 1
   - text: I was able to guess that. I'm more interested in its meaning.
     speaker: 0
@@ -31,5 +31,5 @@ MonoBehaviour:
       decipher its meaning with at least 90% certainty, I would need a considerably
       larger sample size.
     speaker: 1
-  - text: Then let's see if we can find more.
+  - text: Let's see if we can find more then.
     speaker: 0

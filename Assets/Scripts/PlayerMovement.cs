@@ -290,8 +290,12 @@ public class PlayerMovement : MonoBehaviour
         inputEnabled = true;
     }
 
-    void SetFlashlightState(bool enabled, bool playSound = true)
+    public void SetFlashlightState(bool enabled, bool playSound = true)
     {
+        if (enabled == isFlashlightEnabled)
+        {
+            return;
+        }
         isFlashlightEnabled = enabled;
         flashlight.SetActive(enabled);
         if (playSound) AudioManager.Get().PlaySFX(flashlightSound, 1);

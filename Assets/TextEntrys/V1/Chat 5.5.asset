@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a633f449938a194e9738ad7bc2507bb, type: 3}
-  m_Name: Chat 9
+  m_Name: Chat 5.5
   m_EditorClassIdentifier: 
   textLine:
-  - text: My scanner isn't detecting anything else in this area.
+  - text: 'Analyzing... '
     speaker: 1
-  - text: There's probably more to be found, but it might not be as important.
+  - text: I have initiated the translation process by comparing the data of both
+      of the found documents.
     speaker: 1
-  - text: The scanner will now point towards the exit of this zone in case you get
-      lost.
+  - text: If you open them in your tablet, you will notice some words are already
+      revealed.
     speaker: 1
+  - text: 'I will expand my knowledge of this language with each document you encounter
+      and update the text accordingly. '
+    speaker: 1
+  - text: Got it.
+    speaker: 0

@@ -18,15 +18,17 @@ MonoBehaviour:
   - text: Indeed. Based on the type of technology that I'm scanning ahead, this edification
       seems to be something similar to a laboratory.
     speaker: 1
-  - text: I think we hit the jackpot here.
+  - text: I think we lucked out.
     speaker: 0
   - text: Make sure to log any important piece of data that you ran into and grab
-      every document that you can find. Use my scanner if you need help finding the
-      latter ones.
+      every document that you can find.
     speaker: 1
   - text: Yeah, obviously.
     speaker: 0
-  - text: By the way, where is this artificial light coming from? What energy source?
+  - text: Use my scanner if you need help.
+    speaker: 1
+  - text: Sure. By the way, where is this artificial light coming from? What energy
+      source?
     speaker: 0
   - text: I think you will find the answer to that up ahead.
     speaker: 1

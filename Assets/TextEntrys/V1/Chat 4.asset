@@ -16,5 +16,5 @@ MonoBehaviour:
   - text: As a reminder, you can activate the flashlight in your suit by pressing
       the button labeled F in your electropanel.
     speaker: 1
-  - text: It might help you see in the dark.
+  - text: It might help you find your way in the dark.
     speaker: 1

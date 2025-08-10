@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Chat 1
   m_EditorClassIdentifier: 
   textLine:
-  - text: Warning. Company policy indicates that expeditions must be carried by a
-      minimum of two crew members.
+  - text: Warning. Company policy indicates that expeditions must be carried out
+      by a minimum of two crew members.
     speaker: 3
   - text: Initializing complimentary AI assistant...
     speaker: 3
-  - text: Hello! I am MIRA. Since you are currently alone, I will be joining you
-      and helping however I can.
+  - text: Hello! I am your Multipurpose Interplanetary Remote Assistant, but you
+      can call me MIRA. Since you are currently alone, I will be joining you and
+      helping however I can.
     speaker: 1
   - text: Uhh... sure.
     speaker: 0

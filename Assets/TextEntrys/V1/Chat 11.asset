@@ -15,8 +15,8 @@ MonoBehaviour:
   textLine:
   - text: Is there anything else left to investigate in this area?
     speaker: 0
-  - text: ' I''m not detecting much more. There is enough data for me to analyze
-      for several days.'
+  - text: I'm not detecting much else. We have enough data for me to analyze for
+      weeks.
     speaker: 1
   - text: In that case, we should start heading back to the ship.
     speaker: 0

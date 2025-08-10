@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chat 10
   m_EditorClassIdentifier: 
   textLine:
-  - text: My scanner is picking up some nearby object that could be worth investigating.
+  - text: My scanner is picking up a nearby object that could be worth investigating.
     speaker: 1
   - text: I would suggest looking into it before leaving the area.
     speaker: 1

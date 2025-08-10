@@ -387,6 +387,11 @@ public class GameplayController : MonoBehaviour
         playerMovement.ActivateSonar();
     }
 
+    public void ForcePlayerFlashlight(bool newState)
+    {
+        playerMovement.SetFlashlightState(newState);
+    }
+
     public bool IsOptionsMenuOpen()
     {
         return optionsMenuOpen;

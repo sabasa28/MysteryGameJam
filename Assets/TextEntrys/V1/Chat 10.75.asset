@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a633f449938a194e9738ad7bc2507bb, type: 3}
+  m_Name: Chat 10.75
+  m_EditorClassIdentifier: 
+  textLine:
+  - text: ...
+    speaker: 0
+  - text: Everything I've seen on this planet so far has been fascinating, but there's
+      something about this thing that just screams danger.
+    speaker: 0
+  - text: I bet the small fragment we found earlier was part of another machine just
+      like this one.
+    speaker: 0
+  - text: Its interior is different from anything previously encountered. I can confidently
+      say that it belongs to a completely different civilization.
+    speaker: 1
+  - text: It looks like they were analyzing it. Perhaps they left behind the results
+      of their examinations. See if you can find anything nearby.
+    speaker: 1

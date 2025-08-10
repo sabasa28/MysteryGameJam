@@ -53,7 +53,7 @@ MonoBehaviour:
   wakeUpChat: {fileID: 11400000, guid: e5f21597fd4509745a8c1432f3707c63, type: 2}
   doneWithZone: 0
   firstDocChat: {fileID: 11400000, guid: 8925fb357af981d44b152fb941782384, type: 2}
-  secondDocChat: {fileID: 11400000, guid: 8925fb357af981d44b152fb941782384, type: 2}
+  secondDocChat: {fileID: 11400000, guid: c72ef9a140f6a8a42b044cc617f4c34b, type: 2}
   astrounautName: You
   unknownName: ???
   AIName: MIRA
