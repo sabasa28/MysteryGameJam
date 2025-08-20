@@ -73,7 +73,7 @@ public class UIGameplay : MonoBehaviour
 
     private void Update()
     {
-        if (docOpen && Input.GetKeyDown(KeyCode.Mouse0))
+        if (docOpen && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.E)))
         {
             ShipDoc1.SetActive(false);
             ShipDoc2.SetActive(false);
@@ -234,14 +234,7 @@ public class UIGameplay : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         EndGameButton.interactable = true;
     }
-    public void StartEndingCinematic()
-    {
-        ShipDoc5.SetActive(false);
-        GameplayController.Get().ChangeInputState(GameplayController.InputState.UI);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        GameplayController.Get().StartEndGameCinematic();
-    }
+
     public void SetCustomTimeForNextFade(float customTime)
     {
         fadeOutInCustomTime = customTime;

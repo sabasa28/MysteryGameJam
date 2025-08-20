@@ -366,9 +366,14 @@ public class GameplayController : MonoBehaviour
         playerMovement.RaiseHand();
     }
 
-    public void MovePlayerCameraAndReturn(Transform targetPos, float goingTime, float returningTime)
+    public void MovePlayerCameraAndReturn(Transform targetPos, float goingTime, float returningTime, InputState newInputState = InputState.InGameUI)
     {
-        ChangeInputState(InputState.InGameUI);
+        ChangeInputState(newInputState);
+        if (newInputState == InputState.UI)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
         playerMovement.MoveCameraAndReturn(targetPos, goingTime, returningTime);
     }
 

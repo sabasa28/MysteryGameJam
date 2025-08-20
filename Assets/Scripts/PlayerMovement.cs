@@ -616,7 +616,7 @@ public class PlayerMovement : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-
+        GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);
         mainCamera.transform.SetLocalPositionAndRotation(initialLocalCamPos, initialLocalCamRot);
         triggerCameraReturn = false;
         cameraDettached = false;
