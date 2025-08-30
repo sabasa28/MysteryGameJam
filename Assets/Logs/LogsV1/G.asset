@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: G
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: ada6513c8fb995c4f98c4ae52d07def5, type: 3}
-  logText: This object is a complex 3D maze with a ring stuck in the middle. After
+  logText: This object is a complex 3D maze with a ring stuck in the centre. After
     fiddling around for a bit, it almost seems like a toy where the objective is
     to either remove the ring or have it reach a specific point.
   orderFound: 0

@@ -38,6 +38,9 @@ public class UIGameplay : MonoBehaviour
     float trollTimer = 0.0f;
     float timeBeforeTrolling = 10.0f;
     bool docOpen = false;
+    KeyCode lastHitKey;
+    bool cheatsOn = false;
+    [SerializeField] GameObject cheats;
 
     public static UIGameplay Get()
     {
@@ -97,6 +100,24 @@ public class UIGameplay : MonoBehaviour
             }
             framesSinceLastUpdate = 0;
             fpsDisplayTimer = 0.0f;
+        }
+    }
+    private void OnGUI()
+    {
+        if (!cheatsOn && Input.anyKeyDown)
+        {
+            if (lastHitKey == KeyCode.Minus)
+            {
+                if (Event.current.keyCode == KeyCode.U)
+                {
+                    cheatsOn = true;
+                    cheats.SetActive(true);
+                }
+            }
+            else
+            {
+                lastHitKey = Event.current.keyCode;
+            }
         }
     }
     public void ChangeInteractTextDisplay(bool bDisplay)
@@ -172,6 +193,11 @@ public class UIGameplay : MonoBehaviour
         GeneralMenuPanel.SetActive(newVisibility);
         SettingsMenuPanel.SetActive(!newVisibility);
         ControlsMenuPanel.SetActive(!newVisibility);
+    }
+
+    public void UnstuckPlayer()
+    {
+        GameplayController.Get().UnstuckPlayer();    
     }
 
     public void UpdateVolume()

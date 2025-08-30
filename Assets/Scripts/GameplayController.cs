@@ -369,11 +369,6 @@ public class GameplayController : MonoBehaviour
     public void MovePlayerCameraAndReturn(Transform targetPos, float goingTime, float returningTime, InputState newInputState = InputState.InGameUI)
     {
         ChangeInputState(newInputState);
-        if (newInputState == InputState.UI)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-        }
         playerMovement.MoveCameraAndReturn(targetPos, goingTime, returningTime);
     }
 
@@ -400,5 +395,10 @@ public class GameplayController : MonoBehaviour
     public bool IsOptionsMenuOpen()
     {
         return optionsMenuOpen;
+    }
+
+    public void UnstuckPlayer()
+    {
+        playerMovement.AttemptToUnstuck();
     }
 }

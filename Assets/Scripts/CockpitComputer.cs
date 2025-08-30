@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class CockpitComputer : MonoBehaviour, IInteractable
 {
-    [SerializeField] Transform InteractingCameraPos;
+    [SerializeField] Transform InteractingCameraTrans;
+    [SerializeField] Transform ScreenPosTrans;
     [SerializeField] float timeMovingCamera;
     [SerializeField] float timeReturningCamera;
     bool isBeingLookedAt = false;
@@ -19,6 +20,11 @@ public class CockpitComputer : MonoBehaviour, IInteractable
     ColorBlock message2ButtonColorBlockAux;
     bool message1Read = false;
     bool message2Read = false;
+    [SerializeField] Transform minWorldPos;
+    [SerializeField] Transform maxWorldPos;
+    Vector2 minCursorPos;
+    Vector2 maxCursorPos;
+    [SerializeField] InGameCursor inGameCursor;
 
     private void Start()
     {
@@ -30,20 +36,19 @@ public class CockpitComputer : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
-        GameplayController.Get().MovePlayerCameraAndReturn(InteractingCameraPos, timeMovingCamera, timeReturningCamera, GameplayController.InputState.UI);
+        GameplayController.Get().MovePlayerCameraAndReturn(InteractingCameraTrans, timeMovingCamera, timeReturningCamera, GameplayController.InputState.UI);
         StartCoroutine(WaitForZoomInAndTakeInput());
     }
 
     public bool IsInteractable()
     {
-        return (!message1Read || !message2Read);// && LevelsManager.Get().persistentData.canEndGame;
+        return (!message1Read || !message2Read) && LevelsManager.Get().persistentData.canEndGame;
     }
 
     public void RemoveFromNecessaryInteractables()
     {
         throw new System.NotImplementedException();
     }
-
     private void Update()
     {
         if (isBeingLookedAt)
@@ -66,6 +71,9 @@ public class CockpitComputer : MonoBehaviour, IInteractable
     {
         yield return new WaitForSeconds(timeMovingCamera);
         isBeingLookedAt = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        inGameCursor.EnableCursor(minWorldPos.localPosition, maxWorldPos.localPosition, (ScreenPosTrans.position - InteractingCameraTrans.position).magnitude);
     }
 
     public void OpenListOfMessages()
@@ -101,6 +109,7 @@ public class CockpitComputer : MonoBehaviour, IInteractable
     {
         if (message1Read && message2Read)
         {
+            inGameCursor.DisableCursor();
             GameplayController gpc = GameplayController.Get();
             StopBeingLookedAt();
             gpc.ChangeInputState(GameplayController.InputState.UI);

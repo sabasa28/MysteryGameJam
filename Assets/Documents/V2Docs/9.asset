@@ -12,14 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 9
   m_EditorClassIdentifier: 
-  fullText: Premou, we have made a mistake. I stayed after hours to finish an\nanalysis
-    of the Visitor, and I believe the unknown signals we recorded\nstarted when we
-    brought it down here. It seems to react to water and is\ninstructed to activate
-    as it touches it. Furthermore, while we have not\nfigured out what data the Visitor
-    holds, we have repeatedly caught\nsomething coming out of it, as if it were emitting
-    some sort of wave. I\nhave reasons to believe this was never meant for us.\n\nIt
-    is not a message; it is a beacon. And it is leading someone here.
-  currentText: 
+  fullText: 'Premou,                                                                                                                                                                                
+    \n\nWe have made a mistake. I stayed after hours to finish an analysis of\nthe
+    Visitor, and I believe the unknown signals we recorded started\nwhen we brought
+    it down here. It seems to react to water and is\ninstructed to activate as it
+    touches it. Furthermore, while we have not\nfigured out what data the Visitor
+    holds, we have repeatedly caught it\nemitting some sort of radio wave. I have
+    reasons to believe this was\nnever meant for us.                                                                                                                                                                                 
+    \n\nIt is not a message; it is a beacon. And it is leading someone here.                                                                                                                                                                                 '
+  currentText: '******, we have made a mistake. I stayed after hours to finish an
+
+    analysis
+    of the *******, and I believe the unknown signals we recorded
+
+    started when
+    we brought it down here. It seems to react to ***** and is
+
+    instructed to
+    activate as it touches it. Furthermore, while we have not
+
+    figured out what
+    data the ******* holds, we have repeatedly caught
+
+    something coming out of
+    it, as if it were emitting some sort of ****. I
+
+    have reasons to believe
+    this was never meant for us.
+
+
+    It is not a message; it is a beacon. And it
+    is leading ******* here.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 18

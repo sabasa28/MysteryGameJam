@@ -13,35 +13,18 @@ MonoBehaviour:
   m_Name: P
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: d99e9125d5e5f574b86cb3f8c3e04de4, type: 3}
-  logText: 'April 20th, 2091\n\nCloser scanning of TRAPPIST-1 e confirms previous
-    examinations.
-
-    Its total mass is approximately 0.692 Earths.
-
-    It is tidally
-    locked. While half the planet constantly receives sunlight, surface temperatures
-    don''t seem extreme.
-
-    It takes 146 Earth hours to complete one full orbit
-    around its star.
-
-    Its moon is about 15% larger than ours.
-
-
-    Surface scans
-    indicate that the planet likely had substantial amounts of water, with an estimated
-    volume of 1 billion cubic kilometres, but it sadly dried out completely. If there
-    was ever life here, we are several hundred million years late.
-
-
-    However,
+  logText: "April 20th, 2091\\n\\nCloser scanning of TRAPPIST-1 e confirms previous
+    examinations.\n\u2022 Its total mass is approximately 0.692 Earths.\n\u2022 It
+    is tidally locked. While half the planet constantly receives sunlight, surface
+    temperatures don't seem extreme.\n\u2022 It takes 146 Earth hours to complete
+    one full orbit around its star.\n\u2022 Its moon is about 15% larger than ours.\n\nSurface
+    scans indicate that the planet likely had substantial amounts of water, with
+    an estimated volume of 1 billion cubic kilometres, but it sadly dried out completely.
+    If there was ever life here, we are several hundred million years late.\n\nHowever,
     some data results seem extremely abnormal. The atmosphere, which is slowly disappearing
-    (probably due to the planet''s orbit being extremely close to its star), shows
-    a gas composition that simply shouldn''t exist in a barren world like this.
-
-
-    I
+    (probably due to the planet's orbit being extremely close to its star), shows
+    a gas composition that simply shouldn't exist in a barren world like this.\n\nI
     strongly believe it is worth investigating, which means I need to convince the
-    higher-ups to let me go on a solo mission.'
+    higher-ups to let me go on a solo mission."
   orderFound: 0
   read: 1

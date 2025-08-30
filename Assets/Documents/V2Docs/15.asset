@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 15
   m_EditorClassIdentifier: 
-  fullText: What is happening? There are red lights all over the sky. They are very\nnoticeable
-    on the dark side of the planet. Do they have anything to do\nwith the rising
-    temperatures?
-  currentText: '**** ** ********** ***** *** red ****** all **** *** sky. **** ***
-    **** ********** on *** dark **** ** *** ******. Do **** **** ******** ** do ****
-    *** ****** temperatures*'
+  fullText: 'Praba! What is happening? There are red lights all over the sky.                                                                                                                                                                                
+    \nThey are shining so bright you do not even need echo-goggles to see\non the
+    dark side of the planet.                                                                                                                                                                                
+    \nDo they have anything to do with the rising temperatures?                                                                                                                                                                                  '
+  currentText: 'What is happening? There are red lights all over the sky. They are
+    very
+
+    noticeable on the dark side of the planet. Do they have anything to
+    do
+
+    with the rising temperatures?'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 30
-  read: 1
+  read: 0

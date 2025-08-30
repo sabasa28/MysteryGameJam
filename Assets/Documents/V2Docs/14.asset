@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 14
   m_EditorClassIdentifier: 
-  fullText: The water is getting warmer. I think there might have been an accident\nat
-    the thermal vents, and all that heat is coming our way.\nIt is strange that no
-    official statement has been made yet. I wonder if I\nshould leave like the others.
-  currentText: 
+  fullText: 'The water is getting warmer. I think there might have been an accident\nat
+    the thermal vents and all that heat is coming our way.                                                                                                                                                                                
+    \nIt is strange that no official statement has been made yet. I wonder if I\nshould
+    have left like the others.                                                                                                                                                                                 '
+  currentText: 'The ***** is getting warmer. I think there might have been an accident
+
+    at
+    the thermal vents, and all that heat is coming our way.
+
+    It is strange that
+    no official ********* has been made yet. I wonder if I
+
+    should leave like
+    the others.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 28

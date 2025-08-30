@@ -12,11 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  fullText: Prumi, something weird is happening out there. There are a lot of\nrumors
-    going around, and I even heard that weapons are being sent to\nthe surface.\nAs
-    soon as I finish working, I will go get you and Prinma. We will hide\ndeep until
-    this whole thing is over.
-  currentText: 
+  fullText: 'Prumi, something weird is happening outside. There are a lot of\nrumors
+    going around, and I even heard that weapons are being sent to\nthe surface.                                                                                                                                                                                
+    \nAs soon as I finish working, I will go get you and Prinma. We will hide\ndeep
+    until this whole thing is over.                                                                                                                                                                                 '
+  currentText: '*****, something weird is happening out there. There are a lot of
+
+    rumors
+    going around, and I even heard that weapons are being sent to
+
+    the *******.
+
+    As
+    soon as I finish working, I will go get you and ******. We will hide
+
+    deep
+    until this whole thing is over.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 22

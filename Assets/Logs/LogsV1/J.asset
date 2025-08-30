@@ -13,15 +13,11 @@ MonoBehaviour:
   m_Name: J
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: 08d37715bb099484197d9b450c75b37a, type: 3}
-  logText: 'This map-like object seems to chart part of their world, specifically
-    the bottom floor of an ocean.
-
-    Each location on the map has a label attached
-    with something written on it. MIRA can''t translate them, but I think that might
-    be because they are all proper names.\n\n
-
-    Given the amount of effort they
-    invested into building structures underwater, it is safe to assume they have
-    adapted to marine life, either biologically or technologically.'
+  logText: This map-like object seems to chart part of their world, specifically
+    the bottom floor of an ocean.\n\nEach location on the map has a label attached
+    with something written on it. MIRA can't translate them, but I think that might
+    be because they are all proper names.\n\nGiven the amount of effort they invested
+    into building structures underwater, it is safe to assume they have adapted to
+    marine life, either biologically or technologically.
   orderFound: 0
   read: 0

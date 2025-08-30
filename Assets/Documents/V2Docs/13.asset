@@ -12,10 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 13
   m_EditorClassIdentifier: 
-  fullText: Notice to all military personnel\n\nWe are holding an emergency meeting.
-    Come to the headquarters as\nsoon as you receive this message.\nDo not spread
-    any rumors. Do not act panicked. Be ready for\nimmediate deployment.
-  currentText: 
+  fullText: 'Notice to all military personnel                                                                                                                                                                                
+    \n\nWe are holding an emergency meeting. Come to the headquarters as\nsoon as
+    you receive this message.                                                                                                                                                                                
+    \nDo not spread any rumors. Do not act panicked. Be ready for\nimmediate deployment.                                                                                                                                                                                 '
+  currentText: 'Notice to all military personnel
+
+
+    We are holding an emergency
+    *******. Come to the headquarters as
+
+    soon as you receive this message.
+
+    Do
+    not spread any rumors. Do not *** panicked. Be ready for
+
+    immediate deployment.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 26

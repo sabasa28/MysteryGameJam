@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: M
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: f47c2bf8ebd33e347a37d2f3cf3c5f41, type: 3}
-  logText: December 17th, 2091\n\nAs of today, humanity can finally confirm that
+  logText: 'December 17th, 2091\n\nAs of today, humanity can finally confirm that
     we are not alone in the universe. The expedition on TRAPPIST-1 e has only just
-    began, but it has already turned into the most important one.\nA quick internal
+    began, and it has already turned into the most important one.\n\nA quick internal
     scan of a structure I found revealed a series of complex designs comparable to
-    electronic circuits. This was without a doubt built by an advanced species.\nWhile
-    the interior luckily seems to have been preserved, the structure's exterior suggests
-    that it has been abandoned for a while.
+    electronic circuits. This was without a doubt built by an advanced species. While
+    the interior luckily seems to have been preserved, the structure''s exterior
+    suggests that it has been abandoned for a while. '
   orderFound: 0
   read: 0

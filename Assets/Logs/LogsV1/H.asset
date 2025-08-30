@@ -13,16 +13,9 @@ MonoBehaviour:
   m_Name: H
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: 05f3ef937b381a94da545d46441d773d, type: 3}
-  logText: 'This spherical structure initially appeared to be a part of a larger
-    building, but a deeper analysis of its interior seems to suggest that''s not
-    the case.
-
-    Its design actually indicates that it might have been used for
-    housing, since it has features like insulated walls.
-
-
-    A spherical house
-    is not what I was expecting, and especially not one so deep underground. I''m
-    hoping to encounter more in better conditions.'
+  logText: This spherical structure initially appeared to be part of a larger building,
+    but a deeper analysis of its interior suggests that's not the case.\nThe design
+    indicates that it may have been used for housing, since it has features like
+    insulated walls.
   orderFound: 0
   read: 0

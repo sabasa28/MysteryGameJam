@@ -13,21 +13,24 @@ MonoBehaviour:
   m_Name: 19
   m_EditorClassIdentifier: 
   fullText: 'The temperature is getting unbearable. We are being forced to retreat
-
-    deeper
-    and deeper as the water evaporates at unbelievable speeds.
-
-    Proima has never
-    lived through something like this before. All the
-
-    natural disasters that
-    hit this planet can not compare to this. I just hope
-
-    we actually get to
-    live through it.
-
-    All the research I have done has been useless. I am scared
-    mom.'
+    deeper and deeper as the water\nevaporates at unbelievable speeds. Proima has
+    never lived through something like this before. No\nnatural disaster that ever
+    hit our planet can compare to this catastrophe.                                                                                                                                                                             
+    \n\nIt has been months of hard work, yet all the research I have done has proven
+    useless. After every dead\nend I see my colleagues grow more tired and hopeless.
+    At this point, no scientific advances are being\nmade; I just sit in the lab,
+    my mind wandering.                                                                                                                                                                             
+    \n\nLast week, I caught myself thinking about how to restore the planet when
+    we lose to the invaders, but I\nfigured I was being pessimistic by assuming defeat.
+    Now I know I was actually being optimistic, thinking\nafter all this passes there
+    would be anyone left to do the restoring.                                                                                                                                                                             
+    \n\nAs I write this lines I don''t know how or where you are. Although everything
+    is looking grimmer and\ngrimmer for the Povann, I would be happy just knowing
+    that you alone are okay. That you are still able to\nlive the last years of your
+    life peacefully as you have always wanted. I try to hold on to the idea that
+    you\nwill read this in some safe, secluded place, but I am starting to think
+    such a thing does not exist.                                                                                                                                                                             
+    \n\nI miss you mom. I am scared.                                                                                                                                                                                                                                                                                                                              '
   currentText: 'The *********** is getting unbearable. We are being forced to retreat
 
     deeper
@@ -47,4 +50,4 @@ MonoBehaviour:
   placeFoundText: 
   timeFound: 
   orderToDisplay: 38
-  read: 1
+  read: 0

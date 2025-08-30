@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: Q
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: d99e9125d5e5f574b86cb3f8c3e04de4, type: 3}
-  logText: 'May 7th, 2091\n\nI have finally obtained permission to land on TRAPPIST-1
+  logText: May 7th, 2091\n\nI have finally obtained permission to land on TRAPPIST-1
     e. Protocol requires one person to always stay at the ship, but I argued that
     forcing someone to come would be worse, as they would need to jump several times
     to reach me. Our engines can only achieve faster-than-light travel so many times,
     and the risk of getting more people and ships stranded is greater than my own
-    safety.
-
-
-    I don''t have any intention of getting stuck on this planet, and
-    while the logical thing to do is return, I believe that this mission is more
-    important than anything else. And I know the higher-ups agree.'
+    safety.\n\nI don't have any intention of getting stuck on this planet, and while
+    the logical thing to do is return, I believe that this mission is more important
+    than anything else. And I know the higher-ups agree.\n\nAll arrangements for
+    the expedition should be done by May 9th. The flight to the planet will take
+    about 7 months, so I'll be going into hibernation tomorrow.
   orderFound: 0
   read: 1

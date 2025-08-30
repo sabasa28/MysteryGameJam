@@ -12,15 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: 
-  fullText: Premou has chosen to transport the foreign object to the recently\ninaugurated
-    Prubei laboratory, since it was built in a discrete location.\nI do not understand
-    the reasoning for this decision, especially\nconsidering almost no equipment
-    has been installed yet.\nAll this secrecy around the object is quite strange.
-  currentText: '****** *** chosen ** transport *** foreign object ** *** ********
-    inaugurated Prubei *********** ***** ** *** ***** ** a ******** ********. * do
-    *** ********** *** reasoning *** **** decision* ********** *********** ******
-    no ********* *** been ********* ***. All **** ******* around *** object ** quite
-    *******.'
+  fullText: "Premou has chosen to transport the foreign object to the recently\ninaugurated
+    Prubei laboratory, since it was built in a discrete location.\nI do not fully
+    support this decision, especially considering almost no\nequipment has been installed
+    yet.                                                                                                                                                                                 
+    \n\nAll this secrecy around the object is quite strange.                                                                                                                                                                                  "
+  currentText: '****** *** ****** ** ********* *** ******* ****** ** *** ********
+
+    ***********
+    ****** laboratory* ***** ** *** ***** ** a ******** *********
+
+    * ** not *****
+    ******* **** ********* especially *********** ****** **
+
+    ********* *** been
+    ********* ****
+
+
+    *** **** ******* ****** *** ****** ** ***** ********'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 6

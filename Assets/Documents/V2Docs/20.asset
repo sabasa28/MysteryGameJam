@@ -12,11 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 20
   m_EditorClassIdentifier: 
-  fullText: We have sealed the laboratory, but it is only a matter of time until
-    the\nwater becomes uninhabitable.\nI simply can not figure out a way to survive
-    this.\n\nThe thought of everything and everyone being dead outside these\nwalls
-    is terrifying.\nAnd we will soon follow.
-  currentText: 
+  fullText: 'We have sealed the laboratory, but it is only a matter of time until
+    the\nwater becomes uninhabitable. I simply can not figure out a way to\nsurvive
+    this.                                                                                                                                                                                                                                                                                   
+    \n\nThe thought of everything and everyone being dead outside these\nwalls is
+    terrifying. And we will soon follow.                                                                                                                                                                                         '
+  currentText: 'We have sealed the laboratory, but it is only a matter of time until
+    the
+
+    ***** becomes uninhabitable.
+
+    I simply can not figure out a way
+    to survive this.
+
+
+    The thought of everything and everyone being dead outside
+    these
+
+    walls is terrifying.
+
+    And we will soon follow.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 40

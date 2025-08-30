@@ -784,8 +784,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.20784314, g: 1, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.20784314, g: 1, b: 0, a: 1}
-    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 0.96862745, b: 0, a: 1}
     m_SelectedColor: {r: 0.20784314, g: 1, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2148,6 +2148,7 @@ MonoBehaviour:
   jumpForce: 8
   verticalForce: 0
   testgrounded: 0
+  testvelocity: {x: 0, y: 0, z: 0}
   coyoteTime: 0.2
   isFlashlightEnabled: 0
   flashlight: {fileID: 4112983044151802501}
@@ -2219,12 +2220,13 @@ MonoBehaviour:
   pitchForDirtSteps: 1.5
   pitchForMetalSteps: 2.65
   volumeDirtSteps: 0.3
-  volumeMetalSteps: 0.3
+  volumeMetalSteps: 0.15
   endAnimMetal1: {fileID: 0}
   endAnimMetal2: {fileID: 0}
   endAnimMetal3: {fileID: 0}
   endAnimMetal4: {fileID: 0}
   endAnimDirt1: {fileID: 0}
+  unstuckDistance: 0.02
 --- !u!143 &6191270722901303704
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2246,7 +2248,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1.8
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 50
   m_StepOffset: 0.5
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -3052,57 +3054,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'My name is Premou. I carry with me all the information about the terrible
-    fate of Proima, our planet, that I could gather in
-
-    the little time that
-    I had left.
-
-
-    We were visited by an advanced device from beyond the sky.
-    We believe its job was to detect water and notify whatever
-
-    species built
-    it about its location.
-
-    Soon after its arrival, red lights surrounded our
-    whole planet, originating from their spaceships.
-
-    It took us too long to
-    figure out what they were doing, but I doubt there was anything we could have
-    done about it.
-
-
-    The temperatures began to rapidly rise, and our water evaporated
-    at incredible speeds.
-
-    Our best guess is that these invaders are capable
-    of absorbing the water in the air without needing to enter the
-
-    atmosphere,
-    and they do it by artificially boiling the planet below them.
-
-
-    Before we
-    could even figure anything out, we were forced to retreat deep into the underground
-    caves.
-
-    Our cities crumbled to dust as the surface became dry and devoid
-    of life.
-
-
-    We never had the chance to contact them. We never got to fight
-    back. We never even saw how they looked.
-
-    We were killed without notice in
-    such a quick and merciless way.
-
-
-    If anyone ever finds this, use this as
-    a warning. Your planet might not be safe.
-
-
-    Premou, last of the Povann.'
+  m_text: a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3129,24 +3081,24 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.9
+  m_fontSize: 50
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 50
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 16
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_wordSpacing: 0
+  m_wordSpacing: 0.65
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 0
-  m_wordWrappingRatios: 0.4
+  m_wordWrappingRatios: 0
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
@@ -5063,8 +5015,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.20784314, g: 1, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.20784314, g: 1, b: 0, a: 1}
-    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 0.96862745, b: 0, a: 1}
     m_SelectedColor: {r: 0.20784314, g: 1, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1

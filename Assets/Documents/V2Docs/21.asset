@@ -12,11 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 21
   m_EditorClassIdentifier: 
-  fullText: Premou has taken our only surface gear, which should have enough\nwater
-    to exit the caves.\nWe wrote a document with our story and what we know of this\ninvasion.\nMaybe
-    one day some other advanced species might find it so that we\nare not forgotten.\nIf
-    it happens, I hope that it serves as a warning to save others.
-  currentText: 
+  fullText: 'Premou has taken our only surface gear, which should have enough\nwater
+    to exit the caves.                                                                                                                                                                                       
+    \nWe wrote a document with our story and everything we know of this\ninvasion.
+    Maybe one day some other advanced species might find it\nso that we are not forgotten.                                                                                                                                                                                       
+    \nIf that happens, I hope it serves as a warning to save others.                                                                                            '
+  currentText: '****** has taken our only ******* gear, which should have enough
+
+    *****
+    to exit the caves.
+
+    We wrote a document with our story and what we know of
+    this
+
+    ********.
+
+    Maybe one day some other advanced species might find
+    it so that we
+
+    are not forgotten.
+
+    If it happens, I hope that it serves
+    as a warning to save others.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 42

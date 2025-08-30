@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6666474127287351291}
   - component: {fileID: 106880538880180602}
-  - component: {fileID: 6139599874178317436}
+  - component: {fileID: 370299398766797049}
   - component: {fileID: 333713798845124553}
   m_Layer: 0
   m_Name: GFXLabDocA
@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8111152806691157683}
   m_Mesh: {fileID: -2432090755550338912, guid: 59ac6b88a0a079f4b95bf86112d1e84a, type: 3}
---- !u!23 &6139599874178317436
+--- !u!23 &370299398766797049
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,7 +70,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.1
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 0}
+  eventToTrigger: {fileID: 0}
 --- !u!1001 &8995737319773732547
 PrefabInstance:
   m_ObjectHideFlags: 0

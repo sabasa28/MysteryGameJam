@@ -12,10 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  fullText: Where are you Pruuv? Something happened while the surface team\nwas coming
-    back down. There seems to be a lot of panic, but we are\nnot allowed to get close.\nGet
-    your tentacles over here and figure out what is happening.
-  currentText: 
+  fullText: "Where are you Pruuv? Something happened while the surface team\nwas
+    coming back down. There seems to be a lot of panic, but we are\nnot allowed to
+    get close.                                                                                                                                                                                 
+    \nGet your tentacles over here and figure out what is happening.                                                                                                                                                                                  "
+  currentText: 'Where are you *****? Something happened while the ******* team
+
+    was
+    coming back down. There seems to be a lot of panic, but we are
+
+    not *******
+    to get close.
+
+    Get your ********* over here and figure out what is happening.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 8

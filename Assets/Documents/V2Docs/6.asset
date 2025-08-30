@@ -12,13 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 6
   m_EditorClassIdentifier: 
-  fullText: 'Entry 1
+  fullText: "Entry 1                                                                                                                                                                                 
+    \n\nWe have decided to denominate the foreign object simply as\n\"The Visitor\".
+    It seems to possess an electronic interior, covered by an\nextremely resistant
+    metallic exterior. It is outputting all sorts of\nunknown signals, and I am starting
+    to worry that our technology might\nnot be advanced enough to comprehend it.                                                                                                                                                                                 
+    \\nOthers are highly skeptical about its origins, thinking it might be\\nsomeone
+    playing a joke on us, but I am convinced such complexity can not\\nbe achieved
+    on Proima.                                                                                                                                                                                 
+    \\n\\nWhat an incredible discovery!                                                                                                                                                                                  "
+  currentText: 'Entry 1
 
 
     We have decided to denominate the foreign object simply
     as "The
 
-    Visitor". It seems to possess an electronic interior, covered by
+    *******". It seems to ******* an electronic interior, covered by
     an
 
     extremely resistant metallic exterior. It is outputting all sorts of
@@ -27,40 +36,16 @@ MonoBehaviour:
     signals, and I am starting to worry that our technology might
 
     not be advanced
-    enough to comprehend it. Others are highly skeptical
+    enough to ********** it. Others are highly skeptical
 
     about its origins,
-    thinking it might be someone playing a joke on us,
+    thinking it might be ******* playing a joke on us,
 
     but I am convinced such
-    complexity can not be achieved on Proima.
+    complexity can not be achieved on ******.
 
     What an incredible discovery!'
-  currentText: '***** *
-
-
-    ** **** ******* ** ********** *** ******* ****** ******
-    ** ****
-
-    ********* ** ***** ** ******* ** ********** ********* ******* **
-    **
-
-    ********* ********* ******** ********* ** is outputting *** ***** **
-
-    *******
-    ******** *** * ** ******** ** ***** that *** ********** *****
-
-    *** ** ********
-    ****** ** ********** *** ****** *** ****** *********
-
-    ***** its ********
-    ******** ** ***** ** ******* ******* * **** ** ***
-
-    *** * ** convinced ****
-    ********** *** *** ** ******** ** *******
-
-    **** ** ********** discovery*'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 12
-  read: 1
+  read: 0

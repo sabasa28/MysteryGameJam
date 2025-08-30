@@ -12,12 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 12
   m_EditorClassIdentifier: 
-  fullText: They have taken over the laboratory. Premou said that the military will\ncontinue
-    all further investigations.\nI decided to leave while I still can, but I can
-    not float idle while\nsomething so large is happening.\nI can not even begin
-    to explain what I saw through the telescope. Find\nme at my house as soon as
-    you are free.
-  currentText: 
+  fullText: 'They have taken over the laboratory. Premou said that the military will\ncontinue
+    all further investigations. I left with as much of my research\nas possible;
+    I will not float idle while something so large is happening.\n\nWords can not
+    express what I saw through the telescope. Find me at\nmy house as soon as you
+    are able.                                                                                                                                                                                   '
+  currentText: 'They have taken over the laboratory. ****** said that the military
+    will
+
+    continue all ******* investigations.
+
+    I decided to leave while
+    I still can, but I can not ***** idle while
+
+    something so large is happening.
+
+    I
+    can not even begin to explain what I saw through the *********. Find
+
+    me
+    at my house as soon as you are ****.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 24

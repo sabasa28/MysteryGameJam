@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 18
   m_EditorClassIdentifier: 
-  fullText: I have been informed that the attack was unsuccessful. These\ninvaders
-    are clearly more advanced than we anticipated.\nWe need to act quickly before
-    it is too late. We have already lost\naccess to three military stations due to
-    the lowering sea levels.\n\nAt this rate, we will be forced to hide in the lower
-    cave systems.
-  currentText: 
+  fullText: 'I have been informed that the attack was unsuccessful. These\ninvaders
+    are even more advanced than we anticipated.                                                                                                                                                                              
+    \nWe need to act quickly before it is too late. We have already lost\naccess
+    to three military stations due to the lowering sea levels.                                                                                                                                                                             
+    \n\nAt this rate, we will be forced to hide in the lower cave systems.                                                                                                                                                                              '
+  currentText: 'I have been informed that the attack was unsuccessful. These
+
+    ********
+    are clearly more advanced than we anticipated.
+
+    We need to *** ******* before
+    it is too late. We have already lost
+
+    access to three military stations due
+    to the lowering sea levels.
+
+
+    At this rate, we will be forced to hide in
+    the lower cave systems.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 36

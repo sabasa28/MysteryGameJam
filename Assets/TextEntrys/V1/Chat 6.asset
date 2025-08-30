@@ -18,5 +18,6 @@ MonoBehaviour:
   - text: To avoid getting lost, I would recommend taking advantage of the beacons
       in the compartment labeled R of your suit.
     speaker: 1
-  - text: You are only holding twenty beacons; make sure you don't waste them.
+  - text: You are only holding twenty, but they should be plenty for the size of
+      this cave.
     speaker: 1

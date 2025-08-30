@@ -12,10 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 16
   m_EditorClassIdentifier: 
-  fullText: We have visual confirmation.\nThe source of the red lights comes from
-    ships that resemble the\nforeign object we recovered earlier.\nThere are several
-    thousands of them, and they cover the whole\nplanet.\n
-  currentText: 
+  fullText: ...we have visual confirmation.                                                                                                                                                                               
+    \nThe source of the red lights comes from ships that resemble the\nforeign object
+    we recovered earlier.                                                                                                                                                                              
+    \nThere are several thousands of them, and they cover the whole planet.
+  currentText: 'We have visual confirmation.
+
+    The source of the red lights comes
+    from ***** that resemble the
+
+    foreign object we recovered earlier.
+
+    There
+    are several thousands of them, and they cover the whole
+
+    planet.
+
+'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 32

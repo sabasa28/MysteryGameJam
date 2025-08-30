@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Chat 15
   m_EditorClassIdentifier: 
   textLine:
-  - text: I noticed you have some old messages that you never read.
+  - text: I noticed you have some unread messages from right after you entered hibernation.
     speaker: 1
   - text: Oh, I guess I got too excited after reaching the planet. I hopped out of
-      the hibernation chamber and left immediately without checking.
+      the chamber and left immediately without checking.
     speaker: 0

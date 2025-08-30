@@ -20,7 +20,7 @@ MonoBehaviour:
     speaker: 1
   - text: I think we lucked out.
     speaker: 0
-  - text: Make sure to log any important piece of data that you ran into and grab
+  - text: Make sure to log any important piece of data that you run into and grab
       every document that you can find.
     speaker: 1
   - text: Yeah, obviously.

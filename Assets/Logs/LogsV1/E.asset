@@ -13,15 +13,10 @@ MonoBehaviour:
   m_Name: E
   m_EditorClassIdentifier: 
   attachedPhoto: {fileID: 21300000, guid: 77eca4dde18c7dc478add7dd768f5cf2, type: 3}
-  logText: 'We have decrypted audio recordings!
-
-    It seems they had a limited
-    amount of sounds, which explains the repetition of characters in the texts found
-    so far.
-
-    They had around 13 or 14 unique characters, and they follow certain
-    patterns. For example, all names appear to begin with a "pr" sound.\nAlso, with
-    this audio we learnt their planet''s name! TRAPPIST-1 e shall now be known as
-    Proima.'
+  logText: We have decrypted audio recordings!\n\nIt seems they had a limited amount
+    of sounds, which explains the repetition of characters in the texts found so
+    far. They had around 13 or 14 unique characters, and they follow certain patterns.
+    For example, all names appear to begin with a "pr" sound.\n\nAlso, with this
+    audio, we learnt their planet's name! TRAPPIST-1 e shall now be known as Proima.
   orderFound: 0
   read: 0

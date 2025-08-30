@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 7
   m_EditorClassIdentifier: 
-  fullText: Entry 3\n\nThe Visitor appears to be made out of a metal composed of
-    several\nknown minerals. However, there are some unidentifiable components\nthat
-    give further evidence to my theory.\nWhile we continue analyzing its structure,
-    I have begun researching\nhow it interacts when in contact with water, as the
-    reports indicated\nthat might be what caused it to "open".
-  currentText: 
+  fullText: 'Entry 3                                                                                                                                                                                 
+    \n\nThe Visitor is made out of a metal composed of several known\nminerals. However,
+    there are some unidentifiable components that\ngive further evidence to my theory.                                                                                                                                                                                 
+    \nWhile we continue analyzing its structure, I have begun researching\nhow it
+    interacts when in contact with water, as the soldiers think that is\nwhat caused
+    it to "open".                                                                                                                                                                                  '
+  currentText: 'Entry 3                                                                                                                                                                                 
+    \n\nThe Visitor is made out of a metal composed of several known\nminerals. However,
+    there are some unidentifiable components that\ngive further evidence to my theory.                                                                                                                                                                                 
+    \nWhile we continue analyzing its structure, I have begun researching\nhow it
+    interacts when in contact with water, as the soldiers think that is\nwhat caused
+    it to "open".                                                                                                                                                                                  '
   placeFoundText: 
   timeFound: 
   orderToDisplay: 14

@@ -49,7 +49,7 @@ MonoBehaviour:
   redList:
   - dispatched
   - whatever
-  - reasoning
+  - support
   - allowed
   - situations
   - further
@@ -91,7 +91,7 @@ MonoBehaviour:
   - float
   - tentacles
   censoredText: 
-  documentsRead: []
+  documentsFound: []
   logsFound: []
   persistentData: {fileID: 11400000, guid: be961e185e0d7c94aaa6e516c061b19e, type: 2}
   uiHelmet: {fileID: 0}

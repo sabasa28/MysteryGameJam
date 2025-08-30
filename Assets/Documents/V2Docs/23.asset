@@ -12,24 +12,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 23
   m_EditorClassIdentifier: 
-  fullText: My name is Premou. I carry with me all the information about the terrible
-    fate of Proima, our planet, that I could gather in\nthe little time that I had
-    left.\n\nWe were visited by an advanced device from beyond the sky. We believe
-    its job was to detect water and notify whatever\nspecies built it about its location.\nSoon
-    after its arrival, red lights surrounded our whole planet, originating from their
-    spaceships.\nIt took us too long to figure out what they were doing, but I doubt
-    there was anything we could have done about it.\n\nThe temperatures began to
-    rapidly rise, and our water evaporated at incredible speeds.\nOur best guess
-    is that these invaders are capable of absorbing the water in the air without
-    needing to enter the\natmosphere, and they do it by artificially boiling the
-    planet below them.\n\nBefore we could even figure anything out, we were forced
-    to retreat deep into the underground caves.\nOur cities crumbled to dust as the
-    surface became dry and devoid of life.\n\nWe never had the chance to contact
-    them. We never got to fight back. We never even saw how they looked.\nWe were
-    killed without notice in such a quick and merciless way.\n\nIf anyone ever finds
-    this, use this as a warning. Your planet might not be safe.\n\nPremou, last of
-    the Povann.
-  currentText: 
+  fullText: 'My name is Premou. I carry with me all the information about the terrible
+    fate of Proima, our planet. This is all I could\ngather in the little time that
+    I had left in this world.                                                                                                                                                                                                                                                                                                                                                                               
+    \n\nWe were visited by an advanced probe from beyond the skies. We believe its
+    job was to detect water and broadcast its\nlocation to whoever built it. Soon
+    after the device''s arrival, our whole planet was surrounded by red lights, originated
+    from\ntheir spaceships. It took us too long to figure out their intentions, but
+    I doubt there was anything we could have done about\nit.                                                                                                                                                                                       
+    \n\nThe temperature of our planet rose, and the oceans began to evaporate at
+    an alarming rate. Our best guess is that these\ninvaders are capable of absorbing
+    the water in the air without needing to enter the atmosphere. They achieve this
+    by\nartificially boiling the planet, ignoring anything and anyone beneath them.                                                                                                                                                                                       
+    \n\nBefore we could even react, we were forced to retreat deep into the underground
+    caves. Our cities crumbled to dust as the\nsurface became dry and devoid of life.                                                                                                                                                                                                                                                                                   
+    \n\nWe never had the chance to contact them. We never got to fight back. We never
+    even had a glimpse of what they looked\nlike. We were killed without notice,
+    in such a quick and merciless way.                                                                                                                                                                                       
+    \n\nIf anyone ever finds this, take it as a warning. Your planet might not be
+    safe.                                                                                                                                                                                                                                                                                                                                                                               
+    \n\n- Premou, last of the Povann.                                                                                                                                                                                                                                                                                                                                                                                '
+  currentText: 'My name is ******. I carry with me all the information about the
+    terrible fate of ******, our planet, that I could gather in
+
+    the little time
+    that I had left.
+
+
+    We were visited by an advanced device from beyond the
+    sky. We believe its job was to detect ***** and notify ********
+
+    species
+    built it about its location.
+
+    Soon after its arrival, red lights surrounded
+    our whole planet, originating from their spaceships.
+
+    It took us too long
+    to figure out what they were doing, but I doubt there was anything we could have
+    done about it.
+
+
+    The temperatures began to rapidly rise, and our ***** evaporated
+    at incredible speeds.
+
+    Our best guess is that these ******** are capable
+    of absorbing the ***** in the air without needing to enter the
+
+    atmosphere,
+    and they do it by artificially boiling the planet below them.
+
+
+    Before we
+    could even figure anything out, we were forced to retreat deep into the underground
+    caves.
+
+    Our cities crumbled to dust as the ******* became dry and devoid
+    of life.
+
+
+    We never had the chance to contact them. We never got to fight
+    back. We never even saw how they looked.
+
+    We were killed without notice in
+    such a quick and merciless way.
+
+
+    If anyone ever finds this, use this as
+    a warning. Your planet might not be safe.
+
+
+    ******, last of the Povann.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 46

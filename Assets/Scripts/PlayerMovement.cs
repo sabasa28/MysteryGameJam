@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float verticalForce;
     [SerializeField] bool testgrounded;
+    [SerializeField] Vector3 testvelocity;
     [SerializeField] float coyoteTime;
     bool grounded = true;
     float lastTimeGrounded;
@@ -95,6 +96,8 @@ public class PlayerMovement : MonoBehaviour
     int endAnimSteps = 0;
     bool triggerCameraReturn = false;
     bool cameraDettached = false;
+    [SerializeField] float unstuckDistance;
+    int timesUnstuckBeforeCD;
 
     void Awake()
     {
@@ -173,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         testgrounded = characterController.isGrounded;
+        testvelocity = characterController.velocity;
         if (!cameraDettached)
         {
             cameraRotX += cameraSpeed * SettingsData.sensitivity * 2.0f * -mouseY;
@@ -625,5 +629,26 @@ public class PlayerMovement : MonoBehaviour
     public void ReturnCameraToPlayer()
     {
         triggerCameraReturn = true;
+    }
+
+    public void AttemptToUnstuck()
+    {
+        if (timesUnstuckBeforeCD < 5)
+        {
+            if (timesUnstuckBeforeCD == 0)
+            {
+                StartCoroutine(AntiUnstuckSpam());
+            }
+            timesUnstuckBeforeCD++;
+            characterController.enabled = false;
+            transform.position += Vector3.up * unstuckDistance;
+            characterController.enabled = true;
+        }
+    }
+
+    IEnumerator AntiUnstuckSpam()
+    {
+        yield return new WaitForSeconds(3);
+        timesUnstuckBeforeCD = 0;
     }
 }

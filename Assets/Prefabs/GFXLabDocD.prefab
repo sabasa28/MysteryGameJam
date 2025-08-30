@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1700289769118727065}
   - component: {fileID: 566538507976516689}
-  - component: {fileID: 2696383784563416131}
+  - component: {fileID: 4258364791498666342}
   - component: {fileID: 3207151042711867514}
   m_Layer: 0
   m_Name: GFXLabDocD
@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2485529469343451725}
   m_Mesh: {fileID: -2432090755550338912, guid: b82b8d9476fa53d4b827b45e20627b31, type: 3}
---- !u!23 &2696383784563416131
+--- !u!23 &4258364791498666342
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 0}
+  eventToTrigger: {fileID: 0}
 --- !u!1001 &3771444975274591017
 PrefabInstance:
   m_ObjectHideFlags: 0

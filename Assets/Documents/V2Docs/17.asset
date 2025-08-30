@@ -12,11 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 17
   m_EditorClassIdentifier: 
-  fullText: Pruvv, they are the ones causing the temperatures to rise!\nThe sea levels
-    seem to have lowered all over the world at tremendous\nspeeds, but I can not
-    figure out the exact process without the data\nfrom the laboratory.\n\nI need
-    you to help me get back in.
-  currentText: 
+  fullText: 'They are the ones causing the temperatures to rise!                                                                                                                                                                              
+    \nThe sea levels have been lowering all over the world at tremendous\nspeeds,
+    but I can not figure out the exact process without the data\nfrom the laboratory.                                                                                                                                                                              
+    \n\nI need you to help me get back in, Pruvv.                                                                                                                                                                               '
+  currentText: 'Pruvv, they are the ones causing the temperatures to rise!
+
+    The
+    sea levels seem to have lowered all over the world at **********
+
+    speeds,
+    but I can not figure out the exact process without the data
+
+    from the laboratory.
+
+
+    I
+    need you to help me get back in.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 34

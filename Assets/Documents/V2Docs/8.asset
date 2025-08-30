@@ -12,44 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 8
   m_EditorClassIdentifier: 
-  fullText: 'Entry 6
-
-
-    There is no doubt about it. Scans of the Visitor''s interior
-    have shown a
-
-    complex electronic system that could not be achieved by us.
-
-    We
-    are trying to decrypt the data it holds, but our excitement has
-
-    slowed down
-    progress. We believe this might hold information related
-
-    to a species from
-    another planet and likely has a message for us.
-
-    There is still a lot of
-    work to do before we can share our discoveries.'
-  currentText: 'Entry 6
-
-
-    There ** no doubt about it. Scans of *** Visitor''s
-    interior have shown a
-
-    complex electronic system that could not be achieved
-    by us.
-
-    We *** trying ** decrypt *** data it holds, but our excitement has
-
-    slowed
-    down progress. We believe this might hold information related
-
-    ** a species
-    from another planet and likely has a message for us.
-
-    There ** still a lot
-    of work ** do before we can share our discoveries.'
+  fullText: "Entry 6                                                                                                                                                                                 
+    \n\nThere is no doubt about it. Scans of the Visitor's interior have shown a\ncomplex
+    electronic system that could not have been achieved by us.                                                                                                                                                                                 
+    \nWe are trying to decrypt the data it holds, but our excitement has\nslowed
+    down progress. We believe this might hold information related\nto a species from
+    another planet and likely has a message for us.                                                                                                                                                                                 
+    \n\nThere is still a lot of work to do before we can share our discoveries.                                                                                                                                                                                  "
+  currentText: "Entry 6                                                                                                                                                                                 
+    \n\nThere is no doubt about it. Scans of the *******'s interior have shown a\ncomplex
+    electronic system that could not have been achieved by us.                                                                                                                                                                                 
+    \nWe are trying to decrypt the data it holds, but our excitement has\nslowed
+    down progress. We believe this might **** information related\nto a species from
+    another planet and likely has a message for us.                                                                                                                                                                                 
+    \n\nThere is still a lot of work to do before we can share our discoveries.                                                                                                                                                                                  "
   placeFoundText: 
   timeFound: 
   orderToDisplay: 16

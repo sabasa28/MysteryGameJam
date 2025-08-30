@@ -12,15 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 5
   m_EditorClassIdentifier: 
-  fullText: We were transporting the object as instructed, inside the sealed\ncontainer,
+  fullText: "We were transporting the object as instructed, inside the sealed\ncontainer,
     when one of the reefs collapsed. We were prepared for such\nsituations, but the
     container was too large to handle comfortably and\ngot damaged while we moved
     to safety. The second water touched the\nobject, it began moving and emitting
-    a red light, followed by a\nscreeching sound.\nWe tried to go back to the surface
-    to prevent further damage, but the\norder was given to completely cover the object
-    and rush to Prubei\nlaboratory.\nI can not figure out what that thing was, but
-    I do know one thing. It is\nnot ours.
-  currentText: 
+    a red light, followed by a\nscreeching sound.                                                                                                                                                                                 
+    \nWe tried to go back to the surface to prevent further damage, but the\norder
+    was given to completely cover the object and rush to Prubei\nlaboratory.                                                                                                                                                                                 
+    \nI could not figure out what that was, but I do know one thing: it is\nnot ours.                                                                                                                                                                                  "
+  currentText: 'We were transporting the object as instructed, inside the sealed
+
+    container,
+    when one of the reefs collapsed. We were prepared for such
+
+    **********, but
+    the container was too large to handle comfortably and
+
+    got damaged while
+    we moved to safety. The second ***** touched the
+
+    object, it began moving
+    and emitting a red light, followed by a
+
+    screeching sound.
+
+    We tried
+    to go back to the ******* to prevent ******* damage, but the
+
+    order was given
+    to completely cover the object and rush to ******
+
+    laboratory.
+
+    I could
+    not figure out what that was, but I do know one thing: it is
+
+    not ours.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 10

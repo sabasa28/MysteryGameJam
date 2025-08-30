@@ -45,7 +45,7 @@ public class DocumentManager : MonoBehaviour
     int knowledgeLevel = 0;
     [SerializeField] List<Document> documentsFound = new();
     [SerializeField] List<LogEntry> logsFound = new();
-    string[] separators = new string[] { ",", ".", "!", " ", "?", "\'s", "-", "\n", "\"" };
+    string[] separators = new string[] { ",", ".", "!", ":" , " ", "?", "\'s", "\n", "\"" };
     [SerializeField] PersistentData persistentData;
     [SerializeField] UIHelmet uiHelmet;
     [SerializeField] List<LogEntry> preexistentLogs = new();
@@ -302,16 +302,17 @@ public class DocumentManager : MonoBehaviour
 
     public void AddLogToFoundLogs(LogEntry newLog, bool isPreexisting = false)
     {
-        if (!logsFound.Contains(newLog))
+        if (logsFound.Contains(newLog))
         {
-            newLog.logText = newLog.logText.Replace("\\n", "\n");
-            newLog.read = false;
-            logsFound.Add(newLog);
-            persistentData.UpdatePersistentLogsData(logsFound);
-            if (!isPreexisting)
-            {
-                uiHelmet.DisplayNewLogNotif();
-            }
+            return;
+        }
+        newLog.logText = newLog.logText.Replace("\\n", "\n");
+        newLog.read = false;
+        logsFound.Add(newLog);
+        persistentData.UpdatePersistentLogsData(logsFound);
+        if (!isPreexisting)
+        {
+            uiHelmet.DisplayNewLogNotif();
         }
     }
 

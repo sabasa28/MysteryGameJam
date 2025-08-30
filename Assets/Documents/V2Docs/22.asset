@@ -12,11 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5751e45b3bc551448917ed569792a2a2, type: 3}
   m_Name: 22
   m_EditorClassIdentifier: 
-  fullText: I am the only one left. All water is nearly gone.\nI have prepared a
-    capsule that should hopefully maintain my body\nintact for a very long time.\nIt
-    is unlikely that anyone will find us down here, but it is the only thing I\ncan
-    think of.\n\nThis is simply sad. A sad way to go.
-  currentText: 
+  fullText: 'I am the only one left. All water is nearly gone.                                                                                                                                                                                                                                                                                   
+    \n\nI have prepared a capsule that should hopefully maintain my body\nintact
+    for a very long time. It is unlikely that anyone will find us down\nhere, but
+    it is the only thing I can think of.                                                                                           
+    \n\nThis is simply sad. A sad way to go.                                                                                                                                                                                        '
+  currentText: 'I am the only one left. All ***** is nearly gone.
+
+    I have prepared
+    a capsule that should hopefully maintain my body
+
+    intact for a very long
+    time.
+
+    It is unlikely that anyone will find us down here, but it is the only
+    thing I
+
+    can think of.
+
+
+    This is simply sad. A sad way to go.'
   placeFoundText: 
   timeFound: 
   orderToDisplay: 44
