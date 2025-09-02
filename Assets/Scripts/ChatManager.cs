@@ -200,4 +200,9 @@ public class ChatManager : MonoBehaviour
     {
         StartDisplayingTextEntry(wakeUpChat);
     }
+
+    public bool IsInTextMode()
+    {
+        return textState != TextState.notInTextMode;
+    }
 }

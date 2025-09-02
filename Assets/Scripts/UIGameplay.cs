@@ -291,4 +291,14 @@ public class UIGameplay : MonoBehaviour
     {
         TimescaleText.text = "Current Speed x" + Time.timeScale;
     }
+
+    public bool IsOnAnyFadeState()
+    {
+        return (isFadingIn || isFadingOut || isFaded);
+    }
+
+    public bool IsAnyDocActive()
+    {
+        return (ShipDoc1.activeInHierarchy || ShipDoc2.activeInHierarchy || ShipDoc3.activeInHierarchy);
+    }
 }

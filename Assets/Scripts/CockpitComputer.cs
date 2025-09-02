@@ -63,7 +63,7 @@ public class CockpitComputer : MonoBehaviour, IInteractable
 
     public void StopBeingLookedAt()
     {
-        GameplayController.Get().ReturnPlayerCamera();
+        GameplayController.Get().ReturnPlayerCamera(false);
         isBeingLookedAt = false;
     }
 

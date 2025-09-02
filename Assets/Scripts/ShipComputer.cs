@@ -48,7 +48,7 @@ public class ShipComputer : MonoBehaviour, IInteractable
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                StopBeingLookedAt();
+                StopBeingLookedAt(true);
                 insertedString = "";
                 UpdateText();
             }
@@ -107,7 +107,7 @@ public class ShipComputer : MonoBehaviour, IInteractable
         isCheckingPassword = false;
         if (passwordIsCorrect)
         {
-            StopBeingLookedAt();
+            StopBeingLookedAt(false);
             GameplayController.Get().EnableAndOpenTablet();
         }
         else
@@ -117,9 +117,9 @@ public class ShipComputer : MonoBehaviour, IInteractable
         }
     }
 
-    public void StopBeingLookedAt()
+    public void StopBeingLookedAt(bool enableMovement)
     {
-        GameplayController.Get().ReturnPlayerCamera();
+        GameplayController.Get().ReturnPlayerCamera(enableMovement);
         isBeingLookedAt = false;
     }
 

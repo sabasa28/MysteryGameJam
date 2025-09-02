@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     bool hookAllowed;
     bool beaconsAllowed;
     bool flashlightAllowed;
-    bool jumpAllowed = false;
+    [SerializeField] bool jumpAllowed = false;
     bool tabletAllowed = true;
     Animator animator;
     Coroutine enablingInputCoroutine = null;
@@ -96,8 +96,7 @@ public class PlayerMovement : MonoBehaviour
     int endAnimSteps = 0;
     bool triggerCameraReturn = false;
     bool cameraDettached = false;
-    [SerializeField] float unstuckDistance;
-    int timesUnstuckBeforeCD;
+    bool enableMovementOnCameraAttach = false;
 
     void Awake()
     {
@@ -124,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         float verticalValue = 0.0f;
         float mouseY = 0.0f;
         float mouseX = 0.0f;
-        if (inputEnabled && !GameplayController.Get().IsCameraLocked())
+        if (inputEnabled && !animator.enabled && !GameplayController.Get().IsOnAnyTransition() && !GameplayController.Get().IsCameraLocked())
         {
             mouseY = Input.GetAxis("Mouse Y");
             mouseX = Input.GetAxis("Mouse X");
@@ -499,6 +498,12 @@ public class PlayerMovement : MonoBehaviour
         characterController.enabled = true;
     }
 
+    public void CopyRotation(Transform transformToCopy)
+    {
+        cameraRotX = transformToCopy.rotation.eulerAngles.x;
+        cameraRotY = transformToCopy.rotation.eulerAngles.y;
+    }
+
     public void InitialPlayerSpawn()
     {
         tabletAllowed = false;
@@ -620,35 +625,33 @@ public class PlayerMovement : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-        GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);
+        if (enableMovementOnCameraAttach)
+        {
+            GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);
+        }
         mainCamera.transform.SetLocalPositionAndRotation(initialLocalCamPos, initialLocalCamRot);
         triggerCameraReturn = false;
         cameraDettached = false;
     }
 
-    public void ReturnCameraToPlayer()
+    public void ReturnCameraToPlayer(bool enableMovement)
     {
         triggerCameraReturn = true;
+        enableMovementOnCameraAttach = enableMovement;
     }
 
-    public void AttemptToUnstuck()
+    public bool IsAnimating()
     {
-        if (timesUnstuckBeforeCD < 5)
-        {
-            if (timesUnstuckBeforeCD == 0)
-            {
-                StartCoroutine(AntiUnstuckSpam());
-            }
-            timesUnstuckBeforeCD++;
-            characterController.enabled = false;
-            transform.position += Vector3.up * unstuckDistance;
-            characterController.enabled = true;
-        }
+        return animator.enabled;
     }
 
-    IEnumerator AntiUnstuckSpam()
+    public bool CameraIsDettached()
     {
-        yield return new WaitForSeconds(3);
-        timesUnstuckBeforeCD = 0;
+        return cameraDettached;
+    }
+
+    public bool IsHooking() //(?
+    {
+        return hook.gameObject.activeInHierarchy;
     }
 }

@@ -60,10 +60,15 @@ public class GameplayController : MonoBehaviour
     InputState savedInputState;
     [SerializeField] GameObject playerDocs;
     bool playerDocsActive;
+    [SerializeField] Transform currentUnstuckCheckpoint;
+    bool unstuckCheckpointSet = false;
+    bool savedCursorVisibility = false;
+    UIGameplay uiGameplay;
 
     private void Start()
     {
         LevelsManager levelsManager = LevelsManager.Get();
+        uiGameplay = UIGameplay.Get();
         if (!levelsManager.GoingUp && levelsManager.GetCurrentSceneName() == "SurfaceScene")
         {
             ChangeInputState(InputState.Cinematic);
@@ -81,7 +86,7 @@ public class GameplayController : MonoBehaviour
     private void Update()
     {
         //es muy tonto que esto este aca
-        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic && !IsOptionsMenuOpen())
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic && !IsOptionsMenuOpen() && !playerMovement.IsAnimating() && !playerMovement.CameraIsDettached() && !uiGameplay.IsAnyDocActive() && !IsOnAnyTransition())
         {
             inGameMenuOpen = !inGameMenuOpen;
             ChangeInputState(inGameMenuOpen ? InputState.InGameUI : InputState.Movement);
@@ -98,7 +103,7 @@ public class GameplayController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OnUIMenuStateChanged();
-            UIGameplay.Get().ChangeMenuVisibility(optionsMenuOpen);
+            uiGameplay.ChangeMenuVisibility(optionsMenuOpen);
         }
     }
 
@@ -121,6 +126,10 @@ public class GameplayController : MonoBehaviour
         if (optionsMenuOpen)
         {
             savedInputState = inputState;
+            if (savedInputState == InputState.UI)
+            {
+                savedCursorVisibility = Cursor.visible;
+            }
             ChangeInputState(InputState.UI);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -133,6 +142,10 @@ public class GameplayController : MonoBehaviour
                 case InputState.InGameUI:
                     Cursor.lockState = CursorLockMode.Confined;
                     Cursor.visible = false;
+                    break;
+                case InputState.UI:
+                    Cursor.visible = savedCursorVisibility;
+                    Cursor.lockState = CursorLockMode.Confined;
                     break;
                 case InputState.Chat:
                 case InputState.Movement:
@@ -240,7 +253,7 @@ public class GameplayController : MonoBehaviour
     {
         if (customFadeOutInTime > 0.0f)
         {
-            UIGameplay.Get().SetCustomTimeForNextFade(customFadeOutInTime);
+            uiGameplay.SetCustomTimeForNextFade(customFadeOutInTime);
         }
         isPlayerInShip = !isPlayerInShip;
         StartCoroutine(MovePlayerInOutShipCoroutine(isPlayerInShip));
@@ -255,15 +268,13 @@ public class GameplayController : MonoBehaviour
     IEnumerator MovePlayerInOutShipCoroutine(bool moveIn)
     {
         ChangeInputState(InputState.Cinematic);
-        UIGameplay.Get().FadeOutAndIn(false);
-        yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
-        playerMovement.GetComponent<CharacterController>().enabled = false;
-        playerMovement.transform.position = moveIn ? insideOfShipPos.position : outsideOfShipPos.position;
-        playerMovement.GetComponent<CharacterController>().enabled = true;
+        uiGameplay.FadeOutAndIn(false);
+        yield return new WaitUntil(() => !uiGameplay.isFadingOut);
+        playerMovement.CopyPositionAndRotation(moveIn ? insideOfShipPos : outsideOfShipPos);
         helmetVolume.enabled = !moveIn;
         LevelsManager.Get().persistentData.UpdateHelmetState(!moveIn);
         playerMovement.PlayHelmetSound(!moveIn);
-        yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
+        yield return new WaitUntil(() => !uiGameplay.isFadingIn);
         ChangeInputState(InputState.Movement);
         playerMovement.SetJumpAllowed(!moveIn);
     }
@@ -271,14 +282,14 @@ public class GameplayController : MonoBehaviour
     IEnumerator MovePlayerInOutLabCoroutine(bool moveIn)
     {
         ChangeInputState(InputState.Cinematic);
-        UIGameplay.Get().FadeOutAndIn(moveIn);
-        yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
+        uiGameplay.FadeOutAndIn(moveIn);
+        yield return new WaitUntil(() => !uiGameplay.isFadingOut);
         if (!moveIn)
         {
             LevelsManager.Get().persistentData.isReturning = true;
         }
         playerMovement.CopyPositionAndRotation(moveIn ? insideOfLabPos : outsideOfLabPos);
-        yield return new WaitUntil(() => !UIGameplay.Get().isFadingIn);
+        yield return new WaitUntil(() => !uiGameplay.isFadingIn);
         ChangeCurrentZone(moveIn ? labZone : lowerCavesReturnZone);
         ChangeInputState(InputState.Movement);
     }
@@ -339,8 +350,8 @@ public class GameplayController : MonoBehaviour
 
     IEnumerator StartEndAnimation()
     { 
-        yield return new WaitUntil(() => !UIGameplay.Get().isFadingOut);
-        yield return new WaitUntil(() => !UIGameplay.Get().isFaded);
+        yield return new WaitUntil(() => !uiGameplay.isFadingOut);
+        yield return new WaitUntil(() => !uiGameplay.isFaded);
         Animator playerAnim = playerMovement.GetComponent<Animator>();
         playerAnim.enabled = true;
         playerAnim.SetBool("HasReceivedTerribleNews", true);
@@ -366,15 +377,20 @@ public class GameplayController : MonoBehaviour
         playerMovement.RaiseHand();
     }
 
+    public void DisableTablet()
+    { 
+        
+    }
+
     public void MovePlayerCameraAndReturn(Transform targetPos, float goingTime, float returningTime, InputState newInputState = InputState.InGameUI)
     {
         ChangeInputState(newInputState);
         playerMovement.MoveCameraAndReturn(targetPos, goingTime, returningTime);
     }
 
-    public void ReturnPlayerCamera()
+    public void ReturnPlayerCamera(bool enableMovement)
     { 
-        playerMovement.ReturnCameraToPlayer();
+        playerMovement.ReturnCameraToPlayer(enableMovement);
     }
 
     public void OnCurrentZoneNecessaryInteractableFound(GameObject InteractableFound)
@@ -399,6 +415,25 @@ public class GameplayController : MonoBehaviour
 
     public void UnstuckPlayer()
     {
-        playerMovement.AttemptToUnstuck();
+        if (unstuckCheckpointSet && !chatManager.IsInTextMode() && !playerMovement.IsAnimating() && !playerMovement.CameraIsDettached() && !inGameMenuOpen && !IsOnAnyTransition() && !uiGameplay.IsAnyDocActive() && !playerMovement.IsHooking())
+        {
+            playerMovement.CopyPositionAndRotation(currentUnstuckCheckpoint);
+        }
+    }
+
+    public void SetUnstuckCheckpoint(Transform newCheckpointTrans)
+    {
+        currentUnstuckCheckpoint = newCheckpointTrans;
+        unstuckCheckpointSet = true; 
+    }
+
+    public bool InGameMenuOpen()
+    {
+        return inGameMenuOpen;
+    }
+
+    public bool IsOnAnyTransition()
+    {
+        return uiGameplay.IsOnAnyFadeState();
     }
 }
