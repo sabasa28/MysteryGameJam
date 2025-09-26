@@ -31,6 +31,7 @@ public class UIPlayerDocs : MonoBehaviour
     [SerializeField] TextMeshProUGUI sortingButtonText;
     [SerializeField] GameObject anyDocUnreadIndicator;
     [SerializeField] GameObject anyLogUnreadIndicator;
+    UIDocument lastSelectedDoc = null;
 
     private void OnEnable()
     {
@@ -41,13 +42,11 @@ public class UIPlayerDocs : MonoBehaviour
         SetReadingDocActiveState(false);
         SetLogActiveState(false);
         SetDocumentListActiveState(false);
-        if (firstDisplay)
+
+        if (firstDisplayText && firstDisplayText.activeInHierarchy)
         {
+            firstDisplayText.SetActive(firstDisplay && !LevelsManager.Get().GoingUp);
             firstDisplay = false;
-        }
-        else
-        { 
-            firstDisplayText.SetActive(false);
         }
     }
 
@@ -59,6 +58,7 @@ public class UIPlayerDocs : MonoBehaviour
     public void SetDocumentListActiveState(bool state)
     {
         initialOptions.SetActive(!state);
+        SetReadingDocActiveState(false);
         DocumentManager documentManager = DocumentManager.Get();
         documentList.SetActive(state);
         sortingButton.SetActive(LevelsManager.Get().persistentData.calendarDiscovered);
@@ -82,6 +82,7 @@ public class UIPlayerDocs : MonoBehaviour
             for (int i = uIDocuments.Count; i < documents.Count; i++)
             {
                 UIDocument uIDocument = Instantiate(uiDocumentPrefab, docsParent);
+                uIDocument.SetDefaultColor();
                 uIDocument.button.onClick.AddListener(delegate { InitializeReadingDocument(uIDocument); });
                 uIDocuments.Add(uIDocument);
             }
@@ -94,9 +95,14 @@ public class UIPlayerDocs : MonoBehaviour
         UpdateDocsSortedByDate();
         for (int i = 0; i < uIDocuments.Count; i++)
         {
+            uIDocuments[i].ResetToUnselected();
             uIDocuments[i].titleText.text = "Document " + documents.FindIndex(a => a == sortedDocs[i]);
             uIDocuments[i].placeFoundText.text = sortedDocs[i].placeFoundText;
             uIDocuments[i].unreadIndicator.SetActive(!sortedDocs[i].read);
+        }
+        if (lastSelectedDoc)
+        {
+            lastSelectedDoc.ResetToUnselected();
         }
     }
 
@@ -170,6 +176,13 @@ public class UIPlayerDocs : MonoBehaviour
         {
             sortedDocs[foundIndex].read = true;
         }
+
+        if (lastSelectedDoc)
+        {
+            lastSelectedDoc.ResetToUnselected();
+        }
+        lastSelectedDoc = document;
+        document.SetAsSelected();
 
         SetReadingDocActiveState(true);
     }

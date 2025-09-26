@@ -8,6 +8,8 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LightCookie/LightCookie.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Clustering.hlsl"
 
+float _LightAttenuationExponent = 2.0f;
+
 // Abstraction over Light shading data.
 struct Light
 {
@@ -60,7 +62,7 @@ struct Light
 
 // Matches Unity Vanilla HINT_NICE_QUALITY attenuation
 // Attenuation smoothly decreases to light range.
-float DistanceAttenuation(float distanceSqr, half2 distanceAttenuation)
+float DistanceAttenuation(float distanceSqr, half2 distanceAndSpotAttenuation)
 {
 // We use a shared distance attenuation for additional directional and puctual lights
 // for directional lights attenuation will be 1
@@ -85,9 +87,9 @@ float DistanceAttenuation(float distanceSqr, half2 distanceAttenuation)
 ////smoothFactor = 1.0; // smoothfactor is the fading for max range of point lights. Remove it and the light range does nothing.
 //return lightAtten * smoothFactor;
 float distance = sqrt(distanceSqr);
-float range = rsqrt(distanceAttenuation.x);
-float distance01 = saturate(1.0f - (distance / range));
-float lightAtten = pow(distance01, 2.0f);
+float range = rsqrt(distanceAndSpotAttenuation.x);
+float distance01 = saturate(1 - (distance / range));
+float lightAtten = pow(distance01, _LightAttenuationExponent);// 2
 return lightAtten;
 }
 

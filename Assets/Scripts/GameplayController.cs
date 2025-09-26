@@ -41,6 +41,7 @@ public class GameplayController : MonoBehaviour
         UI
     }
     InputState inputState;
+    [SerializeField] float DEBUGlightAttenuation = 2.0f;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] ChatManager chatManager;
     [SerializeField] ZoneData currentZone;
@@ -73,6 +74,7 @@ public class GameplayController : MonoBehaviour
         {
             ChangeInputState(InputState.Cinematic);
             playerMovement.InitialPlayerSpawn();
+            AudioManager.Get().UpdateBackgroundVolume(0.5f, false);
         }
         else
         { 
@@ -85,6 +87,7 @@ public class GameplayController : MonoBehaviour
     }
     private void Update()
     {
+        Shader.SetGlobalFloat("_LightAttenuationExponent", DEBUGlightAttenuation);
         //es muy tonto que esto este aca
         if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic && !IsOptionsMenuOpen() && !playerMovement.IsAnimating() && !playerMovement.CameraIsDettached() && !uiGameplay.IsAnyDocActive() && !IsOnAnyTransition())
         {
@@ -277,6 +280,7 @@ public class GameplayController : MonoBehaviour
         yield return new WaitUntil(() => !uiGameplay.isFadingIn);
         ChangeInputState(InputState.Movement);
         playerMovement.SetJumpAllowed(!moveIn);
+        AudioManager.Get().UpdateBackgroundVolume(moveIn ? 0.5f : 1.0f, true);
     }
 
     IEnumerator MovePlayerInOutLabCoroutine(bool moveIn)

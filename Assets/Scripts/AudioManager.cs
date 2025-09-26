@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         audioSource.volume = SettingsData.volume;
-        ambienceSource.volume = SettingsData.volume * ambienceVolumeSceneModifier * 0.5f;
+        ambienceSource.volume = SettingsData.volume * ambienceVolumeSceneModifier;
         stepsSource.volume = SettingsData.volume;
         stepsSource.loop = true;
         ambienceSource.loop = true;
@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
     public void UpdateVolume()
     {
         audioSource.volume = SettingsData.volume;
-        ambienceSource.volume = SettingsData.volume * 0.5f;
+        ambienceSource.volume = SettingsData.volume * ambienceVolumeSceneModifier;
     }
 
     public void PlaySFX(AudioClip clip, float volume = 1.0f)
@@ -97,5 +97,33 @@ public class AudioManager : MonoBehaviour
     public void PlayPhotoSound()
     {
         PlaySFX(photoSound);
+    }
+
+    public void UpdateBackgroundVolume(float ambienceVol, bool fade)
+    {
+        if (fade)
+        {
+            StartCoroutine(LerpBackgroundVol(ambienceVolumeSceneModifier, ambienceVol));
+        }
+        else
+        { 
+            ambienceVolumeSceneModifier = ambienceVol;
+            UpdateVolume();
+        }
+    }
+
+    IEnumerator LerpBackgroundVol(float initialAmbienceVol, float targetAmbienceVol)
+    {
+        float lerpTime = 1.0f;
+        float timer = 0.0f;
+        while (timer < lerpTime)
+        {
+            ambienceVolumeSceneModifier = Mathf.Lerp(initialAmbienceVol, targetAmbienceVol, timer / lerpTime);
+            UpdateVolume();
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        ambienceVolumeSceneModifier = targetAmbienceVol;
+        UpdateVolume();
     }
 }

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: H
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 21300000, guid: 05f3ef937b381a94da545d46441d773d, type: 3}
-  logText: This spherical structure initially appeared to be part of a larger building,
-    but a deeper analysis of its interior suggests that's not the case.\nThe design
-    indicates that it may have been used for housing, since it has features like
-    insulated walls.
+  attachedPhoto: {fileID: 21300000, guid: 9761021b8ae432a4a8c39395d9e92ace, type: 3}
+  logText: 'This spherical structure initially appeared to be part of a larger building,
+    but a deeper analysis of its interior suggests that''s not the case.
+
+    The
+    design indicates that it may have been used for housing, since it has features
+    like insulated walls.'
   orderFound: 0
-  read: 0
+  read: 1

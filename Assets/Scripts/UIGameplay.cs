@@ -39,7 +39,6 @@ public class UIGameplay : MonoBehaviour
     float timeBeforeTrolling = 10.0f;
     bool docOpen = false;
     KeyCode lastHitKey;
-    bool cheatsOn = false;
     [SerializeField] GameObject cheats;
 
     public static UIGameplay Get()
@@ -76,7 +75,7 @@ public class UIGameplay : MonoBehaviour
 
     private void Update()
     {
-        if (docOpen && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.E)))
+        if (docOpen && !GameplayController.Get().IsOptionsMenuOpen() && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.E)))
         {
             ShipDoc1.SetActive(false);
             ShipDoc2.SetActive(false);
@@ -104,17 +103,16 @@ public class UIGameplay : MonoBehaviour
     }
     private void OnGUI()
     {
-        if (!cheatsOn && Input.anyKeyDown)
+        if (Input.anyKeyDown)
         {
             if (lastHitKey == KeyCode.Minus)
             {
                 if (Event.current.keyCode == KeyCode.U)
                 {
-                    cheatsOn = true;
-                    cheats.SetActive(true);
+                    cheats.SetActive(!cheats.activeInHierarchy);
                 }
             }
-            else
+            if (Event.current.keyCode != KeyCode.None)
             {
                 lastHitKey = Event.current.keyCode;
             }
@@ -299,6 +297,6 @@ public class UIGameplay : MonoBehaviour
 
     public bool IsAnyDocActive()
     {
-        return (ShipDoc1.activeInHierarchy || ShipDoc2.activeInHierarchy || ShipDoc3.activeInHierarchy);
+        return (ShipDoc1 && ShipDoc1.activeInHierarchy) || (ShipDoc2 && ShipDoc2.activeInHierarchy || (ShipDoc3 && ShipDoc3.activeInHierarchy));
     }
 }
