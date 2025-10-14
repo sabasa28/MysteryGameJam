@@ -21,6 +21,7 @@ public class ChatManager : MonoBehaviour
     public bool doneWithZone = false;
     [SerializeField] TextEntry firstDocChat;
     [SerializeField] TextEntry secondDocChat;
+    [SerializeField] TextEntry newMessagesChat;
     [SerializeField] string astrounautName;
     [SerializeField] string unknownName;
     [SerializeField] string AIName;
@@ -200,9 +201,14 @@ public class ChatManager : MonoBehaviour
     {
         StartDisplayingTextEntry(wakeUpChat);
     }
+    public void PlayNewMessagesIgnoredChat()
+    {
+        StartDisplayingTextEntry(newMessagesChat);
+    }
 
     public bool IsInTextMode()
     {
         return textState != TextState.notInTextMode;
     }
+
 }

@@ -25,6 +25,8 @@ public class CockpitComputer : MonoBehaviour, IInteractable
     Vector2 minCursorPos;
     Vector2 maxCursorPos;
     [SerializeField] InGameCursor inGameCursor;
+    LevelsManager lvlManager;
+    bool playedIgnoredNewMessagesChat = false;
 
     private void Start()
     {
@@ -33,16 +35,25 @@ public class CockpitComputer : MonoBehaviour, IInteractable
         auxColorBlock.highlightedColor = auxColorBlock.normalColor;
         auxColorBlock.pressedColor = auxColorBlock.normalColor;
         message2Button.colors = auxColorBlock;
+        lvlManager = LevelsManager.Get();
     }
     public void Interact()
     {
-        GameplayController.Get().MovePlayerCameraAndReturn(InteractingCameraTrans, timeMovingCamera, timeReturningCamera, GameplayController.InputState.UI);
-        StartCoroutine(WaitForZoomInAndTakeInput());
+        if (lvlManager.persistentData.canEndGame)
+        {
+            GameplayController.Get().MovePlayerCameraAndReturn(InteractingCameraTrans, timeMovingCamera, timeReturningCamera, GameplayController.InputState.UI);
+            StartCoroutine(WaitForZoomInAndTakeInput());
+        }
+        else
+        {
+            ChatManager.Get().PlayNewMessagesIgnoredChat();
+            playedIgnoredNewMessagesChat = true;
+        }
     }
 
     public bool IsInteractable()
     {
-        return (!message1Read || !message2Read) && LevelsManager.Get().persistentData.canEndGame;
+        return ((!message1Read || !message2Read) && lvlManager.persistentData.canEndGame) || (!lvlManager.persistentData.canEndGame && !playedIgnoredNewMessagesChat);
     }
 
     public void RemoveFromNecessaryInteractables()

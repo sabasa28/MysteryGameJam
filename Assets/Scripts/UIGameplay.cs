@@ -8,6 +8,22 @@ using TMPro;
 public class UIGameplay : MonoBehaviour
 {
     static UIGameplay Instance;
+    [SerializeField] float DEBUGLightAttenuation = 2.0f;
+    [SerializeField] float DEBUGFlashlightRange = 2.0f;
+    [SerializeField] float DEBUGInnerFlashlightIntensity = 2.0f;
+    [SerializeField] float DEBUGOuterFlashlightIntensity = 2.0f;
+    [SerializeField] float DEBUGLightAttenuationDefault = 2.0f;
+    [SerializeField] float DEBUGFlashlightRangeDefault = 2.0f;
+    [SerializeField] float DEBUGInnerFlashlightIntensityDefault = 2.0f;
+    [SerializeField] float DEBUGOuterFlashlightIntensityDefault = 2.0f;
+    [SerializeField] Slider DEBUGAttenuationSlider;
+    [SerializeField] TextMeshProUGUI DEBUGAttenuationText;
+    [SerializeField] Slider DEBUGLightRangeSlider;
+    [SerializeField] TextMeshProUGUI DEBUGLightRangeText;
+    [SerializeField] Slider DEBUGInnerIntensitySlider;
+    [SerializeField] TextMeshProUGUI DEBUGInnerIntensityText;
+    [SerializeField] Slider DEBUGOuterIntensitySlider;
+    [SerializeField] TextMeshProUGUI DEBUGOuterIntensityText;
     [SerializeField] GameObject InteractText;
     [SerializeField] GameObject FadeOutPanel;
     [SerializeField] Image FadeOutImage;
@@ -24,6 +40,8 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] GameObject ControlsMenuPanel;
     [SerializeField] Slider SensitivitySlider;
     [SerializeField] Slider VolumeSlider;
+    [SerializeField] Slider BrightnessSlider;
+    GeneralBrightnessSettings generalBrightnessSettings;
     [SerializeField] GameObject ShipDoc1;
     [SerializeField] GameObject ShipDoc2;
     [SerializeField] GameObject ShipDoc3;
@@ -68,14 +86,18 @@ public class UIGameplay : MonoBehaviour
 
     private void Start()
     {
+        generalBrightnessSettings = GeneralBrightnessSettings.Get();
+        Shader.SetGlobalFloat("_LightAttenuationExponent", DEBUGLightAttenuation);
+        InitializeLightDebugData();
         SensitivitySlider.value = SettingsData.sensitivity;
         VolumeSlider.value = SettingsData.volume;
+        BrightnessSlider.value = generalBrightnessSettings.GetGain();
         UpdateTimeScaleText();
     }
 
     private void Update()
     {
-        if (docOpen && !GameplayController.Get().IsOptionsMenuOpen() && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.E)))
+        if (docOpen && !GameplayController.Get().IsOptionsMenuOpen() && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape)))
         {
             ShipDoc1.SetActive(false);
             ShipDoc2.SetActive(false);
@@ -208,6 +230,11 @@ public class UIGameplay : MonoBehaviour
     {
         SettingsData.sensitivity = SensitivitySlider.value;
     }
+    
+    public void UpdateBrightness()
+    {
+        generalBrightnessSettings.UpdateGain(BrightnessSlider.value);
+    }
 
     public void ReturnToMenu()
     {
@@ -283,6 +310,69 @@ public class UIGameplay : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         UpdateTimeScaleText();
+    }
+
+    public void SetLightAttenuationFromSlider(Slider slider)
+    {
+        DEBUGLightAttenuation = slider.value;
+        DEBUGAttenuationText.text = "Light attenuation: " + DEBUGLightAttenuation.ToString("F2");
+        Shader.SetGlobalFloat("_LightAttenuationExponent", DEBUGLightAttenuation);
+    }
+
+    public void SetInnerLightIntensityFromSlider(Slider slider)
+    {
+        DEBUGInnerFlashlightIntensity = slider.value;
+        DEBUGInnerIntensityText.text = "Inner light intensity: " + DEBUGInnerFlashlightIntensity.ToString("F2");
+        GameplayController.Get().SetFlashlightSettings(DEBUGFlashlightRange, DEBUGInnerFlashlightIntensity, DEBUGOuterFlashlightIntensity);
+    }
+
+    public void SetOutterLightIntensityFromSlider(Slider slider)
+    {
+        DEBUGOuterFlashlightIntensity = slider.value;
+        DEBUGOuterIntensityText.text = "Outer light intensity: " + DEBUGOuterFlashlightIntensity.ToString("F2");
+        GameplayController.Get().SetFlashlightSettings(DEBUGFlashlightRange, DEBUGInnerFlashlightIntensity, DEBUGOuterFlashlightIntensity);
+    }
+
+    public void SetFlashlightRangeFromSlider(Slider slider)
+    {
+        DEBUGFlashlightRange = slider.value;
+        DEBUGLightRangeText.text = "Light range: " + DEBUGFlashlightRange.ToString("F2");
+        GameplayController.Get().SetFlashlightSettings(DEBUGFlashlightRange, DEBUGInnerFlashlightIntensity, DEBUGOuterFlashlightIntensity);
+    }
+
+    public void InitializeLightDebugData()
+    {
+        GameplayController.Get().GetFlashlightSettings(out DEBUGFlashlightRange, out DEBUGInnerFlashlightIntensity, out DEBUGOuterFlashlightIntensity);
+        DEBUGAttenuationSlider.value = DEBUGLightAttenuation;
+        DEBUGAttenuationText.text = "Light attenuation: " + DEBUGLightAttenuation.ToString("F2");
+        DEBUGLightRangeSlider.value = DEBUGFlashlightRange;
+        DEBUGLightRangeText.text = "Light range: " + DEBUGFlashlightRange.ToString("F2");
+        DEBUGInnerIntensitySlider.value = DEBUGInnerFlashlightIntensity;
+        DEBUGInnerIntensityText.text = "Inner light intensity: " +  DEBUGInnerFlashlightIntensity.ToString("F2");
+        DEBUGOuterIntensitySlider.value = DEBUGOuterFlashlightIntensity;
+        DEBUGOuterIntensityText.text = "Outer light intensity: " + DEBUGOuterFlashlightIntensity.ToString("F2");
+        DEBUGLightAttenuationDefault = DEBUGLightAttenuation;
+        DEBUGFlashlightRangeDefault = DEBUGFlashlightRange;
+        DEBUGInnerFlashlightIntensityDefault = DEBUGInnerFlashlightIntensity;
+        DEBUGOuterFlashlightIntensityDefault = DEBUGOuterFlashlightIntensity;
+    }
+
+    public void ResetLightsToDefaults()
+    {
+        DEBUGLightAttenuation = DEBUGLightAttenuationDefault;
+        DEBUGFlashlightRange = DEBUGFlashlightRangeDefault;
+        DEBUGInnerFlashlightIntensity = DEBUGInnerFlashlightIntensityDefault;
+        DEBUGOuterFlashlightIntensity = DEBUGOuterFlashlightIntensityDefault;
+        DEBUGAttenuationSlider.value = DEBUGLightAttenuation;
+        DEBUGAttenuationText.text = "Light attenuation: " + DEBUGLightAttenuation.ToString("F2");
+        DEBUGLightRangeSlider.value = DEBUGFlashlightRange;
+        DEBUGLightRangeText.text = "Light range: " + DEBUGFlashlightRange.ToString("F2");
+        DEBUGInnerIntensitySlider.value = DEBUGInnerFlashlightIntensity;
+        DEBUGInnerIntensityText.text = "Inner light intensity: " + DEBUGInnerFlashlightIntensity.ToString("F2");
+        DEBUGOuterIntensitySlider.value = DEBUGOuterFlashlightIntensity;
+        DEBUGOuterIntensityText.text = "Outer light intensity: " + DEBUGOuterFlashlightIntensity.ToString("F2");
+        GameplayController.Get().SetFlashlightSettings(DEBUGFlashlightRange, DEBUGInnerFlashlightIntensity, DEBUGOuterFlashlightIntensity);
+        Shader.SetGlobalFloat("_LightAttenuationExponent", DEBUGLightAttenuation);
     }
 
     public void UpdateTimeScaleText()

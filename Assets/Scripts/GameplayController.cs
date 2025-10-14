@@ -41,7 +41,6 @@ public class GameplayController : MonoBehaviour
         UI
     }
     InputState inputState;
-    [SerializeField] float DEBUGlightAttenuation = 2.0f;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] ChatManager chatManager;
     [SerializeField] ZoneData currentZone;
@@ -87,9 +86,15 @@ public class GameplayController : MonoBehaviour
     }
     private void Update()
     {
-        Shader.SetGlobalFloat("_LightAttenuationExponent", DEBUGlightAttenuation);
+        if (Input.GetKeyDown(KeyCode.Escape) && ((inputState == InputState.Movement && !optionsMenuOpen) || (inputState == InputState.UI && optionsMenuOpen)) &&
+            !playerMovement.IsAnimating() && !playerMovement.CameraIsDettached() && !uiGameplay.IsAnyDocActive() && !IsOnAnyTransition())
+        {
+            OnUIMenuStateChanged();
+            uiGameplay.ChangeMenuVisibility(optionsMenuOpen);
+        }
         //es muy tonto que esto este aca
-        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab)) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic && !IsOptionsMenuOpen() && !playerMovement.IsAnimating() && !playerMovement.CameraIsDettached() && !uiGameplay.IsAnyDocActive() && !IsOnAnyTransition())
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab) || (inGameMenuOpen && Input.GetKeyDown(KeyCode.Escape))) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic 
+            && !IsOptionsMenuOpen() && !playerMovement.IsAnimating() && !playerMovement.CameraIsDettached() && !uiGameplay.IsAnyDocActive() && !IsOnAnyTransition()) //https://youtu.be/0LUYV3a1qgA?t=8
         {
             inGameMenuOpen = !inGameMenuOpen;
             ChangeInputState(inGameMenuOpen ? InputState.InGameUI : InputState.Movement);
@@ -103,11 +108,7 @@ public class GameplayController : MonoBehaviour
                 CloseTablet();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            OnUIMenuStateChanged();
-            uiGameplay.ChangeMenuVisibility(optionsMenuOpen);
-        }
+
     }
 
     void OpenTablet()
@@ -381,7 +382,7 @@ public class GameplayController : MonoBehaviour
         playerMovement.RaiseHand();
     }
 
-    public void DisableTablet()
+    public void DisableTablet() //? por que hice esto
     { 
         
     }
@@ -431,7 +432,7 @@ public class GameplayController : MonoBehaviour
         unstuckCheckpointSet = true; 
     }
 
-    public bool InGameMenuOpen()
+    public bool IsInGameMenuOpen()
     {
         return inGameMenuOpen;
     }
@@ -439,5 +440,14 @@ public class GameplayController : MonoBehaviour
     public bool IsOnAnyTransition()
     {
         return uiGameplay.IsOnAnyFadeState();
+    }
+
+    public void SetFlashlightSettings(float range, float innerIntensity, float outerIntensity)
+    {
+        playerMovement.SetFlashlightSettings(range, innerIntensity, outerIntensity);
+    }
+    public void GetFlashlightSettings(out float range, out float innerIntensity, out float outerIntensity)
+    {
+        playerMovement.GetFlashlightSettings(out range, out innerIntensity, out outerIntensity); //ref
     }
 }

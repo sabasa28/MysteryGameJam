@@ -5,6 +5,9 @@ using UnityEngine;
 //ended up using it not only for movement
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] Light outerFlashlight;
+    [SerializeField] Light innerFlashlight;
+    [SerializeField] bool jumpAllowed = false;
     [SerializeField] float speed;
     [SerializeField] float cameraSpeed;
     [SerializeField] float gravityForce;
@@ -84,7 +87,6 @@ public class PlayerMovement : MonoBehaviour
     bool hookAllowed;
     bool beaconsAllowed;
     bool flashlightAllowed;
-    [SerializeField] bool jumpAllowed = false;
     bool tabletAllowed = true;
     Animator animator;
     Coroutine enablingInputCoroutine = null;
@@ -97,6 +99,9 @@ public class PlayerMovement : MonoBehaviour
     bool triggerCameraReturn = false;
     bool cameraDettached = false;
     bool enableMovementOnCameraAttach = false;
+    [SerializeField] uint timesToFlickerFlashlight;
+    [SerializeField] float flickerTimerFlashlight;
+    [SerializeField] float timeFlickeredFlashlight;
 
     void Awake()
     {
@@ -152,6 +157,10 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R) && beaconsAllowed && beaconsDiscovered)
             {
                 PlaceBeacon();
+            }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                FlickerFlashlight();
             }
         }
 
@@ -305,6 +314,53 @@ public class PlayerMovement : MonoBehaviour
         persistentData.UpdateFlashlightState(enabled);
     }
 
+    void FlickerFlashlight()
+    {
+        StartCoroutine(FlickerFlashlightAndReturnToNormal(timesToFlickerFlashlight, flickerTimerFlashlight, timeFlickeredFlashlight));
+    }
+
+    IEnumerator FlickerFlashlightAndReturnToNormal(uint timesToFlicker, float flickerTimer, float timeFlickered)
+    {
+        float initialInnerRange = innerFlashlight.range;
+        float initialOuterRange = outerFlashlight.range;
+        float targetInnerRange = initialInnerRange / 2.0f;
+        float targetOuterRange = initialOuterRange / 2.0f;
+        float initialInnerIntensity = innerFlashlight.intensity;
+        float initialOuterIntensity = outerFlashlight.intensity;
+        float targetInnerIntensity = initialInnerIntensity;
+        float targetOuterIntensity = initialOuterIntensity;
+        innerFlashlight.intensity = targetInnerIntensity;
+        outerFlashlight.intensity = targetOuterIntensity;
+        for (int i = 0; i < timesToFlicker; i++)
+        {
+            innerFlashlight.range = 0.0f;
+            outerFlashlight.range = 0.0f;
+            yield return new WaitForSeconds(flickerTimer / 2);
+            innerFlashlight.range = targetInnerRange;
+            outerFlashlight.range = targetOuterRange;
+            yield return new WaitForSeconds(flickerTimer);
+        }
+        innerFlashlight.range = 0.0f;
+        outerFlashlight.range = 0.0f;
+        yield return new WaitForSeconds(timeFlickered / 2);
+        innerFlashlight.range = targetInnerRange;
+        outerFlashlight.range = targetOuterRange;
+        yield return new WaitForSeconds(timeFlickered);
+        innerFlashlight.range = 0.0f;
+        outerFlashlight.range = 0.0f;
+        yield return new WaitForSeconds(flickerTimer / 2);
+        innerFlashlight.intensity = initialInnerIntensity;
+        outerFlashlight.intensity = initialOuterIntensity;
+        innerFlashlight.range = initialInnerRange;
+        outerFlashlight.range = initialOuterRange;
+        yield return new WaitForSeconds(flickerTimer);
+        innerFlashlight.range = 0.0f;
+        outerFlashlight.range = 0.0f;
+        yield return new WaitForSeconds(flickerTimer / 2);
+        innerFlashlight.range = initialInnerRange;
+        outerFlashlight.range = initialOuterRange;
+    }
+
     IEnumerator CoyoteTime()
     {
         yield return new WaitForSeconds(coyoteTime);
@@ -341,8 +397,10 @@ public class PlayerMovement : MonoBehaviour
         float timer = 0.0f;
         while (timer < sonarTimer && trackedTransform != null)
         {
-            Vector3 slerpedVector = Vector3.Slerp(transform.forward, interactableTrackedPos - transform.position, timer / sonarAlignTime);
+            Vector3 slerpedVector = Vector3.Slerp(transform.forward, interactableTrackedPos - sonarPivotX.transform.position, timer / sonarAlignTime);
+            Debug.Log("Slerped vector "+ slerpedVector);
             Quaternion rotation = Quaternion.LookRotation(slerpedVector, Vector3.up);
+            Quaternion rotationB = Quaternion.LookRotation(slerpedVector) * Quaternion.Inverse(Quaternion.LookRotation(Vector3.forward, Vector3.up));
             float distToInteractable = Vector3.Distance(transform.position, interactableTrackedPos);
             if (distToInteractable > distanceForMediumColor)
             {
@@ -354,8 +412,9 @@ public class PlayerMovement : MonoBehaviour
                 sonarSprite.color = Color.Lerp(closeColor, mediumColor, distToInteractable / distanceForMediumColor);
                 sonarSprite2.color = Color.Lerp(closeColor, mediumColor, distToInteractable / distanceForMediumColor);
             }
-            sonarPivotY.eulerAngles = new Vector3(sonarPivotY.eulerAngles.x, rotation.eulerAngles.y, sonarPivotY.eulerAngles.z);
-            sonarPivotX.eulerAngles = new Vector3(rotation.eulerAngles.x, sonarPivotX.eulerAngles.y, sonarPivotX.eulerAngles.z);
+            sonarPivotX.rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, sonarPivotX.rotation.z);
+            //sonarPivotX.localEulerAngles = new Vector3(sonarPivotX.localEulerAngles.x, sonarPivotX.localEulerAngles.y, 0.0f);
+            //sonarPivotY.eulerAngles = new Vector3(sonarPivotY.eulerAngles.x, sonarPivotY.eulerAngles.y, rotation.eulerAngles.z);
             timer += Time.deltaTime;
             yield return null;
         }
@@ -653,5 +712,20 @@ public class PlayerMovement : MonoBehaviour
     public bool IsHooking() //(?
     {
         return hook.gameObject.activeInHierarchy;
+    }
+
+    public void SetFlashlightSettings(float range, float innerIntensity, float outerIntensity)
+    {
+        innerFlashlight.intensity = innerIntensity;
+        outerFlashlight.intensity = outerIntensity;
+        innerFlashlight.range = range;
+        outerFlashlight.range = range;
+    }
+
+    public void GetFlashlightSettings(out float range, out float innerIntensity, out float outerIntensity)
+    {
+        range = innerFlashlight.range;
+        innerIntensity = innerFlashlight.intensity;
+        outerIntensity = outerFlashlight.intensity;
     }
 }

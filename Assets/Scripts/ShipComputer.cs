@@ -46,7 +46,7 @@ public class ShipComputer : MonoBehaviour, IInteractable
     {
         if (isBeingLookedAt && !isCheckingPassword)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
             {
                 StopBeingLookedAt(true);
                 insertedString = "";

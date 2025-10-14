@@ -51,7 +51,11 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 5a3a9b621b08f0549b89f40ce0d73db1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 6ea024a76d9d43542952cdb7e5f7afc6, type: 2}
+      objectReference: {fileID: 2100000, guid: af44a9392750381469605c2eb23562f3, type: 2}
+    - target: {fileID: -6400281290468069383, guid: 5a3a9b621b08f0549b89f40ce0d73db1, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: 63f01844b3d3656448577507dcf7babc, type: 3}
     - target: {fileID: 919132149155446097, guid: 5a3a9b621b08f0549b89f40ce0d73db1, type: 3}
       propertyPath: m_Name
       value: cave_decorations-0
@@ -98,4 +102,4 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: 5a3a9b621b08f0549b89f40ce0d73db1, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: 63f01844b3d3656448577507dcf7babc, type: 3}
