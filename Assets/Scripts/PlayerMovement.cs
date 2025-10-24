@@ -102,6 +102,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] uint timesToFlickerFlashlight;
     [SerializeField] float flickerTimerFlashlight;
     [SerializeField] float timeFlickeredFlashlight;
+    bool temporarilyDisabledFlashlight = false;
+    bool isOnFlashlightAnimation = false;
 
     void Awake()
     {
@@ -138,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 verticalForce += jumpForce;
             }
-            if (Input.GetKeyDown(KeyCode.F) && flashlightAllowed)
+            if (Input.GetKeyDown(KeyCode.F) && flashlightAllowed && !isOnFlashlightAnimation)
             {
                 SetFlashlightState(!isFlashlightEnabled);
             }
@@ -150,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 interactable.AttemptInteract();
             }
-            if (Input.GetKeyDown(KeyCode.Q) && hookAllowed && hookDiscovered && Time.time > hookMinTimeToReUse && !hook.gameObject.activeInHierarchy)
+            if (Input.GetKeyDown(KeyCode.Q) && hookAllowed && hookDiscovered && Time.time > hookMinTimeToReUse && !hook.gameObject.activeInHierarchy && !isOnFlashlightAnimation)
             {
                 HookRaycast();
             }
@@ -319,8 +321,10 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(FlickerFlashlightAndReturnToNormal(timesToFlickerFlashlight, flickerTimerFlashlight, timeFlickeredFlashlight));
     }
 
-    IEnumerator FlickerFlashlightAndReturnToNormal(uint timesToFlicker, float flickerTimer, float timeFlickered)
+    IEnumerator FlickerFlashlightAndReturnToNormal(uint timesToFlicker, float flickerTimer, float timeFlickered, bool keepOffUntilPrompted = false)
     {
+        isOnFlashlightAnimation = true;
+        temporarilyDisabledFlashlight = keepOffUntilPrompted;
         float initialInnerRange = innerFlashlight.range;
         float initialOuterRange = outerFlashlight.range;
         float targetInnerRange = initialInnerRange / 2.0f;
@@ -346,19 +350,33 @@ public class PlayerMovement : MonoBehaviour
         innerFlashlight.range = targetInnerRange;
         outerFlashlight.range = targetOuterRange;
         yield return new WaitForSeconds(timeFlickered);
-        innerFlashlight.range = 0.0f;
-        outerFlashlight.range = 0.0f;
+        innerFlashlight.range = 5.0f;
+        outerFlashlight.range = 5.0f;
+        innerFlashlight.intensity = initialInnerIntensity / 10;
+        outerFlashlight.intensity = initialOuterIntensity / 10;
+        yield return new WaitUntil(()=>!temporarilyDisabledFlashlight);
         yield return new WaitForSeconds(flickerTimer / 2);
-        innerFlashlight.intensity = initialInnerIntensity;
-        outerFlashlight.intensity = initialOuterIntensity;
         innerFlashlight.range = initialInnerRange;
         outerFlashlight.range = initialOuterRange;
+        innerFlashlight.intensity = initialInnerIntensity;
+        outerFlashlight.intensity = initialOuterIntensity;
         yield return new WaitForSeconds(flickerTimer);
         innerFlashlight.range = 0.0f;
         outerFlashlight.range = 0.0f;
         yield return new WaitForSeconds(flickerTimer / 2);
         innerFlashlight.range = initialInnerRange;
         outerFlashlight.range = initialOuterRange;
+        isOnFlashlightAnimation = false;
+    }
+
+    public void FlickerAndDisableFlashlight()
+    { 
+        StartCoroutine(FlickerFlashlightAndReturnToNormal(timesToFlickerFlashlight, flickerTimerFlashlight, timeFlickeredFlashlight, true));
+    }
+
+    public void ReenableDisabledFlashlight()
+    {
+        temporarilyDisabledFlashlight = false;
     }
 
     IEnumerator CoyoteTime()

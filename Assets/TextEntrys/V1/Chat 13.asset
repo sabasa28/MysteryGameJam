@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Chat 13
   m_EditorClassIdentifier: 
   textLine:
-  - text: I have detected something that might be of interest right outside the cave
-      entrance.
+  - text: I have detected something that might be of interest.
     speaker: 1
-  - text: It seems I missed it when we first got here.
+  - text: Initially I disregarded it in favour of the cave system, but, since we
+      are back out, it might be worthwhile to inspect it.
     speaker: 1
-  - text: Let's see what it is.
+  - text: I suggest you do it quickly; this sandstorm is getting more dangerous by
+      the minute.
+    speaker: 1
+  - text: Okay, but, after that, we go back to the ship.
     speaker: 0

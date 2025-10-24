@@ -26,7 +26,6 @@ public class CockpitComputer : MonoBehaviour, IInteractable
     Vector2 maxCursorPos;
     [SerializeField] InGameCursor inGameCursor;
     LevelsManager lvlManager;
-    bool playedIgnoredNewMessagesChat = false;
 
     private void Start()
     {
@@ -39,21 +38,13 @@ public class CockpitComputer : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
-        if (lvlManager.persistentData.canEndGame)
-        {
-            GameplayController.Get().MovePlayerCameraAndReturn(InteractingCameraTrans, timeMovingCamera, timeReturningCamera, GameplayController.InputState.UI);
-            StartCoroutine(WaitForZoomInAndTakeInput());
-        }
-        else
-        {
-            ChatManager.Get().PlayNewMessagesIgnoredChat();
-            playedIgnoredNewMessagesChat = true;
-        }
+        GameplayController.Get().MovePlayerCameraAndReturn(InteractingCameraTrans, timeMovingCamera, timeReturningCamera, GameplayController.InputState.UI);
+        StartCoroutine(WaitForZoomInAndTakeInput());
     }
 
     public bool IsInteractable()
     {
-        return ((!message1Read || !message2Read) && lvlManager.persistentData.canEndGame) || (!lvlManager.persistentData.canEndGame && !playedIgnoredNewMessagesChat);
+        return ((!message1Read || !message2Read) && lvlManager.persistentData.canEndGame);
     }
 
     public void RemoveFromNecessaryInteractables()
@@ -67,7 +58,7 @@ public class CockpitComputer : MonoBehaviour, IInteractable
             if (onInitialScreen && Input.GetKeyDown(KeyCode.Mouse0))
             {
                 onInitialScreen = false;
-                OpenListOfMessages();   
+                OpenListOfMessages();
             }
         }
     }

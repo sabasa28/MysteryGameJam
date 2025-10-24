@@ -52,6 +52,7 @@ public class GameplayController : MonoBehaviour
     [SerializeField] Transform outsideOfLabPos;
     [SerializeField] Transform insideOfLabPos;
     [SerializeField] Volume helmetVolume;
+    [SerializeField] StormManager stormManager;
     bool inGameMenuOpen = false;
     bool optionsMenuOpen = false;
     [SerializeField] SelectingFinger selectingFinger;
@@ -278,6 +279,7 @@ public class GameplayController : MonoBehaviour
         helmetVolume.enabled = !moveIn;
         LevelsManager.Get().persistentData.UpdateHelmetState(!moveIn);
         playerMovement.PlayHelmetSound(!moveIn);
+        stormManager.OnEnterOrExitShip(moveIn);
         yield return new WaitUntil(() => !uiGameplay.isFadingIn);
         ChangeInputState(InputState.Movement);
         playerMovement.SetJumpAllowed(!moveIn);
@@ -382,9 +384,20 @@ public class GameplayController : MonoBehaviour
         playerMovement.RaiseHand();
     }
 
-    public void DisableTablet() //? por que hice esto
-    { 
-        
+    public void FlickerAndDisablePlayerFlashlight()
+    {
+        playerMovement.FlickerAndDisableFlashlight();
+    }
+
+    public void ReenablePlayerFlashlight()
+    {
+        StartCoroutine(ReenablePlayerFlashlightAfterSecs(5));
+    }
+
+    IEnumerator ReenablePlayerFlashlightAfterSecs(float secs)
+    {
+        yield return new WaitForSeconds(secs);
+        playerMovement.ReenableDisabledFlashlight();
     }
 
     public void MovePlayerCameraAndReturn(Transform targetPos, float goingTime, float returningTime, InputState newInputState = InputState.InGameUI)

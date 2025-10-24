@@ -12,7 +12,7 @@ public class ZoneData : MonoBehaviour
     public bool allowHook;
     public bool allowBeacons;
     public bool allowFlashlight;
-
+    [SerializeField] EventTriggerBase eventAfterNecessaryInteractions;
     public void CheckNecessaryInteractions()
     {
         for (int i = necessaryInteractions.Count - 1; i >= 0; i--)
@@ -22,6 +22,10 @@ public class ZoneData : MonoBehaviour
                 necessaryInteractions.RemoveAt(i);
                 continue;
             }
+        }
+        if (!HasNecessaryInteractionLeft() && eventAfterNecessaryInteractions)
+        {
+            eventAfterNecessaryInteractions.TriggerEvent();
         }
     }
 
@@ -50,6 +54,10 @@ public class ZoneData : MonoBehaviour
     {
         GameplayController.Get().OnCurrentZoneNecessaryInteractableFound(gameObjectToRemove);
         necessaryInteractions.Remove(gameObjectToRemove);
+        if (!HasNecessaryInteractionLeft() && eventAfterNecessaryInteractions)
+        {
+            eventAfterNecessaryInteractions.TriggerEvent();
+        }
     }
 
     public bool HasNecessaryInteractionLeft()
