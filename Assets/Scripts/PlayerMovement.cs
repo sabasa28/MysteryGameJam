@@ -84,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
     bool hookDiscovered;
     bool beaconsDiscovered;
     bool sonarDiscovered;
+    bool sonarAllowed = true;
     bool hookAllowed;
     bool beaconsAllowed;
     bool flashlightAllowed;
@@ -387,7 +388,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ActivateSonar()
     {
-        if (isSonarActive || !sonarDiscovered)
+        if (isSonarActive || !sonarDiscovered && sonarAllowed)
         {
             return;
         }
@@ -444,6 +445,15 @@ public class PlayerMovement : MonoBehaviour
     public void StopTrackingFoundInteractable(GameObject interactableFound)
     {
         if (trackedTransform != null && trackedTransform == interactableFound.transform)
+        {
+            trackedTransform = null;
+            //this will stop the sonar coroutine
+        }
+    }
+
+    public void StopTrackingCurrentTracked()
+    {
+        if (trackedTransform != null)
         {
             trackedTransform = null;
             //this will stop the sonar coroutine
@@ -668,6 +678,11 @@ public class PlayerMovement : MonoBehaviour
     public void SetJumpAllowed(bool newJumpAllowed)
     { 
         jumpAllowed = newJumpAllowed;
+    }
+
+    public void SetSonarAllowed(bool newSonarAllowed)
+    {
+        sonarAllowed = newSonarAllowed;
     }
 
     public void MoveCameraAndReturn(Transform targetTransform, float goingTime, float returningTime)

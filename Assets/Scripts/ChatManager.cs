@@ -18,6 +18,7 @@ public class ChatManager : MonoBehaviour
     [SerializeField] TextEntry notDoneWithZoneChat;
     [SerializeField] TextEntry doneWithZoneChat;
     [SerializeField] TextEntry wakeUpChat;
+    [SerializeField] TextEntry darknessChat;
     public bool doneWithZone = false;
     [SerializeField] TextEntry firstDocChat;
     [SerializeField] TextEntry secondDocChat;
@@ -92,7 +93,8 @@ public class ChatManager : MonoBehaviour
         }
         if (Input.anyKeyDown && !GameplayController.Get().IsOptionsMenuOpen())
         {
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) ||
+                Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.LeftWindows) || Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.LeftControl))
             {
                 return;
             }
@@ -200,6 +202,11 @@ public class ChatManager : MonoBehaviour
     public void PlayWakeUpChat()
     {
         StartDisplayingTextEntry(wakeUpChat);
+    }
+
+    public void PlayDarknessChat(EventTriggerBase eventToTrigger)
+    {
+        StartDisplayingTextEntry(darknessChat, eventToTrigger);
     }
     public void PlayNewMessagesIgnoredChat()
     {

@@ -29,7 +29,7 @@ MonoBehaviour:
     speaker: 1
   - text: We were so close to meeting them...
     speaker: 0
-  - text: Indeed. I also noticed that while I haven't fully deciphered how their
+  - text: Indeed. I also noticed that, while I haven't fully deciphered how their
       calendar works, the difference in dates between the earliest recovered document
       and this last one is likely less than 6 months.
     speaker: 1

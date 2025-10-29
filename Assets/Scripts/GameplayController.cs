@@ -272,6 +272,7 @@ public class GameplayController : MonoBehaviour
 
     IEnumerator MovePlayerInOutShipCoroutine(bool moveIn)
     {
+        playerMovement.StopTrackingCurrentTracked();
         ChangeInputState(InputState.Cinematic);
         uiGameplay.FadeOutAndIn(false);
         yield return new WaitUntil(() => !uiGameplay.isFadingOut);
@@ -288,6 +289,7 @@ public class GameplayController : MonoBehaviour
 
     IEnumerator MovePlayerInOutLabCoroutine(bool moveIn)
     {
+        playerMovement.StopTrackingCurrentTracked();
         ChangeInputState(InputState.Cinematic);
         uiGameplay.FadeOutAndIn(moveIn);
         yield return new WaitUntil(() => !uiGameplay.isFadingOut);
@@ -389,9 +391,9 @@ public class GameplayController : MonoBehaviour
         playerMovement.FlickerAndDisableFlashlight();
     }
 
-    public void ReenablePlayerFlashlight()
+    public void ReenablePlayerFlashlight(float timeBeforeReenabling)
     {
-        StartCoroutine(ReenablePlayerFlashlightAfterSecs(5));
+        StartCoroutine(ReenablePlayerFlashlightAfterSecs(timeBeforeReenabling));
     }
 
     IEnumerator ReenablePlayerFlashlightAfterSecs(float secs)
