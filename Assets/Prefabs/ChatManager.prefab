@@ -51,6 +51,7 @@ MonoBehaviour:
   notDoneWithZoneChat: {fileID: 11400000, guid: 40e1a9b27ad927246af2e81feb4dcd09, type: 2}
   doneWithZoneChat: {fileID: 11400000, guid: a2c7f4211ffe85549b5bac401a3745a2, type: 2}
   wakeUpChat: {fileID: 11400000, guid: e5f21597fd4509745a8c1432f3707c63, type: 2}
+  glassesFoundChat: {fileID: 11400000, guid: 57854d169d8aeae468057ffbe1f5335a, type: 2}
   darknessChat: {fileID: 11400000, guid: e9e59711cbd04a642866787fa7242059, type: 2}
   doneWithZone: 0
   firstDocChat: {fileID: 11400000, guid: 8925fb357af981d44b152fb941782384, type: 2}

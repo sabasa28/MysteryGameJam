@@ -18,6 +18,7 @@ public class ChatManager : MonoBehaviour
     [SerializeField] TextEntry notDoneWithZoneChat;
     [SerializeField] TextEntry doneWithZoneChat;
     [SerializeField] TextEntry wakeUpChat;
+    [SerializeField] TextEntry glassesFoundChat;
     [SerializeField] TextEntry darknessChat;
     public bool doneWithZone = false;
     [SerializeField] TextEntry firstDocChat;
@@ -202,6 +203,11 @@ public class ChatManager : MonoBehaviour
     public void PlayWakeUpChat()
     {
         StartDisplayingTextEntry(wakeUpChat);
+    }
+
+    public void PlayGlassesFoundChat()
+    {
+        StartDisplayingTextEntry(glassesFoundChat);
     }
 
     public void PlayDarknessChat(EventTriggerBase eventToTrigger)

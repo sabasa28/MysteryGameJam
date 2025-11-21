@@ -3851,11 +3851,11 @@ ParticleSystem:
     collidesWith:
       serializedVersion: 2
       m_Bits: 1023
-    maxCollisionShapes: 256
-    quality: 2
+    maxCollisionShapes: 512
+    quality: 0
     voxelSize: 0.3
     collisionMessages: 0
-    collidesWithDynamic: 1
+    collidesWithDynamic: 0
     interiorCollisions: 0
   TriggerModule:
     enabled: 0

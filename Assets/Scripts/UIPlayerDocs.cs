@@ -26,7 +26,7 @@ public class UIPlayerDocs : MonoBehaviour
     [SerializeField] TextMeshProUGUI readingDocContent;
     [SerializeField] GameObject logImageDisplay;
     bool firstDisplay = true;
-    [SerializeField] GameObject firstDisplayText;
+    [SerializeField] GameObject tutorialScreen;
     [SerializeField] GameObject sortingButton;
     [SerializeField] TextMeshProUGUI sortingButtonText;
     [SerializeField] GameObject anyDocUnreadIndicator;
@@ -35,7 +35,6 @@ public class UIPlayerDocs : MonoBehaviour
 
     private void OnEnable()
     {
-        initialOptions.SetActive(true);
         DocumentManager documentManager = DocumentManager.Get();
         anyDocUnreadIndicator.SetActive(!documentManager.AreAllFoundDocumentsRead());
         anyLogUnreadIndicator.SetActive(!documentManager.AreAllFoundLogsRead());
@@ -43,9 +42,10 @@ public class UIPlayerDocs : MonoBehaviour
         SetLogActiveState(false);
         SetDocumentListActiveState(false);
 
-        if (firstDisplayText && firstDisplayText.activeInHierarchy)
+        if (tutorialScreen && tutorialScreen.activeInHierarchy)
         {
-            firstDisplayText.SetActive(firstDisplay && !LevelsManager.Get().GoingUp);
+            bool showTutorial = firstDisplay && !LevelsManager.Get().GoingUp;
+            ChangeTutorialScreenState(showTutorial);
             firstDisplay = false;
         }
     }
@@ -255,4 +255,9 @@ public class UIPlayerDocs : MonoBehaviour
         InitializeDocsUI();
     }
 
+    public void ChangeTutorialScreenState(bool newState)
+    {
+        tutorialScreen.SetActive(newState);
+        initialOptions.SetActive(!newState);
+    }
 }

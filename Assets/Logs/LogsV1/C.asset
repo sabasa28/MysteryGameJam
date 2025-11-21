@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: C
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 21300000, guid: 9bf918ecddb954a4db8c2f3a9837a18c, type: 3}
+  attachedPhoto: {fileID: 21300000, guid: c7708df9de0d89a48af46d528cfb8c7b, type: 3}
   logText: The capsule containing this specimen has detailed information about their
     physiology.\n\nTheir species name can be translated to Povann. They were an advanced
     underwater civilization that lived all over the oceans of the planet.\nThey have

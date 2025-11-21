@@ -103,8 +103,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] uint timesToFlickerFlashlight;
     [SerializeField] float flickerTimerFlashlight;
     [SerializeField] float timeFlickeredFlashlight;
+    [SerializeField] float randomFlickerMinTime;
+    [SerializeField] float randomFlickerMaxTime;
+    [SerializeField] AudioClip[] flickerSounds;
     bool temporarilyDisabledFlashlight = false;
     bool isOnFlashlightAnimation = false;
+    bool glassesOff = false;
+    float glassesOffInteractDistance;
+    AudioManager audioManager;
 
     void Awake()
     {
@@ -115,8 +121,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        audioManager = AudioManager.Get();
+        glassesOffInteractDistance = maxInteractDistance / 2.0f;
         if (!LevelsManager.Get().playedInitialAnimation)
         {
+            GameplayController.Get().SetNoGlassesVolumeState(true); 
+            glassesOff = true;
             animator.enabled = true;
             LevelsManager.Get().playedInitialAnimation = true;
         }
@@ -161,10 +171,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 PlaceBeacon();
             }
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                FlickerFlashlight();
-            }
+            //if (Input.GetKeyDown(KeyCode.J))
+            //{
+            //    FlickerFlashlight();
+            //}
+            //if (Input.GetKeyDown(KeyCode.K))
+            //{
+            //    StartCoroutine(FlickerRandomly());
+            //}
         }
 
         float magnitudeMovement = Mathf.Max(Mathf.Abs(horizontalValue), Mathf.Abs(verticalValue));
@@ -177,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
         if (walking && (movement.magnitude < minMagnitudeForSteps || !grounded))
         {
             walking = false;
-            AudioManager.Get().StopSteps();
+            audioManager.StopSteps();
             playingStepsSound = false;
         }
         if (!walking && (movement.magnitude > minMagnitudeForSteps && grounded))
@@ -222,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void RayoLaser()
     {
-        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out interactHit, maxInteractDistance))
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out interactHit, glassesOff? glassesOffInteractDistance : maxInteractDistance))
         {
             interactable = interactHit.collider.GetComponent<IInteractable>();
             if (interactable == null)
@@ -231,7 +245,14 @@ public class PlayerMovement : MonoBehaviour
             }
             if (interactable != null && inputEnabled)
             {
-                UIGameplay.Get().ChangeInteractTextDisplay(interactable.IsInteractable());
+                if (glassesOff)
+                {
+                    UIGameplay.Get().ChangeInteractTextDisplay(interactHit.collider.CompareTag("Lentes"));
+                }
+                else
+                { 
+                    UIGameplay.Get().ChangeInteractTextDisplay(interactable.IsInteractable());
+                }
             }
             else
             {
@@ -248,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HookRaycast()
     {
-        AudioManager.Get().PlaySFX(hookSound, 0.2f);
+        audioManager.PlaySFX(hookSound, 0.2f);
         if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hookHit, maxHookDistance, defaultLayer, QueryTriggerInteraction.Ignore))
         {
             hook.gameObject.SetActive(true);
@@ -313,17 +334,67 @@ public class PlayerMovement : MonoBehaviour
         }
         isFlashlightEnabled = enabled;
         flashlight.SetActive(enabled);
-        if (playSound) AudioManager.Get().PlaySFX(flashlightSound, 1);
+        if (playSound) audioManager.PlaySFX(flashlightSound, 1);
         persistentData.UpdateFlashlightState(enabled);
+    }
+
+    public void FlashlightStartsFailing()
+    {
+        StartCoroutine(FlickerRandomly());
+    }
+
+    IEnumerator FlickerRandomly()
+    {
+        float randomNum = Random.Range(randomFlickerMinTime, randomFlickerMaxTime);
+        float timer = 0.0f;
+
+        while (true) // B/
+        {
+            timer += Time.deltaTime;
+            if (timer > randomNum)
+            {
+                randomNum = Random.Range(randomFlickerMinTime, randomFlickerMaxTime);
+                timer = 0.0f;
+                if (!isOnFlashlightAnimation && isFlashlightEnabled)
+                {
+                    isOnFlashlightAnimation = true;
+                    int timesToFlicker = Random.Range(3,6);
+                    float initialInnerRange = innerFlashlight.range;
+                    float initialOuterRange = outerFlashlight.range;
+                    float targetInnerRange = initialInnerRange / 2.0f;
+                    float targetOuterRange = initialOuterRange / 2.0f;
+                    audioManager.PlaySFX(flickerSounds[timesToFlicker-1]);
+                    for (int i = 0; i < timesToFlicker; i++)
+                    {
+                        innerFlashlight.range = 0.0f;
+                        outerFlashlight.range = 0.0f;
+                        yield return new WaitForSeconds(flickerTimerFlashlight / 2);
+                        innerFlashlight.range = targetInnerRange;
+                        outerFlashlight.range = targetOuterRange;
+                        yield return new WaitForSeconds(flickerTimerFlashlight);
+                    }
+                    innerFlashlight.range = initialInnerRange;
+                    outerFlashlight.range = initialOuterRange;
+                    Debug.Log("Flickered " + timesToFlicker + " times. Next flicker in " + randomNum);
+                    isOnFlashlightAnimation = false;
+                }
+            }
+            yield return null;
+        }
     }
 
     void FlickerFlashlight()
     {
-        StartCoroutine(FlickerFlashlightAndReturnToNormal(timesToFlickerFlashlight, flickerTimerFlashlight, timeFlickeredFlashlight));
+        StartCoroutine(FlickerFlashlightAndReturnToNormal(timesToFlickerFlashlight, flickerTimerFlashlight, timeFlickeredFlashlight, true));
     }
 
     IEnumerator FlickerFlashlightAndReturnToNormal(uint timesToFlicker, float flickerTimer, float timeFlickered, bool keepOffUntilPrompted = false)
     {
+        if (isOnFlashlightAnimation)
+        {
+            yield return new WaitUntil(()=>!isOnFlashlightAnimation);
+        }
+        SetFlashlightState(true, false);
         isOnFlashlightAnimation = true;
         temporarilyDisabledFlashlight = keepOffUntilPrompted;
         float initialInnerRange = innerFlashlight.range;
@@ -336,6 +407,7 @@ public class PlayerMovement : MonoBehaviour
         float targetOuterIntensity = initialOuterIntensity;
         innerFlashlight.intensity = targetInnerIntensity;
         outerFlashlight.intensity = targetOuterIntensity;
+        audioManager.PlaySFX(flickerSounds[timesToFlicker - 1]);
         for (int i = 0; i < timesToFlicker; i++)
         {
             innerFlashlight.range = 0.0f;
@@ -347,23 +419,28 @@ public class PlayerMovement : MonoBehaviour
         }
         innerFlashlight.range = 0.0f;
         outerFlashlight.range = 0.0f;
+        audioManager.PlaySFX(flickerSounds[Random.Range(0,2)]);
         yield return new WaitForSeconds(timeFlickered / 2);
         innerFlashlight.range = targetInnerRange;
         outerFlashlight.range = targetOuterRange;
+        audioManager.PlaySFX(flickerSounds[Random.Range(0, 2)]);
         yield return new WaitForSeconds(timeFlickered);
         innerFlashlight.range = 5.0f;
         outerFlashlight.range = 5.0f;
         innerFlashlight.intensity = initialInnerIntensity / 10;
         outerFlashlight.intensity = initialOuterIntensity / 10;
+        audioManager.PlaySFX(flickerSounds[Random.Range(0, 2)]);
         yield return new WaitUntil(()=>!temporarilyDisabledFlashlight);
         yield return new WaitForSeconds(flickerTimer / 2);
         innerFlashlight.range = initialInnerRange;
         outerFlashlight.range = initialOuterRange;
         innerFlashlight.intensity = initialInnerIntensity;
         outerFlashlight.intensity = initialOuterIntensity;
+        audioManager.PlaySFX(flickerSounds[Random.Range(0, 2)]);
         yield return new WaitForSeconds(flickerTimer);
         innerFlashlight.range = 0.0f;
         outerFlashlight.range = 0.0f;
+        audioManager.PlaySFX(flickerSounds[Random.Range(0, 2)]);
         yield return new WaitForSeconds(flickerTimer / 2);
         innerFlashlight.range = initialInnerRange;
         outerFlashlight.range = initialOuterRange;
@@ -388,7 +465,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ActivateSonar()
     {
-        if (isSonarActive || !sonarDiscovered && sonarAllowed)
+        if (isSonarActive || !sonarDiscovered || !sonarAllowed)
         {
             return;
         }
@@ -410,7 +487,7 @@ public class PlayerMovement : MonoBehaviour
     {
         trackedTransform = closestInteractableTransform;
         Vector3 interactableTrackedPos = trackedTransform.position;
-        AudioManager.Get().PlaySFX(sonarSound, 1.0f);
+        audioManager.PlaySFX(sonarSound, 1.0f);
         sonar.SetActive(true);
         isSonarActive = true;
         float timer = 0.0f;
@@ -527,7 +604,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            AudioManager.Get().PlaySFX(inventoryOnOffSound);
+            audioManager.PlaySFX(inventoryOnOffSound);
             uiHandAnim.SetBool("Open", false);
             GameplayController.Get().SetPlayerDocsActiveState(false);
             GameplayController.Get().SetFingerActiveState(false);
@@ -546,7 +623,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (raise)
         {
-            AudioManager.Get().PlaySFX(inventoryOnOffSound);
+            audioManager.PlaySFX(inventoryOnOffSound);
             uiHandAnim.SetBool("Open", true);
             yield return new WaitUntil(() => uiHandAnim.GetCurrentAnimatorStateInfo(0).IsName("Opened"));
             GameplayController.Get().SetPlayerDocsActiveState(true);
@@ -608,11 +685,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (helmetOn)
         {
-            AudioManager.Get().PlaySFX(helmetOnSound);
+            audioManager.PlaySFX(helmetOnSound);
         }
         else
         { 
-            AudioManager.Get().PlaySFX(helmetOffSound);
+            audioManager.PlaySFX(helmetOffSound);
         }
     }
 
@@ -621,7 +698,7 @@ public class PlayerMovement : MonoBehaviour
         overridenStepsSound = shouldForce? footstepsDirtSound : null;
         if (playingStepsSound)
         {
-            AudioManager.Get().StopSteps();
+            audioManager.StopSteps();
             PlayStepSound();
         }
     }
@@ -630,16 +707,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (overridenStepsSound != null)
         {
-            AudioManager.Get().PlaySteps(overridenStepsSound, pitchForDirtSteps, volumeDirtSteps); //I'm only overriding for dirt, if we end up overriding for other mats I'll have to deal with pitch and volume diffs
+            audioManager.PlaySteps(overridenStepsSound, pitchForDirtSteps, volumeDirtSteps); //I'm only overriding for dirt, if we end up overriding for other mats I'll have to deal with pitch and volume diffs
         }
         else if (GameplayController.Get().IsInShip() || GameplayController.Get().IsInLab())
         {
-            AudioManager.Get().PlaySteps(footstepsMetalSound, pitchForMetalSteps, volumeMetalSteps);
+            audioManager.PlaySteps(footstepsMetalSound, pitchForMetalSteps, volumeMetalSteps);
             playingStepsSound = true;
         }
         else
         {
-            AudioManager.Get().PlaySteps(footstepsDirtSound, pitchForDirtSteps, volumeDirtSteps);
+            audioManager.PlaySteps(footstepsDirtSound, pitchForDirtSteps, volumeDirtSteps);
             playingStepsSound = true;
         }
     }
@@ -656,21 +733,21 @@ public class PlayerMovement : MonoBehaviour
         switch (endAnimSteps)
         {
             case 1:
-                AudioManager.Get().PlayIndividualStep(endAnimMetal1, pitchForMetalSteps, volumeMetalSteps);
+                audioManager.PlayIndividualStep(endAnimMetal1, pitchForMetalSteps, volumeMetalSteps);
                 break;
             case 2:
-                AudioManager.Get().PlayIndividualStep(endAnimMetal2, pitchForMetalSteps, volumeMetalSteps);
+                audioManager.PlayIndividualStep(endAnimMetal2, pitchForMetalSteps, volumeMetalSteps);
                 break;
             case 3:
-                AudioManager.Get().PlayIndividualStep(endAnimMetal3, pitchForMetalSteps, volumeMetalSteps);
+                audioManager.PlayIndividualStep(endAnimMetal3, pitchForMetalSteps, volumeMetalSteps);
                 break;
             case 4:
-                AudioManager.Get().PlayIndividualStep(endAnimMetal4, pitchForMetalSteps, volumeMetalSteps);
+                audioManager.PlayIndividualStep(endAnimMetal4, pitchForMetalSteps, volumeMetalSteps);
                 break;
             case 5:
             case 6:
             default:
-                AudioManager.Get().PlayIndividualStep(endAnimDirt1, pitchForDirtSteps, volumeDirtSteps);
+                audioManager.PlayIndividualStep(endAnimDirt1, pitchForDirtSteps, volumeDirtSteps);
                 break;
         }
     }
@@ -760,5 +837,10 @@ public class PlayerMovement : MonoBehaviour
         range = innerFlashlight.range;
         innerIntensity = innerFlashlight.intensity;
         outerIntensity = outerFlashlight.intensity;
+    }
+
+    public void PutOnGlasses()
+    {
+        glassesOff = false;
     }
 }

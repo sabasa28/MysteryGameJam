@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: L
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 21300000, guid: 6ec8245c29fe987419e0c68fc1b6f55d, type: 3}
+  attachedPhoto: {fileID: 21300000, guid: c462580fa8bd22341a4498b74114159c, type: 3}
   logText: The planet continues to surprise me.  This drone-like device is the first
     thing I encounter that resembles that weird fragment I logged earlier. It appears
     to belong to a completely different species, and has been preserved in near perfect

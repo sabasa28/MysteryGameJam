@@ -7,6 +7,7 @@ public class Collectable : MonoBehaviour, IInteractable
     bool found = false;
     [SerializeField] Animator animator;
     [SerializeField] AudioClip foundSound;
+    [SerializeField] AudioClip dissappearSound;
     public void Interact()
     {
         if (!found)
@@ -32,6 +33,7 @@ public class Collectable : MonoBehaviour, IInteractable
     public void Disable()
     {
         gameObject.SetActive(false);
+        AudioManager.Get().PlaySFX(dissappearSound, 2);
     }
 
     public void RemoveFromNecessaryInteractables()

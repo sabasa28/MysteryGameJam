@@ -120,4 +120,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textEntryToDisplay: {fileID: 11400000, guid: a6ded85931cf221418672fe5c39d2d7b, type: 2}
   eventToTrigger: {fileID: 0}
+  eventToTriggerAfterChat: {fileID: 0}
   timeBeforeTriggering: 3
+  FakewallToActivate: {fileID: 0}

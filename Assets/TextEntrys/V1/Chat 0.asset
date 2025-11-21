@@ -23,6 +23,3 @@ MonoBehaviour:
     speaker: 2
   - text: Alright, let's get to it.
     speaker: 2
-  - text: I should synchronize my tablet with the logs I've been writing in the computer
-      since the beginning of the mission.
-    speaker: 2

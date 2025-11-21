@@ -52,6 +52,7 @@ public class GameplayController : MonoBehaviour
     [SerializeField] Transform outsideOfLabPos;
     [SerializeField] Transform insideOfLabPos;
     [SerializeField] Volume helmetVolume;
+    [SerializeField] Volume noGlassessVolume;
     [SerializeField] StormManager stormManager;
     bool inGameMenuOpen = false;
     bool optionsMenuOpen = false;
@@ -222,6 +223,14 @@ public class GameplayController : MonoBehaviour
         helmetVolume.enabled = helmetState;
         isPlayerInShip = !helmetState;
         playerMovement.SetJumpAllowed(!isPlayerInShip);
+    }
+    public void SetNoGlassesVolumeState(bool newState)
+    {
+        if (noGlassessVolume)
+        {
+            noGlassessVolume.enabled = newState;
+            playerMovement.PutOnGlasses();
+        }
     }
 
     public bool IsInShip()
@@ -464,5 +473,9 @@ public class GameplayController : MonoBehaviour
     public void GetFlashlightSettings(out float range, out float innerIntensity, out float outerIntensity)
     {
         playerMovement.GetFlashlightSettings(out range, out innerIntensity, out outerIntensity); //ref
+    }
+    public void StartBreakingFlashlight()
+    {
+        playerMovement.FlashlightStartsFailing();
     }
 }

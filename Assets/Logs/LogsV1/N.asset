@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b8bbe3921380c489c7ea5490eadb9c, type: 3}
   m_Name: N
   m_EditorClassIdentifier: 
-  attachedPhoto: {fileID: 21300000, guid: f47c2bf8ebd33e347a37d2f3cf3c5f41, type: 3}
+  attachedPhoto: {fileID: 21300000, guid: 732f9f8c84f555c49b19e7c89ff1a30a, type: 3}
   logText: Interesting... a wire. There's still electricity running through it, and
     a lot, judging by its thickness. I wouldn't be surprised to find some energy
     source down here, or something that requires a ton of power.
