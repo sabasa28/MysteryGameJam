@@ -15,8 +15,7 @@ MonoBehaviour:
   textLine:
   - text: My scanner isn't detecting anything else in this area.
     speaker: 1
-  - text: There's probably more to be found, but it might not be as important.
+  - text: It's possible there's more to be found, but it might not be as important.
     speaker: 1
-  - text: The scanner will now point towards the exit of this zone in case you get
-      lost.
+  - text: I will now point the scanner towards the bright entrance we just saw.
     speaker: 1

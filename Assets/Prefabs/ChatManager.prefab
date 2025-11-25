@@ -60,3 +60,4 @@ MonoBehaviour:
   astrounautName: You
   unknownName: ???
   AIName: MIRA
+  inputCooldown: 1

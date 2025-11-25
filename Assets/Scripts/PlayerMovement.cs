@@ -108,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioClip[] flickerSounds;
     bool temporarilyDisabledFlashlight = false;
     bool isOnFlashlightAnimation = false;
+    bool isFlashlightFlickering = false;
     bool glassesOff = false;
     float glassesOffInteractDistance;
     AudioManager audioManager;
@@ -151,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 verticalForce += jumpForce;
             }
-            if (Input.GetKeyDown(KeyCode.F) && flashlightAllowed && !isOnFlashlightAnimation)
+            if (Input.GetKeyDown(KeyCode.F) && flashlightAllowed && !isOnFlashlightAnimation && !isFlashlightFlickering)
             {
                 SetFlashlightState(!isFlashlightEnabled);
             }
@@ -167,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 HookRaycast();
             }
-            if (Input.GetKeyDown(KeyCode.R) && beaconsAllowed && beaconsDiscovered)
+            if (Input.GetKeyDown(KeyCode.R) && beaconsAllowed && beaconsDiscovered && !isOnFlashlightAnimation)
             {
                 PlaceBeacon();
             }
@@ -247,7 +248,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (glassesOff)
                 {
-                    UIGameplay.Get().ChangeInteractTextDisplay(interactHit.collider.CompareTag("Lentes"));
+                    if (interactHit.collider.CompareTag("Lentes") || interactHit.collider.CompareTag("Doc"))
+                    {
+                        UIGameplay.Get().ChangeInteractTextDisplay(interactable.IsInteractable());
+                    }
+                    else
+                    {
+                        UIGameplay.Get().ChangeInteractTextDisplay(false);
+                        interactable = null;
+                    }
                 }
                 else
                 { 
@@ -357,7 +366,7 @@ public class PlayerMovement : MonoBehaviour
                 timer = 0.0f;
                 if (!isOnFlashlightAnimation && isFlashlightEnabled)
                 {
-                    isOnFlashlightAnimation = true;
+                    isFlashlightFlickering = true;
                     int timesToFlicker = Random.Range(3,6);
                     float initialInnerRange = innerFlashlight.range;
                     float initialOuterRange = outerFlashlight.range;
@@ -376,7 +385,7 @@ public class PlayerMovement : MonoBehaviour
                     innerFlashlight.range = initialInnerRange;
                     outerFlashlight.range = initialOuterRange;
                     Debug.Log("Flickered " + timesToFlicker + " times. Next flicker in " + randomNum);
-                    isOnFlashlightAnimation = false;
+                    isFlashlightFlickering = false;
                 }
             }
             yield return null;
@@ -390,9 +399,9 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator FlickerFlashlightAndReturnToNormal(uint timesToFlicker, float flickerTimer, float timeFlickered, bool keepOffUntilPrompted = false)
     {
-        if (isOnFlashlightAnimation)
+        if (isFlashlightFlickering)
         {
-            yield return new WaitUntil(()=>!isOnFlashlightAnimation);
+            yield return new WaitUntil(()=>!isFlashlightFlickering);
         }
         SetFlashlightState(true, false);
         isOnFlashlightAnimation = true;
@@ -601,6 +610,7 @@ public class PlayerMovement : MonoBehaviour
         if (raise)
         {
             uiHand.SetActive(true);
+            GameplayController.Get().ChangeInputState(GameplayController.InputState.InGameUI);
         }
         else
         {
@@ -609,6 +619,7 @@ public class PlayerMovement : MonoBehaviour
             GameplayController.Get().SetPlayerDocsActiveState(false);
             GameplayController.Get().SetFingerActiveState(false);
             yield return new WaitUntil(() => uiHandAnim.GetCurrentAnimatorStateInfo(0).IsName("Closed"));
+            GameplayController.Get().ChangeInputState(GameplayController.InputState.Movement);
         }
         Quaternion initialRot = Quaternion.Euler(new Vector3(raise ? uiHandXrotationDown : uiHandXrotationUp, uiHand.transform.localRotation.y, uiHand.transform.localRotation.z));
         Quaternion endRot = Quaternion.Euler(new Vector3(raise ? uiHandXrotationUp : uiHandXrotationDown, uiHand.transform.localRotation.y, uiHand.transform.localRotation.z));
@@ -842,5 +853,10 @@ public class PlayerMovement : MonoBehaviour
     public void PutOnGlasses()
     {
         glassesOff = false;
+    }
+
+    public bool IsOnFlashlightAnimation()
+    {
+        return isOnFlashlightAnimation;
     }
 }

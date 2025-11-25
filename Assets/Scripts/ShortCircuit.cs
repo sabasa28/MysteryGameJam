@@ -7,8 +7,10 @@ public class ShortCircuit : MonoBehaviour
     [SerializeField] ParticleSystem sparksPS;
     [SerializeField] AudioSource sparkleazo;
     [SerializeField] AudioClip[] sparkleazoClips;
+
     public void EmitSparks()
     {
+        sparkleazo.volume = SettingsData.volume;
         sparksPS.Play();
         int i = Random.Range(0, sparkleazoClips.Length);
         sparkleazo.clip = sparkleazoClips[i];

@@ -208,7 +208,9 @@ public class UIPlayerDocs : MonoBehaviour
     public void UpdateDocsSortedByDate()
     {
         sortedDocs = new List<Document>(documents);
-        if (LevelsManager.Get().persistentData.persistentDocsData.docsSortedByDate)
+        bool sortByDate = LevelsManager.Get().persistentData.persistentDocsData.docsSortedByDate;
+        sortingButtonText.text = sortByDate ? "Date" : "Found";
+        if (sortByDate)
         {
             sortedDocs.Sort((x,y) => x.orderToDisplay - y.orderToDisplay);
         }
@@ -251,7 +253,6 @@ public class UIPlayerDocs : MonoBehaviour
         LevelsManager levelManager = LevelsManager.Get();
         bool previousValue = levelManager.persistentData.persistentDocsData.docsSortedByDate;
         levelManager.persistentData.persistentDocsData.docsSortedByDate = !previousValue;
-        sortingButtonText.text = previousValue? "Found" : "Date";
         InitializeDocsUI();
     }
 

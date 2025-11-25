@@ -16,7 +16,6 @@ public class ChatManager : MonoBehaviour
     [SerializeField] GameObject textPanel;
     [SerializeField] TextEntry testText;
     [SerializeField] TextEntry notDoneWithZoneChat;
-    [SerializeField] TextEntry doneWithZoneChat;
     [SerializeField] TextEntry wakeUpChat;
     [SerializeField] TextEntry glassesFoundChat;
     [SerializeField] TextEntry darknessChat;
@@ -28,7 +27,8 @@ public class ChatManager : MonoBehaviour
     [SerializeField] string unknownName;
     [SerializeField] string AIName;
     EventTriggerBase eventToTriggerAfterChat = null;
-
+    [SerializeField] float inputCooldown;
+    bool onInputCooldown = false;
     #region singleton
     static ChatManager instance;
     public static ChatManager Get()
@@ -72,6 +72,7 @@ public class ChatManager : MonoBehaviour
 
     public void StartDisplayingTextEntry(TextEntry textEntry, EventTriggerBase newEventToTriggerAfterChat = null)
     {
+        StartCoroutine(StartInputCooldown());
         eventToTriggerAfterChat = newEventToTriggerAfterChat;
         GameplayController.Get().ChangeInputState(GameplayController.InputState.Chat);
         textPanel.SetActive(true);
@@ -88,7 +89,7 @@ public class ChatManager : MonoBehaviour
 
     public void Update()
     {
-        if (textState == TextState.notInTextMode)
+        if (textState == TextState.notInTextMode || onInputCooldown)
         {
             return;
         }
@@ -222,6 +223,13 @@ public class ChatManager : MonoBehaviour
     public bool IsInTextMode()
     {
         return textState != TextState.notInTextMode;
+    }
+
+    IEnumerator StartInputCooldown()
+    {
+        onInputCooldown = true;
+        yield return new WaitForSeconds(inputCooldown);
+        onInputCooldown = false;
     }
 
 }

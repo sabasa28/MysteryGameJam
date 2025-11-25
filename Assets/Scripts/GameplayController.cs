@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -66,9 +67,16 @@ public class GameplayController : MonoBehaviour
     bool unstuckCheckpointSet = false;
     bool savedCursorVisibility = false;
     UIGameplay uiGameplay;
-
+    [SerializeField] float tabletOpenCloseImmobileTime;
+    public LightingDataAsset lightmapdata;
+    public Texture2D compLight;
+    public Texture2D compDir;
     private void Start()
     {
+        
+        Debug.Log(LightmapSettings.lightmaps[0]);
+        LightmapSettings.lightmaps[0].lightmapColor = compLight;
+        LightmapSettings.lightmaps[0].lightmapDir = compDir;
         LevelsManager levelsManager = LevelsManager.Get();
         uiGameplay = UIGameplay.Get();
         if (!levelsManager.GoingUp && levelsManager.GetCurrentSceneName() == "SurfaceScene")
@@ -85,6 +93,7 @@ public class GameplayController : MonoBehaviour
         SetPlayerDocsActiveState(playerDocsActive);
         initialZone = currentZone;
         ChangeCurrentZone(currentZone); // not really changing just loading playerdata
+        selectingFinger.animationTime = tabletOpenCloseImmobileTime;
     }
     private void Update()
     {
@@ -95,11 +104,12 @@ public class GameplayController : MonoBehaviour
             uiGameplay.ChangeMenuVisibility(optionsMenuOpen);
         }
         //es muy tonto que esto este aca
-        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab) || (inGameMenuOpen && Input.GetKeyDown(KeyCode.Escape))) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat && inputState != InputState.Cinematic 
-            && !IsOptionsMenuOpen() && !playerMovement.IsAnimating() && !playerMovement.CameraIsDettached() && !uiGameplay.IsAnyDocActive() && !IsOnAnyTransition()) //https://youtu.be/0LUYV3a1qgA?t=8
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Tab) || (inGameMenuOpen && Input.GetKeyDown(KeyCode.Escape))) && playerMovement.CanModifyTabletState() && inputState != InputState.Chat 
+            && inputState != InputState.Cinematic && !IsOptionsMenuOpen() && !playerMovement.IsAnimating() && !playerMovement.CameraIsDettached() && !uiGameplay.IsAnyDocActive() && !IsOnAnyTransition() 
+            && !(playerMovement.IsOnFlashlightAnimation() && !inGameMenuOpen)) //https://youtu.be/0LUYV3a1qgA?t=8
         {
             inGameMenuOpen = !inGameMenuOpen;
-            ChangeInputState(inGameMenuOpen ? InputState.InGameUI : InputState.Movement);
+            //ChangeInputState(inGameMenuOpen ? InputState.InGameUI : InputState.Movement);
 
             if (inGameMenuOpen)
             {
@@ -260,7 +270,14 @@ public class GameplayController : MonoBehaviour
 
     public void SetFingerActiveState(bool state)
     {
-        selectingFinger.gameObject.SetActive(state);
+        if (state)
+        {
+            selectingFinger.gameObject.SetActive(true);
+        }
+        else
+        {
+            selectingFinger.AnimateAndDisable();
+        }
     }
 
     public void MovePlayerInOutOfShip(float customFadeOutInTime = -1.0f)
@@ -302,10 +319,6 @@ public class GameplayController : MonoBehaviour
         ChangeInputState(InputState.Cinematic);
         uiGameplay.FadeOutAndIn(moveIn);
         yield return new WaitUntil(() => !uiGameplay.isFadingOut);
-        if (!moveIn)
-        {
-            LevelsManager.Get().persistentData.isReturning = true;
-        }
         playerMovement.CopyPositionAndRotation(moveIn ? insideOfLabPos : outsideOfLabPos);
         yield return new WaitUntil(() => !uiGameplay.isFadingIn);
         ChangeCurrentZone(moveIn ? labZone : lowerCavesReturnZone);

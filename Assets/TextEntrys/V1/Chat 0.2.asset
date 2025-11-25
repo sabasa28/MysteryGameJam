@@ -15,6 +15,6 @@ MonoBehaviour:
   textLine:
   - text: That's better. Hard to work without my glasses.
     speaker: 2
-  - text: Now, I should synchronize my tablet with the logs I've been writing in
+  - text: Now, I should synchronize my tablet with the logs I've been writing on
       the computer since the beginning of the mission.
     speaker: 2
