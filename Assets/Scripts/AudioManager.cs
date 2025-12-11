@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip uiBackClip;
     [SerializeField] AudioClip photoSound;
     [SerializeField] float ambienceVolumeSceneModifier = 1.0f;
+    float fadeIn = 3.0f;
     static AudioManager instance;
 
     public static AudioManager Get()
@@ -46,13 +47,14 @@ public class AudioManager : MonoBehaviour
         stepsSource.volume = SettingsData.volume;
         stepsSource.loop = true;
         ambienceSource.loop = true;
+        StartCoroutine(LerpBackgroundFadeIn(1.0f));
         ambienceSource.Play();
     }
 
     public void UpdateVolume()
     {
         audioSource.volume = SettingsData.volume;
-        ambienceSource.volume = SettingsData.volume * ambienceVolumeSceneModifier;
+        ambienceSource.volume = SettingsData.volume * ambienceVolumeSceneModifier * fadeIn;
     }
 
     public void PlaySFX(AudioClip clip, float volume = 1.0f)
@@ -124,6 +126,20 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
         ambienceVolumeSceneModifier = targetAmbienceVol;
+        UpdateVolume();
+    }
+
+    IEnumerator LerpBackgroundFadeIn(float fadeInTime)
+    {
+        float timer = 0.0f;
+        while (timer < fadeInTime)
+        {
+            fadeIn = Mathf.Lerp(0, 1, timer / fadeInTime);
+            UpdateVolume();
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        fadeIn = 1.0f;
         UpdateVolume();
     }
 }

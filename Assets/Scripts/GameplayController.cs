@@ -68,26 +68,36 @@ public class GameplayController : MonoBehaviour
     bool savedCursorVisibility = false;
     UIGameplay uiGameplay;
     [SerializeField] float tabletOpenCloseImmobileTime;
-    public LightingDataAsset lightmapdata;
-    public Texture2D compLight;
-    public Texture2D compDir;
+    public float inShipVol;
+    public float outOfShipVol;
+    public float stormVolModifier;
+    [SerializeField] StartReturnMusic startReturnMusicEvent;
+    LevelsManager levelsManager;
+    [SerializeField] Document finalDoc;
     private void Start()
-    {
-        
-        Debug.Log(LightmapSettings.lightmaps[0]);
-        LightmapSettings.lightmaps[0].lightmapColor = compLight;
-        LightmapSettings.lightmaps[0].lightmapDir = compDir;
-        LevelsManager levelsManager = LevelsManager.Get();
+    {    
+        levelsManager = LevelsManager.Get();
         uiGameplay = UIGameplay.Get();
         if (!levelsManager.GoingUp && levelsManager.GetCurrentSceneName() == "SurfaceScene")
         {
             ChangeInputState(InputState.Cinematic);
             playerMovement.InitialPlayerSpawn();
-            AudioManager.Get().UpdateBackgroundVolume(0.5f, false);
+            AudioManager.Get().UpdateBackgroundVolume(inShipVol, false);
         }
         else
-        { 
+        {
             ChangeInputState(InputState.Movement);
+            if (levelsManager.GetCurrentSceneName() == "SurfaceScene")
+            {
+                if (!levelsManager.persistentData.isReturning)
+                {
+                    AudioManager.Get().UpdateBackgroundVolume(outOfShipVol, false);
+                }
+                else
+                {
+                    AudioManager.Get().UpdateBackgroundVolume(outOfShipVol * stormVolModifier, false);
+                }
+            }
         }
         playerDocsActive = playerDocs.activeInHierarchy;
         SetPlayerDocsActiveState(playerDocsActive);
@@ -132,6 +142,10 @@ public class GameplayController : MonoBehaviour
 
     void CloseTablet()
     {
+        if (levelsManager.persistentData.canEndGame && levelsManager.persistentData.WasDocFoundAndRead(finalDoc)) //start playing music if it hasnt played
+        {
+            startReturnMusicEvent.TriggerEvent();
+        }
         Cursor.lockState = CursorLockMode.Locked;
         playerMovement.LowerHand();
     }
@@ -239,8 +253,12 @@ public class GameplayController : MonoBehaviour
         if (noGlassessVolume)
         {
             noGlassessVolume.enabled = newState;
-            playerMovement.PutOnGlasses();
         }
+    }
+
+    public void PutGlassesOnPlayer()
+    {
+        playerMovement.PutOnGlasses();
     }
 
     public bool IsInShip()
@@ -286,6 +304,10 @@ public class GameplayController : MonoBehaviour
         {
             uiGameplay.SetCustomTimeForNextFade(customFadeOutInTime);
         }
+        if (startReturnMusicEvent)
+        {
+            startReturnMusicEvent.StopLooping();
+        }
         isPlayerInShip = !isPlayerInShip;
         StartCoroutine(MovePlayerInOutShipCoroutine(isPlayerInShip));
     }
@@ -304,13 +326,20 @@ public class GameplayController : MonoBehaviour
         yield return new WaitUntil(() => !uiGameplay.isFadingOut);
         playerMovement.CopyPositionAndRotation(moveIn ? insideOfShipPos : outsideOfShipPos);
         helmetVolume.enabled = !moveIn;
-        LevelsManager.Get().persistentData.UpdateHelmetState(!moveIn);
+        levelsManager.persistentData.UpdateHelmetState(!moveIn);
         playerMovement.PlayHelmetSound(!moveIn);
         stormManager.OnEnterOrExitShip(moveIn);
         yield return new WaitUntil(() => !uiGameplay.isFadingIn);
         ChangeInputState(InputState.Movement);
         playerMovement.SetJumpAllowed(!moveIn);
-        AudioManager.Get().UpdateBackgroundVolume(moveIn ? 0.5f : 1.0f, true);
+        float insideBaseVol = inShipVol;
+        float outsideBaseVol = outOfShipVol;
+        if (levelsManager.persistentData.isReturning)
+        {
+            insideBaseVol *= stormVolModifier;
+            outsideBaseVol *= stormVolModifier;
+        }
+        AudioManager.Get().UpdateBackgroundVolume(moveIn ? insideBaseVol : outsideBaseVol, true);
     }
 
     IEnumerator MovePlayerInOutLabCoroutine(bool moveIn)
@@ -346,25 +375,25 @@ public class GameplayController : MonoBehaviour
 
     public void DiscoverHook()
     {
-        LevelsManager.Get().persistentData.hookDiscovered = true;
+        levelsManager.persistentData.hookDiscovered = true;
         LoadPlayerPersistence();
     }
 
     public void DiscoverBeacons()
     {
-        LevelsManager.Get().persistentData.beaconsDiscovered = true;
+        levelsManager.persistentData.beaconsDiscovered = true;
         LoadPlayerPersistence();
     }
 
     public void DiscoverSonar()
     {
-        LevelsManager.Get().persistentData.sonarDiscovered = true;
+        levelsManager.persistentData.sonarDiscovered = true;
         LoadPlayerPersistence();
     }
 
     public void DiscoverCalendar()
     {
-        LevelsManager.Get().persistentData.calendarDiscovered = true;
+        levelsManager.persistentData.calendarDiscovered = true;
     }
 
     public bool IsZoneDone()

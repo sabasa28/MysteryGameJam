@@ -48,12 +48,20 @@ MonoBehaviour:
   chatManager: {fileID: 0}
   currentZone: {fileID: 0}
   labZone: {fileID: 0}
+  lowerCavesReturnZone: {fileID: 0}
   outsideOfShipPos: {fileID: 0}
   insideOfShipPos: {fileID: 0}
   outsideOfLabPos: {fileID: 0}
   insideOfLabPos: {fileID: 0}
   helmetVolume: {fileID: 0}
+  noGlassessVolume: {fileID: 0}
+  stormManager: {fileID: 0}
   selectingFinger: {fileID: 0}
-  lightScalar: 1
-  lightAttenuationExponent: 2
+  isPlayerInShip: 1
+  isPlayerInLab: 0
   playerDocs: {fileID: 0}
+  currentUnstuckCheckpoint: {fileID: 0}
+  tabletOpenCloseImmobileTime: 0.25
+  inShipVol: 0.25
+  outOfShipVol: 0.5
+  stormVolModifier: 2

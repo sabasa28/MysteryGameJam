@@ -224,6 +224,11 @@ public class PersistentData : ScriptableObject
         return persistentDocsData.documentsFound.Contains(doc);
     }
 
+    public bool WasDocFoundAndRead(Document doc)
+    {
+        return (persistentDocsData.documentsFound.Contains(doc) && doc.read);
+    }
+
     public void AddChatToPlayedChats(TextEntry chat)
     {
         if (!chatsAlreadyPlayed.Contains(chat))

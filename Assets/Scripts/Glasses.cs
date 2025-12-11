@@ -28,6 +28,7 @@ public class Glasses : MonoBehaviour, IInteractable
     {
         yield return new WaitForSeconds(1.0f);
         ChatManager.Get().PlayGlassesFoundChat();
+        GameplayController.Get().PutGlassesOnPlayer();
         gameObject.SetActive(false);
     }
     public bool IsInteractable()

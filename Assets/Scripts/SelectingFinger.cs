@@ -28,7 +28,6 @@ public class SelectingFinger : MonoBehaviour
             mouseVec.z = distToCamera;
             mouseVec = Camera.main.ScreenToWorldPoint(mouseVec);
             transform.position = mouseVec;
-            Debug.Log(Input.mousePosition);
         }
     }
     IEnumerator Animate(bool enterScreen)

@@ -18,6 +18,7 @@ public class UIMainMenu : MonoBehaviour
     [SerializeField] GameObject title;
     GeneralBrightnessSettings generalBrightnessSettings;
     bool firstTimeInMenu = true;
+    bool loadGameplayScene = false;
 
     private void Start()
     {
@@ -31,6 +32,7 @@ public class UIMainMenu : MonoBehaviour
             LevelsManager.Get().CleanInstance(); //jam stuff
         }
         ShowInitialBrightnessOptions(firstTimeInMenu);
+        StartCoroutine(PreLoadGameplayScene());
     }
 
     private void OnLevelWasLoaded(int level)
@@ -42,7 +44,7 @@ public class UIMainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("SurfaceScene");
+        loadGameplayScene = true;
     }
 
     public void ShowSettings(bool show)
@@ -89,5 +91,18 @@ public class UIMainMenu : MonoBehaviour
     {
         Debug.Log("El juego se hubiese cerrado");
         Application.Quit();
+    }
+
+    IEnumerator PreLoadGameplayScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("SurfaceScene");
+        asyncLoad.allowSceneActivation = false;
+        yield return new WaitUntil(()=>loadGameplayScene);
+        asyncLoad.allowSceneActivation = true;
+        
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 }

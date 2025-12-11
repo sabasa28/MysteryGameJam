@@ -50,6 +50,7 @@ public class UIGameplay : MonoBehaviour
     [SerializeField] Button EndGameButton;
     [SerializeField] TextMeshProUGUI TimescaleText;
     [SerializeField] TextMeshProUGUI FPSText;
+    [SerializeField] bool DEBUGLightsAndSpeed;
     int framesSinceLastUpdate = 0;
     float timeBeforeUpdatingFPS = 0.5f;
     float fpsDisplayTimer = 0.0f;
@@ -125,7 +126,7 @@ public class UIGameplay : MonoBehaviour
     }
     private void OnGUI()
     {
-        if (Input.anyKeyDown)
+        if (DEBUGLightsAndSpeed && Input.anyKeyDown)
         {
             if (lastHitKey == KeyCode.Minus)
             {
@@ -342,6 +343,10 @@ public class UIGameplay : MonoBehaviour
 
     public void InitializeLightDebugData()
     {
+        if (!DEBUGLightsAndSpeed)
+        {
+            return;
+        }
         GameplayController.Get().GetFlashlightSettings(out DEBUGFlashlightRange, out DEBUGInnerFlashlightIntensity, out DEBUGOuterFlashlightIntensity);
         DEBUGAttenuationSlider.value = DEBUGLightAttenuation;
         DEBUGAttenuationText.text = "Light attenuation: " + DEBUGLightAttenuation.ToString("F2");

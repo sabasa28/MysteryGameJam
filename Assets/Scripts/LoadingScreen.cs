@@ -32,7 +32,7 @@ public class LoadingScreen : MonoBehaviour
         {
             return;
         }
-        if (timer < minimumLoadingTime + timeBeforeLoad)
+        if (timer < minimumLoadingTime + timeBeforeLoad && ((timer - timeBeforeLoad) / minimumLoadingTime < loadingScene.progress / 0.9f))
         {
             timer += Time.deltaTime;
         }

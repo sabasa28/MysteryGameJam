@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Chat 0.2
   m_EditorClassIdentifier: 
   textLine:
-  - text: That's better. Hard to work without my glasses.
+  - text: That's better. Hard to work without these.
     speaker: 2
-  - text: Now, I should synchronize my tablet with the logs I've been writing on
-      the computer since the beginning of the mission.
+  - text: 'Okay, let''s get to it. '
+    speaker: 2
+  - text: I should synchronize my tablet with the logs I've been writing in the computer
+      since the beginning of the mission.
     speaker: 2

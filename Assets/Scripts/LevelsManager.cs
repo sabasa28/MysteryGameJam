@@ -11,7 +11,8 @@ public class LevelsManager : MonoBehaviour
         Surface,
         HigherCave,
         LowerCave,
-        MainMenu
+        MainMenu,
+        DemoEndscreen
     }
     Scenes nextScene = Scenes.Surface;
     [SerializeField] Scenes currentScene = Scenes.Surface;
@@ -77,6 +78,10 @@ public class LevelsManager : MonoBehaviour
         SceneManager.LoadScene("LoadingScreenScene");
     }
 
+    public void LoadWEBDemoEndscreen()
+    {
+        SceneManager.LoadScene("WEBDemoEndscreen");
+    }
     string GetScene(Scenes scene)
     {
         switch (scene)

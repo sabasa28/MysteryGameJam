@@ -29,6 +29,9 @@ public class LevelChangeVolume : MonoBehaviour
             case LevelsManager.Scenes.LowerCave:
                 LevelsManager.Get().LoadLowerCavesScene();
                 break;
+            case LevelsManager.Scenes.DemoEndscreen:
+                LevelsManager.Get().LoadWEBDemoEndscreen();
+                break;
             default:
                 LevelsManager.Get().LoadSurfaceCavesScene();
                 break;
